@@ -36,8 +36,10 @@ android {
 
 dependencies {
     implementation(projects.core.designsystem)
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
 
