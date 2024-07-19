@@ -52,7 +52,7 @@ fun HomeScreen(
 
 @Preview(device = Devices.PIXEL_7)
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     AfoilTheme {
         HomeScreen(onDestinationSelected = {})
     }
