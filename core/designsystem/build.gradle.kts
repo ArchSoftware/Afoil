@@ -5,13 +5,14 @@ plugins {
 
 android {
     namespace = "com.archsoftware.afoil.core.designsystem"
-
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 }
 
 dependencies {
     api(libs.androidx.material3)
     api(libs.androidx.material.icons.extended)
+
+    androidTestImplementation(projects.core.testing)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.ui.test.manifest)
 }

@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +26,7 @@ import com.archsoftware.afoil.navigation.TopLevelDestination
 
 @Composable
 fun HomeScreen(
+    canNavigate: Boolean,
     onDestinationSelected: (TopLevelDestination) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -44,8 +47,26 @@ fun HomeScreen(
             Text(
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp)
             )
+            TopLevelDestination.entries.forEach {
+                if (it.titleId != null && it.icon != null) {
+                    TextButton(
+                        enabled = canNavigate,
+                        onClick = { onDestinationSelected(it) }
+                    ) {
+                        Icon(
+                            imageVector = it.icon,
+                            contentDescription = null
+                        )
+                        Text(
+                            text = stringResource(id = it.titleId),
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -54,6 +75,9 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     AfoilTheme {
-        HomeScreen(onDestinationSelected = {})
+        HomeScreen(
+            canNavigate = true,
+            onDestinationSelected = {}
+        )
     }
 }

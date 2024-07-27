@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_ui_projectsdirselectiondialog_title">Select projects directory</string>
+    <string name="core_ui_projectsdirselectiondialog_text">
+        This is required to save the projects data and results.
+    </string>
+    <string name="core_ui_projectsdirselectiondialog_select">Select</string>
+
+    <string name="core_ui_projectpreparingdialog_title">Preparing %1$s…</string>
+    <string name="core_ui_projectpreparingdialog_text">
+        This could take a while, please wait.
+    </string>
+</resources>

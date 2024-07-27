@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_airfoilanalysis_title">Airfoil analysis</string>
+    <string name="feature_airfoilanalysis_navigateup_content_desc">Back</string>
+    <string name="feature_airfoilanalysis_input_guidelines">
+        Use dot as decimal separator. Exponential notation supported.
+    </string>
+
+    <string name="feature_airfoilanalysis_projectdetailspage_title">Project details</string>
+    <string name="feature_airfoilanalysis_projectdetailspage_enter_project_details">
+        Enter project details to save it into local database.
+    </string>
+    <string name="feature_airfoilanalysis_projectdetailspage_project_name">Project name</string>
+    <string name="feature_airfoilanalysis_projectdetailspage_empty_project_name_error">
+        Project name cannot be empty
+    </string>
+    <string name="feature_airfoilanalysis_projectdetailspage_duplicate_project_name_error">
+        A project with this name already exists
+    </string>
+    <string name="feature_airfoilanalysis_projectdetailspage_project_location">Project location</string>
+    <string name="feature_airfoilanalysis_projectdetailspage_project_location_placeholder">
+        No location selected
+    </string>
+    <string name="feature_airfoilanalysis_projectdetailspage_select_project_location">
+        Select
+    </string>
+
+    <string name="feature_airfoilanalysis_airfoildatapage_title">Airfoil data</string>
+    <string name="feature_airfoilanalysis_airfoildatapage_open_datairfoil">Open .dat</string>
+    <string name="feature_airfoilanalysis_airfoildatapage_paneling_options">Paneling options</string>
+    <string name="feature_airfoilanalysis_airfoildatapage_panels_number">Panels number</string>
+    <string name="feature_airfoilanalysis_airfoildatapage_datairfoil_placeholder">
+        No airfoil selected
+    </string>
+
+    <string name="feature_airfoilanalysis_fluiddatapage_title">Fluid data</string>
+    <string name="feature_airfoilanalysis_fluiddatapage_reynolds_number">Reynolds number</string>
+    <string name="feature_airfoilanalysis_fluiddatapage_reynolds_number_supporting_text">
+        Leave blank to perform inviscid analysis.
+    </string>
+    <string name="feature_airfoilanalysis_fluiddatapage_mach_number">Mach number</string>
+    <string name="feature_airfoilanalysis_fluiddatapage_angle_of_attack">Angle of attack</string>
+    <string name="feature_airfoilanalysis_fluiddatapage_angle_of_attack_unit_of_measure">deg</string>
+
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_title">Post-processing settings</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_streamlines">Streamlines</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_number_of_streamlines">Number of streamlines</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_refining_level">Refining level</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_pressure_contours">Pressure contours</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_grid_size">Grid size</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_grid_size_supporting_text">
+        Number of grid points along each side.
+    </string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_refining_level_supporting_text">
+        0 means grosser, 1 means smoother
+    </string>
+</resources>

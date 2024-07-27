@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_designsystem_nextprevbottombar_previous">Previous</string>
+    <string name="core_designsystem_nextprevbottombar_next">Next</string>
+    <string name="core_designsystem_nextprevbottombar_done">Done</string>
+    <string name="core_designsystem_numerictextfield_error_message">Please enter a valid number</string>
+</resources>

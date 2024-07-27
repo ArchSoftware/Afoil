@@ -14,8 +14,14 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) = navigate(
     navOptions = navOptions
 )
 
-fun NavGraphBuilder.homeScreen(onDestinationSelected: (TopLevelDestination) -> Unit) {
+fun NavGraphBuilder.homeScreen(
+    canNavigate: Boolean,
+    onDestinationSelected: (TopLevelDestination) -> Unit
+) {
     composable(route = HOME_ROUTE) {
-        HomeScreen(onDestinationSelected = onDestinationSelected)
+        HomeScreen(
+            canNavigate = canNavigate,
+            onDestinationSelected = onDestinationSelected
+        )
     }
 }
