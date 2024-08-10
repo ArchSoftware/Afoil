@@ -26,5 +26,5 @@ include(":core:model")
 include(":core:projectstore")
 include(":core:ui")
 include(":core:testing")
-include("feature:airfoilanalysis")
+include(":feature:airfoilanalysis")
  
