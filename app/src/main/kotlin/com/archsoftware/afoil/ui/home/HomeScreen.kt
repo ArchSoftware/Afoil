@@ -38,7 +38,7 @@ fun HomeScreen(
                 .fillMaxSize()
         ) {
             Image(
-                painter = painterResource(id = R.drawable.afoil_icon),
+                painter = painterResource(id = R.drawable.ic_afoil_logo),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(16.dp)
