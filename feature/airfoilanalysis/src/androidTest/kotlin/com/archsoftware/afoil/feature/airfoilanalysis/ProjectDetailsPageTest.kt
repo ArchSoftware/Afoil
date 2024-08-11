@@ -1,11 +1,10 @@
-package com.archsoftware.afoil
+package com.archsoftware.afoil.feature.airfoilanalysis
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.archsoftware.afoil.core.testing.util.onNodeWithStringId
-import com.archsoftware.afoil.feature.airfoilanalysis.R
 import com.archsoftware.afoil.feature.airfoilanalysis.page.ProjectDetailsPage
 import org.junit.Rule
 import org.junit.Test

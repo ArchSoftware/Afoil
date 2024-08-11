@@ -1,4 +1,4 @@
-package com.archsoftware.afoil
+package com.archsoftware.afoil.feature.airfoilanalysis
 
 import androidx.compose.runtime.snapshots.Snapshot
 import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
@@ -8,8 +8,6 @@ import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResol
 import com.archsoftware.afoil.core.testing.repository.TestAirfoilAnalysisProjectRepository
 import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
 import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
-import com.archsoftware.afoil.feature.airfoilanalysis.AirfoilAnalysisPage
-import com.archsoftware.afoil.feature.airfoilanalysis.AirfoilAnalysisViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

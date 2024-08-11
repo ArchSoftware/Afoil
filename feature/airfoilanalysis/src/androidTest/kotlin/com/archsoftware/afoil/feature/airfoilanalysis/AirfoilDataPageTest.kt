@@ -1,4 +1,4 @@
-package com.archsoftware.afoil
+package com.archsoftware.afoil.feature.airfoilanalysis
 
 import android.net.Uri
 import androidx.activity.ComponentActivity
@@ -14,7 +14,6 @@ import androidx.compose.ui.test.requestFocus
 import androidx.core.app.ActivityOptionsCompat
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
 import com.archsoftware.afoil.core.testing.util.onNodeWithStringId
-import com.archsoftware.afoil.feature.airfoilanalysis.R
 import com.archsoftware.afoil.feature.airfoilanalysis.page.AirfoilDataPage
 import org.junit.Rule
 import kotlin.test.Test
