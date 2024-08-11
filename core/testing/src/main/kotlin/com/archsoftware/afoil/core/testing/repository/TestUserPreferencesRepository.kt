@@ -5,9 +5,10 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.jetbrains.annotations.TestOnly
+import javax.inject.Inject
 
 @TestOnly
-class TestUserPreferencesRepository : PreferencesRepository {
+class TestUserPreferencesRepository @Inject constructor() : PreferencesRepository {
     private val afoilProjectsDirectoryFlow: MutableSharedFlow<String?> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
