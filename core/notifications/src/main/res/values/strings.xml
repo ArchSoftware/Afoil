@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_notifications_computation_service_channel_name">Computation progress updates</string>
+    <string name="core_notifications_computation_service_channel_description">
+        Keep track of the progress of ongoing computation
+    </string>
+    <string name="core_notifications_computation_service_content_text">%1$s: %2$s</string>
+    <string name="core_notifications_computation_service_computation_finished">Computation finished</string>
+</resources>
