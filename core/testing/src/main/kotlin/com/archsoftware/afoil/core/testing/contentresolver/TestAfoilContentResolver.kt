@@ -5,10 +5,9 @@ import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import org.jetbrains.annotations.TestOnly
 import java.io.InputStream
 import java.io.OutputStream
-import javax.inject.Inject
 
 @TestOnly
-class TestAfoilContentResolver @Inject constructor() : UriContentResolver {
+class TestAfoilContentResolver : UriContentResolver {
     var exists: Boolean = false
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null

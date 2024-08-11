@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface UriContentResolverModule {
+internal interface UriContentResolverModule {
     @Binds
     fun bindsUriContentResolver(afoilContentResolver: AfoilContentResolver): UriContentResolver
 }

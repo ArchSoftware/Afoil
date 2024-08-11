@@ -6,10 +6,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.jetbrains.annotations.TestOnly
-import javax.inject.Inject
 
 @TestOnly
-class TestAirfoilAnalysisProjectRepository @Inject constructor() : AnalysisProjectRepository {
+class TestAirfoilAnalysisProjectRepository : AnalysisProjectRepository {
     private val projectsFlow: MutableSharedFlow<List<AirfoilAnalysisProject>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
