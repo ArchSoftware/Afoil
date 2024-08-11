@@ -15,12 +15,14 @@ class DatAirfoilReader @Inject constructor(
 ) {
 
     @Throws(IOException::class)
-    suspend fun readName(uri: Uri): String? {
+    suspend fun readName(uri: Uri?): String? {
         var line: String? = null
         return withContext(ioDispatcher) {
-            contentResolver.openInputStream (uri)?.use { inputStream ->
-                inputStream.bufferedReader().use { reader ->
-                    line = reader.readLine()
+            if (uri != null) {
+                contentResolver.openInputStream(uri)?.use { inputStream ->
+                    inputStream.bufferedReader().use { reader ->
+                        line = reader.readLine()
+                    }
                 }
             }
             line
