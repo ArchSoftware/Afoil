@@ -1,3 +1,16 @@
 package com.archsoftware.afoil.core.model
 
-data class ComputationLog(val tag: String, val message: String, val progress: Int)
+import android.graphics.Color
+
+data class ComputationLog(
+    val timestamp: String,
+    val tag: String,
+    val message: String,
+    val level: Level
+) {
+    enum class Level(val identifier: String, val color: Int) {
+        INFO("I",Color.parseColor("#366079")),
+        WARNING("W", Color.parseColor("#bbb52a")),
+        ERROR("E", Color.parseColor("#cf5b56"))
+    }
+}
