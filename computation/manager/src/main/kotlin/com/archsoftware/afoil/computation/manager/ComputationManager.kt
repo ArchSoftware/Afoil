@@ -26,6 +26,9 @@ class ComputationManager @Inject constructor(
     private val _logs: MutableSharedFlow<List<ComputationLog>> = MutableSharedFlow(replay = 1)
     val logs: Flow<List<ComputationLog>> = _logs
 
+    private val _progress: MutableSharedFlow<Float> = MutableSharedFlow(replay = 1)
+    val progress: Flow<Float> = _progress
+
     @VisibleForTesting
     internal val computationJob: Job = Job()
     private val computationScope: CoroutineScope = CoroutineScope(computationJob + defaultDispatcher)

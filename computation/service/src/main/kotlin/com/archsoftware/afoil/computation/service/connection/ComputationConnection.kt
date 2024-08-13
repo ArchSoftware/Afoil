@@ -13,6 +13,7 @@ class ComputationConnection : ServiceConnection {
 
     val state: Flow<ComputationManager.State> by lazy { computationService.state }
     val logs: Flow<List<ComputationLog>> by lazy { computationService.logs }
+    val progress: Flow<Float> by lazy { computationService.progress }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         val binder = service as ComputationService.ComputationBinder
