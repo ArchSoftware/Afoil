@@ -7,7 +7,6 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.archsoftware.afoil.core.model.ComputationLog
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -21,17 +20,10 @@ class SystemTrayNotifier @Inject constructor(
     val computationServiceNotificationId: Int = COMPUTATION_SERVICE_NOTIFICATION_ID
     private lateinit var computationServiceNotificationBuilder: NotificationCompat.Builder
 
-    fun updateComputationServiceNotification(computationLog: ComputationLog) {
+    fun updateComputationServiceNotification(progress: Float) {
         val notification = computationServiceNotificationBuilder.apply {
-            if (computationLog.progress < PROGRESS_MAX) {
-                setContentText(
-                    context.getString(
-                        /* resId = */ R.string.core_notifications_computation_service_content_text,
-                        computationLog.tag,
-                        computationLog.message
-                    )
-                )
-                setProgress(PROGRESS_MAX, computationLog.progress, false)
+            if (progress < PROGRESS_MAX) {
+                setProgress(PROGRESS_MAX, progress.toInt(), false)
                 setOngoing(true)
             } else {
                 setContentText(context.getString(R.string.core_notifications_computation_service_computation_finished))

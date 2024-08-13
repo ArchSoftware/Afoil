@@ -32,8 +32,9 @@ class ComputationService : Service() {
     private val binder = ComputationBinder()
 
     val state: Flow<ComputationManager.State> = computationManager.computationState
-    val logs: Flow<List<ComputationLog>> = computationManager.logs.onEach {
-        notifier.updateComputationServiceNotification(it.last())
+    val logs: Flow<List<ComputationLog>> = computationManager.logs
+    val progress: Flow<Float> = computationManager.progress.onEach { progress ->
+        notifier.updateComputationServiceNotification(progress)
     }
 
     override fun onBind(intent: Intent?): IBinder = binder
