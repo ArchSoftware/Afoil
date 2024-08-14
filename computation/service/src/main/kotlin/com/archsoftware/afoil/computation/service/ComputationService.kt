@@ -52,9 +52,9 @@ class ComputationService : Service() {
     }
 
     override fun onDestroy() {
-        computationManager.stopComputation()
-
         super.onDestroy()
+
+        computationManager.stopComputation()
     }
 
     private fun startForeground(computationName: String?) {
