@@ -2,10 +2,11 @@ package com.archsoftware.afoil.feature.airfoilanalysis
 
 import androidx.compose.runtime.snapshots.Snapshot
 import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
-import com.archsoftware.afoil.core.model.AirfoilAnalysisProject
+import com.archsoftware.afoil.core.model.AfoilProject
+import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
-import com.archsoftware.afoil.core.testing.repository.TestAirfoilAnalysisProjectRepository
+import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
 import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,13 +41,15 @@ class AirfoilAnalysisViewModelTest {
         preferencesRepository = userPreferencesRepository,
         ioDispatcher = StandardTestDispatcher(mainDispatcherRule.testDispatcher.scheduler)
     )
-    private val projectRepository = TestAirfoilAnalysisProjectRepository()
+    private val projectRepository = TestAfoilProjectRepository()
 
     private lateinit var viewModel: AirfoilAnalysisViewModel
 
     // Test data
     private val invalidValue = "invalid"
-    private val projects = listOf(AirfoilAnalysisProject("Project 1"))
+    private val projects = listOf(
+        AfoilProject("Project 1", AirfoilAnalysisProjectData::class.java.name)
+    )
     private lateinit var datAirfoilFile: File
     private val panelsNumber = "100"
     private val reynoldsNumber = "20e3"

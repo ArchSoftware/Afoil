@@ -3,8 +3,7 @@ package com.archsoftware.afoil.computation.manager
 import androidx.annotation.VisibleForTesting
 import com.archsoftware.afoil.core.common.AfoilDispatcher
 import com.archsoftware.afoil.core.common.Dispatcher
-import com.archsoftware.afoil.core.data.repository.PreferencesRepository
-import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
+import com.archsoftware.afoil.core.data.repository.ProjectRepository
 import com.archsoftware.afoil.core.model.ComputationLog
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ComputationManager @Inject constructor(
-    private val preferencesRepository: PreferencesRepository,
+    private val projectRepository: ProjectRepository,
     private val projectStore: ProjectStore,
     @Dispatcher(AfoilDispatcher.Default) private val defaultDispatcher: CoroutineDispatcher
 ) {
@@ -33,20 +32,17 @@ class ComputationManager @Inject constructor(
     internal val computationJob: Job = Job()
     private val computationScope: CoroutineScope = CoroutineScope(computationJob + defaultDispatcher)
 
-    fun startComputation(projectName: String?, projectDataType: Class<*>?) {
+    fun startComputation(projectName: String?) {
         computationScope.launch {
-            if (projectName == null || projectDataType == null) {
+            if (projectName == null) {
                 _computationState.emit(State.ERROR)
                 return@launch
             }
 
             _computationState.emit(State.RUNNING)
 
-            when (projectDataType) {
-                AirfoilAnalysisProjectData::class.java -> {
-                    // TODO: Start computation
-                }
-            }
+            // TODO: Retrieve project from repository and pass projectDataType to project
+            //  store and implement getUri(projectName) method in ProjectStore
 
             _computationState.emit(State.FINISHED)
         }

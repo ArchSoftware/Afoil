@@ -1,8 +1,8 @@
 package com.archsoftware.afoil.computation.manager
 
-import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
+import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -28,7 +28,7 @@ class ComputationManagerTest {
     @Before
     fun setup() {
         computationManager = ComputationManager(
-            preferencesRepository = TestUserPreferencesRepository(),
+            projectRepository = TestAfoilProjectRepository(),
             projectStore = ProjectStore(
                 contentResolver = TestAfoilContentResolver(),
                 preferencesRepository = TestUserPreferencesRepository(),
@@ -42,16 +42,7 @@ class ComputationManagerTest {
     fun computationStateIsErrorIfDataIsInvalid() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.ERROR
 
-        computationManager.startComputation(null, null)
-        assertEquals(expectedState, computationManager.computationState.first())
-
-        computationManager.startComputation(null, AirfoilAnalysisProjectData::class.java)
-        assertEquals(expectedState, computationManager.computationState.first())
-
-        computationManager.startComputation(projectName, null)
-        assertEquals(expectedState, computationManager.computationState.first())
-
-        computationManager.startComputation(projectName, Any::class.java)
+        computationManager.startComputation(null)
         assertEquals(expectedState, computationManager.computationState.first())
     }
 
@@ -59,7 +50,7 @@ class ComputationManagerTest {
     fun computationStateIsCanceledIfComputationIsStopped() = runTest {
         val expectedState = ComputationManager.State.CANCELED
 
-        computationManager.startComputation(projectName, AirfoilAnalysisProjectData::class.java)
+        computationManager.startComputation(projectName)
         computationManager.stopComputation()
         val state = computationManager.computationState.first()
 

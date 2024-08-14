@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 const val EXTRA_PROJECT_NAME = "com.archsoftware.afoil.intent.extra.PROJECT_NAME"
-const val EXTRA_PROJECT_DATA_TYPE = "com.archsoftware.afoil.intent.extra.PROJECT_DATA_TYPE"
 
 @AndroidEntryPoint
 class ComputationService : Service() {
@@ -43,10 +42,7 @@ class ComputationService : Service() {
         val projectName = intent?.getStringExtra(EXTRA_PROJECT_NAME)
         // Call startForeground() as soon as possible to avoid exceptions
         startForeground(projectName)
-        val projectDataType = intent?.getStringExtra(EXTRA_PROJECT_DATA_TYPE)?.let {
-            Class.forName(it)
-        }
-        computationManager.startComputation(projectName, projectDataType)
+        computationManager.startComputation(projectName)
 
         return START_NOT_STICKY
     }
@@ -77,11 +73,9 @@ class ComputationService : Service() {
     companion object {
         fun createStartIntent(
             context: Context,
-            projectName: String,
-            projectDataType: Class<*>
+            projectName: String
         ): Intent = Intent(context, ComputationService::class.java).apply {
             putExtra(EXTRA_PROJECT_NAME, projectName)
-            putExtra(EXTRA_PROJECT_DATA_TYPE, projectDataType.name)
         }
     }
 }

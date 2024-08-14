@@ -1,8 +1,8 @@
 package com.archsoftware.afoil.core.data.di
 
-import com.archsoftware.afoil.core.data.repository.AirfoilAnalysisProjectRepository
-import com.archsoftware.afoil.core.data.repository.AnalysisProjectRepository
+import com.archsoftware.afoil.core.data.repository.AfoilProjectRepository
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
+import com.archsoftware.afoil.core.data.repository.ProjectRepository
 import com.archsoftware.afoil.core.data.repository.UserPreferencesRepository
 import dagger.Binds
 import dagger.Module
@@ -13,9 +13,9 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal interface DataModule {
     @Binds
-    fun bindsAnalysisProjectRepository(
-        projectRepository: AirfoilAnalysisProjectRepository
-    ): AnalysisProjectRepository
+    fun bindsProjectRepository(
+        projectRepository: AfoilProjectRepository
+    ): ProjectRepository
 
     @Binds
     fun bindsPreferencesRepository(

@@ -17,8 +17,8 @@ import androidx.lifecycle.viewModelScope
 import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
 import com.archsoftware.afoil.core.common.utils.isValidDoubleInput
 import com.archsoftware.afoil.core.common.utils.isValidIntInput
-import com.archsoftware.afoil.core.data.repository.AnalysisProjectRepository
-import com.archsoftware.afoil.core.model.AirfoilAnalysisProject
+import com.archsoftware.afoil.core.data.repository.ProjectRepository
+import com.archsoftware.afoil.core.model.AfoilProject
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AirfoilAnalysisViewModel @Inject constructor(
     private val datAirfoilReader: DatAirfoilReader,
-    private val projectRepository: AnalysisProjectRepository,
+    private val projectRepository: ProjectRepository,
     private val projectStore: ProjectStore
 ) : ViewModel() {
 
@@ -212,7 +212,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
     fun onDone() {
         viewModelScope.launch {
             _projectPreparingState.value = ProjectPreparingState.PREPARING
-            val project = AirfoilAnalysisProject(projectName)
+            val project = AfoilProject(projectName, AirfoilAnalysisProjectData::class.java.name)
             val projectData = AirfoilAnalysisProjectData(
                 datAirfoilUri = datAirfoilUri.toString(),
                 panelsNumber = panelsNumber.toInt(),

@@ -8,7 +8,7 @@ import com.archsoftware.afoil.core.common.AfoilDispatcher
 import com.archsoftware.afoil.core.common.Dispatcher
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
-import com.archsoftware.afoil.core.model.AirfoilAnalysisProject
+import com.archsoftware.afoil.core.model.AfoilProject
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
@@ -27,7 +27,7 @@ class ProjectStore @Inject constructor(
 ) {
     private val gson = Gson()
 
-    suspend fun createProjectDir(project: AirfoilAnalysisProject): Uri? {
+    suspend fun createProjectDir(project: AfoilProject): Uri? {
         val projectsDirectory =
             preferencesRepository.getAfoilProjectsDirectory().first() ?: return null
 
