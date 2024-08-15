@@ -16,7 +16,7 @@ class HomeScreenTest {
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun homeScreen_shouldNotShowHomeDestination() {
+    fun homeScreen_shouldNotShowEmptyDestinations() {
         composeTestRule.setContent {
             HomeScreen(
                 canNavigate = true,
@@ -24,16 +24,18 @@ class HomeScreenTest {
             )
         }
 
-        var displayedDestinationsCount = 0
-        for (destination in TopLevelDestination.entries) {
+        val displayedDestinationsCount = TopLevelDestination.entries.count { destination ->
             val titleId = destination.titleId
             if (titleId != null) {
                 composeTestRule.onNodeWithStringId(titleId).assertIsDisplayed()
-                displayedDestinationsCount += 1
             }
+            titleId != null && destination.icon != null
+        }
+        val emptyDestinationsCount = TopLevelDestination.entries.count {
+            it.icon == null && it.titleId == null
         }
 
-        assert(displayedDestinationsCount == TopLevelDestination.entries.size - 1)
+        assert(displayedDestinationsCount == TopLevelDestination.entries.size - emptyDestinationsCount)
     }
 
     @Test
