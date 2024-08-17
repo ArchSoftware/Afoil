@@ -210,6 +210,8 @@ class AirfoilAnalysisViewModel @Inject constructor(
     }
 
     fun onDone() {
+        if (!checkDataValidity()) return
+
         viewModelScope.launch {
             _projectPreparingState.value = ProjectPreparingState.PREPARING
             val project = AfoilProject(projectName, AirfoilAnalysisProjectData::class.java.name)

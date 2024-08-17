@@ -266,7 +266,7 @@ class AirfoilAnalysisViewModelTest {
         
         assert(!viewModel.numberOfStreamlinesHasError)
         assert(!viewModel.pressureContoursGridSizeHasError)
-        viewModel.onNextClick()
+        viewModel.onDone()
         assert(viewModel.numberOfStreamlinesHasError)
         assert(viewModel.pressureContoursGridSizeHasError)
     }
@@ -277,16 +277,16 @@ class AirfoilAnalysisViewModelTest {
 
         viewModel.onNumberOfStreamlinesChange(invalidValue)
         viewModel.onPressureContoursGridSizeChange(invalidValue)
-        viewModel.onNextClick()
+        viewModel.onDone()
         assert(viewModel.currentPage == AirfoilAnalysisPage.POST_PROCESSING_SETTINGS)
 
         viewModel.onNumberOfStreamlinesChange(numberOfStreamlines)
-        viewModel.onNextClick()
+        viewModel.onDone()
         assert(viewModel.currentPage == AirfoilAnalysisPage.POST_PROCESSING_SETTINGS)
 
         viewModel.onNumberOfStreamlinesChange(invalidValue)
         viewModel.onPressureContoursGridSizeChange(pressureContoursGridSize)
-        viewModel.onNextClick()
+        viewModel.onDone()
         assert(viewModel.currentPage == AirfoilAnalysisPage.POST_PROCESSING_SETTINGS)
     }
 }
