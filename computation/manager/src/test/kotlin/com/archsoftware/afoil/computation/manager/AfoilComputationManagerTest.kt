@@ -1,9 +1,7 @@
 package com.archsoftware.afoil.computation.manager
 
-import com.archsoftware.afoil.core.projectstore.ProjectStore
-import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
+import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
-import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -16,24 +14,20 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
-class ComputationManagerTest {
+class AfoilComputationManagerTest {
 
     private val testScheduler = TestCoroutineScheduler()
 
     // Test data
     private val projectName = "My Project"
 
-    private lateinit var computationManager: ComputationManager
+    private lateinit var computationManager: AfoilComputationManager
 
     @Before
     fun setup() {
-        computationManager = ComputationManager(
+        computationManager = AfoilComputationManager(
             projectRepository = TestAfoilProjectRepository(),
-            projectStore = ProjectStore(
-                contentResolver = TestAfoilContentResolver(),
-                preferencesRepository = TestUserPreferencesRepository(),
-                ioDispatcher = StandardTestDispatcher()
-            ),
+            projectStore = TestAfoilProjectStore(),
             defaultDispatcher = StandardTestDispatcher(testScheduler)
         )
     }
@@ -43,16 +37,16 @@ class ComputationManagerTest {
         val expectedState = ComputationManager.State.ERROR
 
         computationManager.startComputation(null)
-        assertEquals(expectedState, computationManager.computationState.first())
+        assertEquals(expectedState, computationManager.getComputationState().first())
     }
 
     @Test
-    fun computationStateIsCanceledIfComputationIsStopped() = runTest {
+    fun computationStateIsCanceledIfComputationIsStopped() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.CANCELED
 
         computationManager.startComputation(projectName)
         computationManager.stopComputation()
-        val state = computationManager.computationState.first()
+        val state = computationManager.getComputationState().first()
 
         assertEquals(expectedState, state)
         assertTrue(computationManager.computationJob.isCancelled)
