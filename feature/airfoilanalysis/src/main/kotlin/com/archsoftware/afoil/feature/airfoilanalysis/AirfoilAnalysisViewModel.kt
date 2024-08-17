@@ -268,7 +268,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 }
             }
             AirfoilAnalysisPage.FLUID_DATA -> {
-                if (machNumber.isEmpty() || angleOfAttack.isEmpty() || reynoldsNumber.isEmpty()) {
+                if (machNumber.isEmpty() || angleOfAttack.isEmpty()) {
                     isEmptyFieldAllowed = false
                     return false
                 } else {

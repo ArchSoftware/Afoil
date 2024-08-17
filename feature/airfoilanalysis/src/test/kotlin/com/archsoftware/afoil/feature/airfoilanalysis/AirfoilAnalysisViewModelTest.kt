@@ -251,6 +251,16 @@ class AirfoilAnalysisViewModelTest {
     }
 
     @Test
+    fun fluidDataPageCanBeLeftWithReynoldsNumberEmpty() {
+        viewModel.pageIndex.value = 2
+
+        viewModel.onMachNumberChange(machNumber)
+        viewModel.onAngleOfAttackChange(angleOfAttack)
+        viewModel.onNextClick()
+        assert(viewModel.currentPage == AirfoilAnalysisPage.POST_PROCESSING_SETTINGS)
+    }
+
+    @Test
     fun postProcessingSettingsPageEmptyFieldAllowedOnlyBeforeNextClick() {
         viewModel.pageIndex.value = 3
         
