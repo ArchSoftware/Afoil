@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class ProjectStoreTest {
+class AfoilProjectStoreTest {
 
     @get:Rule
     val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
@@ -21,7 +21,7 @@ class ProjectStoreTest {
     private val testScheduler = TestCoroutineScheduler()
     private val afoilContentResolver = TestAfoilContentResolver()
     private val userPreferencesRepository = TestUserPreferencesRepository()
-    private val projectStore = ProjectStore(
+    private val projectStore = AfoilProjectStore(
         contentResolver = afoilContentResolver,
         preferencesRepository = userPreferencesRepository,
         ioDispatcher = StandardTestDispatcher(testScheduler)

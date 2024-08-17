@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.model)
+    implementation(projects.core.projectstore)
 
     implementation(libs.androidx.test.rules)
     implementation(libs.androidx.ui.test.junit4.android)

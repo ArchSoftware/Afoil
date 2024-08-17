@@ -4,10 +4,9 @@ import androidx.compose.runtime.snapshots.Snapshot
 import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
 import com.archsoftware.afoil.core.model.AfoilProject
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
-import com.archsoftware.afoil.core.projectstore.ProjectStore
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
+import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
-import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
 import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -35,12 +34,6 @@ class AirfoilAnalysisViewModelTest {
     val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
 
     private val afoilContentResolver = TestAfoilContentResolver()
-    private val userPreferencesRepository = TestUserPreferencesRepository()
-    private val projectStore = ProjectStore(
-        contentResolver = afoilContentResolver,
-        preferencesRepository = userPreferencesRepository,
-        ioDispatcher = StandardTestDispatcher(mainDispatcherRule.testDispatcher.scheduler)
-    )
     private val projectRepository = TestAfoilProjectRepository()
 
     private lateinit var viewModel: AirfoilAnalysisViewModel
@@ -69,7 +62,7 @@ class AirfoilAnalysisViewModelTest {
                 ioDispatcher = StandardTestDispatcher()
             ),
             projectRepository = projectRepository,
-            projectStore = projectStore
+            projectStore = TestAfoilProjectStore(),
         )
     }
 
