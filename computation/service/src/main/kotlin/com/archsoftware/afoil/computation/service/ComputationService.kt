@@ -4,16 +4,15 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
-import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
 import com.archsoftware.afoil.computation.manager.ComputationManager
-import com.archsoftware.afoil.core.model.ComputationLog
 import com.archsoftware.afoil.core.notifications.SystemTrayNotifier
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 const val EXTRA_PROJECT_NAME = "com.archsoftware.afoil.intent.extra.PROJECT_NAME"
@@ -27,22 +26,22 @@ class ComputationService : Service() {
     @Inject
     lateinit var computationManager: ComputationManager
 
-    // Binder given to clients
-    private val binder = ComputationBinder()
+    private val collectorJob: Job = Job()
+    private val serviceScope = CoroutineScope(collectorJob)
 
-    val state: Flow<ComputationManager.State> = computationManager.computationState
-    val logs: Flow<List<ComputationLog>> = computationManager.logs
-    val progress: Flow<Float> = computationManager.progress.onEach { progress ->
-        notifier.updateComputationServiceNotification(progress)
-    }
-
-    override fun onBind(intent: Intent?): IBinder = binder
+    override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val projectName = intent?.getStringExtra(EXTRA_PROJECT_NAME)
         // Call startForeground() as soon as possible to avoid exceptions
         startForeground(projectName)
         computationManager.startComputation(projectName)
+
+        serviceScope.launch {
+            computationManager.getComputationProgress().collect { progress ->
+                notifier.updateComputationServiceNotification(progress)
+            }
+        }
 
         return START_NOT_STICKY
     }
@@ -66,10 +65,6 @@ class ComputationService : Service() {
         )
     }
 
-    inner class ComputationBinder : Binder() {
-        fun getService(): ComputationService = this@ComputationService
-    }
-
     companion object {
         fun createStartIntent(
             context: Context,
@@ -77,5 +72,8 @@ class ComputationService : Service() {
         ): Intent = Intent(context, ComputationService::class.java).apply {
             putExtra(EXTRA_PROJECT_NAME, projectName)
         }
+
+        fun createStopIntent(context: Context): Intent =
+            Intent(context, ComputationService::class.java)
     }
 }
