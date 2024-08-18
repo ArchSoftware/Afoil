@@ -12,6 +12,7 @@ interface ComputationManager {
     fun stopComputation()
 
     enum class State {
+        IDLE,
         RUNNING,
         ERROR,
         FINISHED,
