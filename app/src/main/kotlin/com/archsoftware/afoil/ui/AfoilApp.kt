@@ -2,17 +2,21 @@ package com.archsoftware.afoil.ui
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.archsoftware.afoil.core.ui.ProjectsDirSelectionDialog
+import com.archsoftware.afoil.R
+import com.archsoftware.afoil.core.designsystem.component.OneButtonCard
 import com.archsoftware.afoil.navigation.AfoilNavHost
 
 @Composable
@@ -21,52 +25,45 @@ fun AfoilApp(
     modifier: Modifier = Modifier
 ) {
     Surface(modifier = modifier) {
-        var showProjectsDirSelectionDialog by remember { mutableStateOf(false) }
         val selectProjectsDirLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.OpenDocumentTree()
         ) { uri ->
             afoilAppState.onProjectsDirectorySelected(uri)
-            showProjectsDirSelectionDialog = false
         }
-        val shouldShowProjectsDirSelectionDialog by afoilAppState
-            .shouldShowProjectsDirSelectionDialog
+        val showNoProjectsDirSelectedMessage by afoilAppState
+            .showNoProjectsDirSelectedMessage
             .collectAsStateWithLifecycle()
-
-        LaunchedEffect(shouldShowProjectsDirSelectionDialog) {
-            if (shouldShowProjectsDirSelectionDialog) {
-                showProjectsDirSelectionDialog = true
-            }
-        }
 
         AfoilApp(
             afoilAppState = afoilAppState,
-            showProjectsDirSelectionDialog = showProjectsDirSelectionDialog,
-            shouldShowProjectsDirSelectionDialog = shouldShowProjectsDirSelectionDialog,
-            onProjectsDirSelectionDialogDismiss = { showProjectsDirSelectionDialog = false },
-            onSelectProjectsDir = { selectProjectsDirLauncher.launch(null) })
+            showNoProjectsDirSelectedMessage = showNoProjectsDirSelectedMessage,
+            onSelectProjectsDir = { selectProjectsDirLauncher.launch(null) },
+        )
     }
 }
 
 @Composable
 internal fun AfoilApp(
     afoilAppState: AfoilAppState,
-    showProjectsDirSelectionDialog: Boolean,
-    shouldShowProjectsDirSelectionDialog: Boolean,
-    onProjectsDirSelectionDialogDismiss: () -> Unit,
+    showNoProjectsDirSelectedMessage: Boolean,
     onSelectProjectsDir: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (showProjectsDirSelectionDialog) {
-        ProjectsDirSelectionDialog(
-            onDismissRequest = onProjectsDirSelectionDialogDismiss,
-            onSelectProjectsDir = onSelectProjectsDir,
-            modifier = Modifier.testTag("projectsDirSelectionDialog")
+    Box(modifier = modifier) {
+        AfoilNavHost(
+            canNavigate = !showNoProjectsDirSelectedMessage,
+            appState = afoilAppState,
         )
+        if (showNoProjectsDirSelectedMessage) {
+            OneButtonCard(
+                text = stringResource(id = R.string.no_projects_dir_selected_message),
+                buttonText = stringResource(id = R.string.select_directory),
+                onButtonClick = onSelectProjectsDir,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp)
+                    .windowInsetsPadding(WindowInsets.systemBars)
+            )
+        }
     }
-
-    AfoilNavHost(
-        canNavigate = !shouldShowProjectsDirSelectionDialog,
-        appState = afoilAppState,
-        modifier = modifier
-    )
 }

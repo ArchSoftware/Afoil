@@ -43,13 +43,13 @@ class AfoilAppStateTest {
         }
 
         // Create an empty collector for the StateFlow
-        backgroundScope.launch { state.shouldShowProjectsDirSelectionDialog.collect() }
+        backgroundScope.launch { state.showNoProjectsDirSelectedMessage.collect() }
 
         state.onProjectsDirectorySelected(afoilContentResolver.testUri)
-        assertTrue(state.shouldShowProjectsDirSelectionDialog.value)
+        assertTrue(state.showNoProjectsDirSelectedMessage.value)
 
         afoilContentResolver.exists = true
         state.onProjectsDirectorySelected(afoilContentResolver.testUri)
-        assertFalse(state.shouldShowProjectsDirSelectionDialog.value)
+        assertFalse(state.showNoProjectsDirSelectedMessage.value)
     }
 }

@@ -45,7 +45,7 @@ data class AfoilAppState(
     val userPreferencesRepository: PreferencesRepository,
     val navController: NavHostController
 ) {
-    val shouldShowProjectsDirSelectionDialog: StateFlow<Boolean> =
+    val showNoProjectsDirSelectedMessage: StateFlow<Boolean> =
         userPreferencesRepository.getAfoilProjectsDirectory().map {
             it == null || !contentResolver.checkIfTreeUriExists(Uri.parse(it))
         }
