@@ -6,7 +6,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
+import org.jetbrains.annotations.TestOnly
 
+@TestOnly
 class TestAfoilComputationManager : ComputationManager {
     private val _computationState: MutableSharedFlow<ComputationManager.State> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
