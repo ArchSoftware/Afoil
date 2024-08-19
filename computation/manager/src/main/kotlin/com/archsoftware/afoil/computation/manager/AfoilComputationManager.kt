@@ -7,6 +7,7 @@ import com.archsoftware.afoil.core.data.repository.ProjectRepository
 import com.archsoftware.afoil.core.model.ComputationLog
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
@@ -31,6 +32,10 @@ class AfoilComputationManager @Inject constructor(
     internal val computationJob: Job = Job()
     private val computationScope: CoroutineScope = CoroutineScope(computationJob + defaultDispatcher)
 
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _computationState.tryEmit(ComputationManager.State.ERROR)
+    }
+
     override fun getComputationState(): Flow<ComputationManager.State> = _computationState
 
     override fun getComputationLogs(): Flow<List<ComputationLog>> = _logs
@@ -45,11 +50,8 @@ class AfoilComputationManager @Inject constructor(
     }
 
     override fun startComputation(projectName: String?, computation: suspend () -> Unit) {
-        computationScope.launch {
-            if (projectName == null) {
-                _computationState.emit(ComputationManager.State.ERROR)
-                return@launch
-            }
+        computationScope.launch(exceptionHandler) {
+            if (projectName == null) throw IllegalArgumentException()
 
             _computationState.emit(ComputationManager.State.RUNNING)
 
