@@ -8,9 +8,12 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
 import com.archsoftware.afoil.computation.manager.ComputationManager
+import com.archsoftware.afoil.core.common.AfoilDispatcher
+import com.archsoftware.afoil.core.common.Dispatcher
 import com.archsoftware.afoil.core.notifications.Notifier
 import com.archsoftware.afoil.core.notifications.SystemTrayNotifier
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -28,7 +31,13 @@ class ComputationService : Service() {
     lateinit var computationManager: ComputationManager
 
     private val collectorJob: Job = Job()
-    private val serviceScope = CoroutineScope(collectorJob)
+    @Inject
+    @Dispatcher(AfoilDispatcher.Default)
+    lateinit var defaultDispatcher: CoroutineDispatcher
+
+    private val serviceScope: CoroutineScope by lazy {
+        CoroutineScope(collectJob + defaultDispatcher)
+    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
