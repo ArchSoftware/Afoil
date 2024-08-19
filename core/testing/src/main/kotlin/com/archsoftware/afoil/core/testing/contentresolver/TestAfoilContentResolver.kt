@@ -1,5 +1,6 @@
 package com.archsoftware.afoil.core.testing.contentresolver
 
+import android.database.ContentObserver
 import android.net.Uri
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import org.jetbrains.annotations.TestOnly
@@ -11,8 +12,6 @@ class TestAfoilContentResolver : UriContentResolver {
     var exists: Boolean = false
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
-
-    val testUri: Uri? = Uri.parse("content://test_uri")
 
     override fun checkIfUriExists(uri: Uri): Boolean = exists
 
@@ -29,4 +28,8 @@ class TestAfoilContentResolver : UriContentResolver {
     ): Uri? = testUri
 
     override fun takePersistableUriPermission(uri: Uri) {}
+
+    companion object {
+        val testUri: Uri? = Uri.parse("content://test_uri")
+    }
 }

@@ -159,7 +159,7 @@ class AirfoilAnalysisViewModelTest {
         assert(viewModel.currentPage == AirfoilAnalysisPage.AIRFOIL_DATA)
 
         afoilContentResolver.inputStream = datAirfoilFile.inputStream()
-        viewModel.onDatAirfoilSelected(afoilContentResolver.testUri)
+        viewModel.onDatAirfoilSelected(TestAfoilContentResolver.testUri)
 
         advanceUntilIdle()
 
@@ -172,7 +172,7 @@ class AirfoilAnalysisViewModelTest {
         assert(viewModel.currentPage == AirfoilAnalysisPage.AIRFOIL_DATA)
 
         afoilContentResolver.inputStream = datAirfoilFile.inputStream()
-        viewModel.onDatAirfoilSelected(afoilContentResolver.testUri)
+        viewModel.onDatAirfoilSelected(TestAfoilContentResolver.testUri)
 
         advanceUntilIdle()
 

@@ -30,7 +30,7 @@ class AfoilProjectStoreTest {
     @Test
     fun readWriteProjectData() = runTest(StandardTestDispatcher(testScheduler)) {
         val projectData = AirfoilAnalysisProjectData(
-            datAirfoilUri = afoilContentResolver.testUri.toString(),
+            datAirfoilUri = TestAfoilContentResolver.testUri.toString(),
             panelsNumber = 100,
             reynoldsNumber = 20e3,
             machNumber = 0.3,
@@ -45,13 +45,13 @@ class AfoilProjectStoreTest {
         afoilContentResolver.outputStream = projectDataFile.outputStream()
 
         projectStore.writeProjectData(
-            uri = afoilContentResolver.testUri,
+            uri = TestAfoilContentResolver.testUri,
             projectData = projectData,
             type = AirfoilAnalysisProjectData::class.java
         )
 
         val readProjectData = projectStore.readProjectData(
-            uri = afoilContentResolver.testUri,
+            uri = TestAfoilContentResolver.testUri,
             type = AirfoilAnalysisProjectData::class.java
         )
 

@@ -33,7 +33,7 @@ class DatAirfoilReaderTest {
         datAirfoilFile.writeText(airfoilName)
         afoilContentResolver.inputStream = datAirfoilFile.inputStream()
 
-        val name = datAirfoilReader.readName(afoilContentResolver.testUri)
+        val name = datAirfoilReader.readName(TestAfoilContentResolver.testUri)
 
         assert(name == airfoilName)
     }

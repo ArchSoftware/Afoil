@@ -23,7 +23,7 @@ class AirfoilDataPageTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private val expectedResult = TestAfoilContentResolver().testUri
+    private val expectedResult = TestAfoilContentResolver.testUri
     private val testRegistryOwner = object : ActivityResultRegistryOwner {
         override val activityResultRegistry = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(
