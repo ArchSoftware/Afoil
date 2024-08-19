@@ -2,6 +2,8 @@ package com.archsoftware.afoil.computation.manager
 
 import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -20,6 +22,7 @@ class AfoilComputationManagerTest {
 
     // Test data
     private val projectName = "My Project"
+    private suspend fun computation() = delay(1000)
 
     private lateinit var computationManager: AfoilComputationManager
 
@@ -36,7 +39,7 @@ class AfoilComputationManagerTest {
     fun computationStateIsErrorIfDataIsInvalid() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.ERROR
 
-        computationManager.startComputation(null)
+        computationManager.startComputation(null) {}
         assertEquals(expectedState, computationManager.getComputationState().first())
     }
 
@@ -44,7 +47,7 @@ class AfoilComputationManagerTest {
     fun computationStateIsCanceledIfComputationIsStopped() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.CANCELED
 
-        computationManager.startComputation(projectName)
+        computationManager.startComputation(projectName) { computation() }
         computationManager.stopComputation()
         val state = computationManager.getComputationState().first()
 

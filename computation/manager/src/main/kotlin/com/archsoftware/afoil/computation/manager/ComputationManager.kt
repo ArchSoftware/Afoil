@@ -9,6 +9,7 @@ interface ComputationManager {
     fun getComputationProgress(): Flow<Float>
 
     fun startComputation(projectName: String?)
+    fun startComputation(projectName: String?, computation: suspend () -> Unit)
     fun stopComputation()
 
     enum class State {

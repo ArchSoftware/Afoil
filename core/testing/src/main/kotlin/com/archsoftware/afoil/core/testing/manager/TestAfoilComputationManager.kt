@@ -20,6 +20,9 @@ class TestAfoilComputationManager : ComputationManager {
     override fun startComputation(projectName: String?) {
         _computationState.tryEmit(ComputationManager.State.RUNNING)
     }
+
+    override fun startComputation(projectName: String?, computation: suspend () -> Unit) {}
+
     override fun stopComputation() {
         _computationState.tryEmit(ComputationManager.State.CANCELED)
     }

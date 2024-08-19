@@ -38,6 +38,13 @@ class AfoilComputationManager @Inject constructor(
     override fun getComputationProgress(): Flow<Float> = _progress
 
     override fun startComputation(projectName: String?) {
+        startComputation(projectName) {
+            // TODO: Retrieve project from repository and pass projectDataType to project
+            //  store and implement getUri(projectName) method in ProjectStore
+        }
+    }
+
+    override fun startComputation(projectName: String?, computation: suspend () -> Unit) {
         computationScope.launch {
             if (projectName == null) {
                 _computationState.emit(ComputationManager.State.ERROR)
@@ -46,8 +53,7 @@ class AfoilComputationManager @Inject constructor(
 
             _computationState.emit(ComputationManager.State.RUNNING)
 
-            // TODO: Retrieve project from repository and pass projectDataType to project
-            //  store and implement getUri(projectName) method in ProjectStore
+            computation()
 
             _computationState.emit(ComputationManager.State.FINISHED)
         }
