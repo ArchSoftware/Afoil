@@ -59,6 +59,7 @@ class ComputationService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
+        collectJob.cancel()
         computationManager.stopComputation()
     }
 
