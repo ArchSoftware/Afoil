@@ -1,5 +1,6 @@
 [versions]
 androidGradlePlugin = "8.5.1"
+accompanist = "0.34.0"
 androidxActivity = "1.9.1"
 androidxComposeBom = "2024.06.00"
 androidxComposeCompiler = "1.5.11"
@@ -22,6 +23,7 @@ robolectric = "4.13"
 room = "2.6.1"
 
 [libraries]
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }

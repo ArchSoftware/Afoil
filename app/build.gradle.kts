@@ -41,6 +41,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.feature.airfoilanalysis)
 
+    implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
