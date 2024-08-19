@@ -17,8 +17,12 @@ class TestAfoilComputationManager : ComputationManager {
     override fun getComputationLogs(): Flow<List<ComputationLog>> = emptyFlow()
     override fun getComputationProgress(): Flow<Float> = emptyFlow()
 
-    override fun startComputation(projectName: String?) {}
-    override fun stopComputation() {}
+    override fun startComputation(projectName: String?) {
+        _computationState.tryEmit(ComputationManager.State.RUNNING)
+    }
+    override fun stopComputation() {
+        _computationState.tryEmit(ComputationManager.State.CANCELED)
+    }
 
     fun sendState(state: ComputationManager.State) {
         _computationState.tryEmit(state)
