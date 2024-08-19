@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 const val EXTRA_PROJECT_NAME = "com.archsoftware.afoil.intent.extra.PROJECT_NAME"
@@ -30,11 +31,12 @@ class ComputationService : Service() {
     @Inject
     lateinit var computationManager: ComputationManager
 
-    private val collectorJob: Job = Job()
     @Inject
     @Dispatcher(AfoilDispatcher.Default)
     lateinit var defaultDispatcher: CoroutineDispatcher
 
+    @VisibleForTesting
+    internal val collectJob: Job = Job()
     private val serviceScope: CoroutineScope by lazy {
         CoroutineScope(collectJob + defaultDispatcher)
     }
@@ -50,6 +52,14 @@ class ComputationService : Service() {
         serviceScope.launch {
             computationManager.getComputationProgress().collect { progress ->
                 notifier.updateComputationServiceNotification(progress)
+            }
+        }
+
+        serviceScope.launch {
+            computationManager.getComputationState().collect { state ->
+                if (state != ComputationManager.State.RUNNING) {
+                    stopSelf()
+                }
             }
         }
 
