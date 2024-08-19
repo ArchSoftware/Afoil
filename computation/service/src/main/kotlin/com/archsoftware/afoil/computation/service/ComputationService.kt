@@ -55,7 +55,7 @@ class ComputationService : Service() {
     private fun startForeground(computationName: String?) {
         ServiceCompat.startForeground(
             /* service = */ this,
-            /* id = */ notifier.computationServiceNotificationId,
+            /* id = */ SystemTrayNotifier.COMPUTATION_SERVICE_NOTIFICATION_ID,
             /* notification = */ notifier.createComputationServiceNotification(computationName),
             /* foregroundServiceType = */ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE

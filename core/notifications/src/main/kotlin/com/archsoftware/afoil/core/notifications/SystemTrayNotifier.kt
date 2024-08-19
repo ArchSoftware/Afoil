@@ -11,13 +11,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 private const val COMPUTATION_SERVICE_NOTIFICATION_CHANNEL_ID = "computation_service_channel"
-private const val COMPUTATION_SERVICE_NOTIFICATION_ID = 1
 private const val PROGRESS_MAX = 100
 
 class SystemTrayNotifier @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    val computationServiceNotificationId: Int = COMPUTATION_SERVICE_NOTIFICATION_ID
     private lateinit var computationServiceNotificationBuilder: NotificationCompat.Builder
 
     fun updateComputationServiceNotification(progress: Float) {
@@ -63,5 +61,9 @@ class SystemTrayNotifier @Inject constructor(
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    companion object {
+        const val COMPUTATION_SERVICE_NOTIFICATION_ID = 1
     }
 }
