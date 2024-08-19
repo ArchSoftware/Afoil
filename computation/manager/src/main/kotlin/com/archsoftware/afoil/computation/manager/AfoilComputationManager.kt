@@ -59,12 +59,12 @@ class AfoilComputationManager @Inject constructor(
         }
     }
 
-    override fun stopComputation() {
-        if (computationJob.isActive) {
-            computationScope.launch {
+    override fun stopComputation(canceled: Boolean) {
+        computationScope.launch {
+            if (canceled) {
                 _computationState.emit(ComputationManager.State.CANCELED)
-                computationJob.cancel()
             }
+            computationJob.cancel()
         }
     }
 }

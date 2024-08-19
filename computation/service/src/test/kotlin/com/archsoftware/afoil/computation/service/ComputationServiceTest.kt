@@ -46,7 +46,7 @@ class ComputationServiceTest {
     }
 
     @Test
-    fun computationAndCollectJobAreCanceledWhenServiceIsStopped() = runTest(testScheduler) {
+    fun computationAndCollectJobAreCanceledWhenServiceIsDestroyed() = runTest(testScheduler) {
         serviceController.startCommand(0, 0)
         serviceController.destroy()
 
@@ -61,6 +61,7 @@ class ComputationServiceTest {
 
         advanceUntilIdle()
 
+        assert(testComputationManager.getComputationState().first() == ComputationManager.State.FINISHED)
         assert(Shadows.shadowOf(computationService).isStoppedBySelf)
     }
 }

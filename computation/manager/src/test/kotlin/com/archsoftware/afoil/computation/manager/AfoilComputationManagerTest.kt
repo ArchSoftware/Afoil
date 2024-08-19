@@ -7,6 +7,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -15,6 +16,7 @@ import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
 class AfoilComputationManagerTest {
 
@@ -44,11 +46,29 @@ class AfoilComputationManagerTest {
     }
 
     @Test
-    fun computationStateIsCanceledIfComputationIsStopped() = runTest(testScheduler) {
+    fun computationStateIsCanceledIfComputationIsStoppedWhileRunning() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.CANCELED
 
         computationManager.startComputation(projectName) { computation() }
-        computationManager.stopComputation()
+        computationManager.stopComputation(true)
+        val state = computationManager.getComputationState().first()
+
+        assertEquals(expectedState, state)
+        assertTrue(computationManager.computationJob.isCancelled)
+    }
+
+    @Test
+    fun computationStateIsFinishedIfComputationIsStoppedWhileNotRunning() = runTest(testScheduler) {
+        val expectedState = ComputationManager.State.FINISHED
+
+        computationManager.startComputation(projectName) { computation() }
+
+        advanceUntilIdle()
+
+        computationManager.stopComputation(false)
+
+        advanceUntilIdle()
+
         val state = computationManager.getComputationState().first()
 
         assertEquals(expectedState, state)

@@ -41,6 +41,9 @@ class ComputationService : Service() {
         CoroutineScope(collectJob + defaultDispatcher)
     }
 
+    // Whether the service was canceled by the user or the system
+    private var canceled: Boolean = true
+
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -58,6 +61,7 @@ class ComputationService : Service() {
         serviceScope.launch {
             computationManager.getComputationState().collect { state ->
                 if (state != ComputationManager.State.RUNNING) {
+                    canceled = false
                     stopSelf()
                 }
             }
@@ -70,7 +74,7 @@ class ComputationService : Service() {
         super.onDestroy()
 
         collectJob.cancel()
-        computationManager.stopComputation()
+        computationManager.stopComputation(canceled)
     }
 
     private fun startForeground(computationName: String?) {

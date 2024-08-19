@@ -10,7 +10,7 @@ interface ComputationManager {
 
     fun startComputation(projectName: String?)
     fun startComputation(projectName: String?, computation: suspend () -> Unit)
-    fun stopComputation()
+    fun stopComputation(canceled: Boolean)
 
     enum class State {
         IDLE,
