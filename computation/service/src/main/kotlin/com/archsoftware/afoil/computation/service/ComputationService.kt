@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
 import com.archsoftware.afoil.computation.manager.ComputationManager
+import com.archsoftware.afoil.core.notifications.Notifier
 import com.archsoftware.afoil.core.notifications.SystemTrayNotifier
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +22,7 @@ const val EXTRA_PROJECT_NAME = "com.archsoftware.afoil.intent.extra.PROJECT_NAME
 class ComputationService : Service() {
 
     @Inject
-    lateinit var notifier: SystemTrayNotifier
+    lateinit var notifier: Notifier
 
     @Inject
     lateinit var computationManager: ComputationManager

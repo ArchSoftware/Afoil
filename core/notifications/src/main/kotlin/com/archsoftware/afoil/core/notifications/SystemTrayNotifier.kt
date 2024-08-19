@@ -15,10 +15,10 @@ private const val PROGRESS_MAX = 100
 
 class SystemTrayNotifier @Inject constructor(
     @ApplicationContext private val context: Context
-) {
+) : Notifier {
     private lateinit var computationServiceNotificationBuilder: NotificationCompat.Builder
 
-    fun updateComputationServiceNotification(progress: Float) {
+    override fun updateComputationServiceNotification(progress: Float) {
         val notification = computationServiceNotificationBuilder.apply {
             if (progress < PROGRESS_MAX) {
                 setProgress(PROGRESS_MAX, progress.toInt(), false)
@@ -32,7 +32,7 @@ class SystemTrayNotifier @Inject constructor(
         NotificationManagerCompat.from(context).notify(COMPUTATION_SERVICE_NOTIFICATION_ID, notification)
     }
 
-    fun createComputationServiceNotification(computationName: String?): Notification {
+    override fun createComputationServiceNotification(computationName: String?): Notification {
         ensureComputationServiceNotificationChannelExists()
         computationServiceNotificationBuilder =
             NotificationCompat.Builder(context, COMPUTATION_SERVICE_NOTIFICATION_CHANNEL_ID).apply {
