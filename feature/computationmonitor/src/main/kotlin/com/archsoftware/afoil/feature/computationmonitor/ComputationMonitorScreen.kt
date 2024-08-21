@@ -243,7 +243,7 @@ internal enum class CancelConfirmationDialogRequester {
 
 @Preview(device = Devices.PIXEL_7)
 @Composable
-fun ComputationMonitorScreenPreview() {
+private fun ComputationMonitorScreenPreview() {
     AfoilTheme {
         ComputationMonitorScreen(
             projectName = "My Project",

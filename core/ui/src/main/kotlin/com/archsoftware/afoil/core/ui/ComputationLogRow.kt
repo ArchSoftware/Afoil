@@ -63,7 +63,7 @@ fun ComputationLogRow(
 
 @Preview
 @Composable
-fun ComputationLogRowPreview() {
+private fun ComputationLogRowPreview() {
     ComputationLogRow(
         log = ComputationLog(
             timestamp = "2023-01-01 12:00:00",
