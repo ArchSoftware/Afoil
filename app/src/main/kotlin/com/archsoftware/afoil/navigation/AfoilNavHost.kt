@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.archsoftware.afoil.core.designsystem.util.sharedAxisEnter
 import com.archsoftware.afoil.core.designsystem.util.sharedAxisExit
 import com.archsoftware.afoil.feature.airfoilanalysis.navigation.airfoilAnalysisScreen
+import com.archsoftware.afoil.feature.computationmonitor.navigation.computationMonitorScreen
 import com.archsoftware.afoil.ui.AfoilAppState
 import com.archsoftware.afoil.ui.home.navigation.HOME_ROUTE
 import com.archsoftware.afoil.ui.home.navigation.homeScreen
@@ -18,6 +19,7 @@ fun AfoilNavHost(
     canNavigate: Boolean,
     appState: AfoilAppState,
     onProjectSetupDone: (projectName: String) -> Unit,
+    onCancelComputation: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = HOME_ROUTE
 ) {
@@ -59,6 +61,11 @@ fun AfoilNavHost(
         airfoilAnalysisScreen(
             onNavigateUp = appState.navController::navigateUp,
             onDone = onProjectSetupDone
+        )
+        computationMonitorScreen(
+            onNavigateUp = appState.navController::navigateUp,
+            onCancel = onCancelComputation,
+            onGoToResults = { /* TODO */ }
         )
     }
 }

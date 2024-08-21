@@ -11,6 +11,7 @@ import androidx.navigation.navOptions
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
 import com.archsoftware.afoil.feature.airfoilanalysis.navigation.navigateToAirfoilAnalysis
+import com.archsoftware.afoil.feature.computationmonitor.navigation.navigateToComputationMonitor
 import com.archsoftware.afoil.navigation.TopLevelDestination
 import com.archsoftware.afoil.ui.home.navigation.navigateToHome
 import kotlinx.coroutines.CoroutineScope
@@ -82,5 +83,17 @@ data class AfoilAppState(
                 navController.navigateToAirfoilAnalysis(navOptions)
             }
         }
+    }
+
+    fun navigateToComputationMonitor(projectName: String) {
+        val navOptions = navOptions {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+
+        navController.navigateToComputationMonitor(projectName, navOptions)
     }
 }

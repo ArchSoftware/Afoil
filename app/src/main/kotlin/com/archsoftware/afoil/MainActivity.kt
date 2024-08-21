@@ -50,6 +50,9 @@ class MainActivity : ComponentActivity() {
                         appState.navigateToComputationMonitor(projectName)
                         startComputation(projectName)
                     },
+                    onCancelComputation = {
+                        stopComputation()
+                    }
                 )
             }
         }
@@ -58,6 +61,11 @@ class MainActivity : ComponentActivity() {
     private fun startComputation(projectName: String) {
         val startIntent = ComputationService.createStartIntent(this, projectName)
         ContextCompat.startForegroundService(this, startIntent)
+    }
+
+    private fun stopComputation() {
+        val stopIntent = ComputationService.createStopIntent(this)
+        stopService(stopIntent)
     }
 }
 

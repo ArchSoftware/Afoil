@@ -30,6 +30,7 @@ class AfoilAppTest {
                 showNoProjectsDirSelectedMessage = true,
                 onSelectProjectsDir = {},
                 onProjectSetupDone = {},
+                onCancelComputation = {}
             )
         }
 
