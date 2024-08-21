@@ -13,12 +13,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,7 +26,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.archsoftware.afoil.core.designsystem.component.NavCenterAlignedAppBar
 import com.archsoftware.afoil.core.designsystem.component.NextPrevBottomBar
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
-import com.archsoftware.afoil.core.ui.ProjectPreparingDialog
 import com.archsoftware.afoil.feature.airfoilanalysis.page.AirfoilDataPage
 import com.archsoftware.afoil.feature.airfoilanalysis.page.FluidDataPage
 import com.archsoftware.afoil.feature.airfoilanalysis.page.PostProcessingSettingsPage
@@ -43,7 +40,11 @@ fun AirfoilAnalysisScreen(
     modifier: Modifier = Modifier,
     viewModel: AirfoilAnalysisViewModel = hiltViewModel()
 ) {
-    var showProjectPreparingDialog by remember { mutableStateOf(false) }
+    val isProjectPreparing by remember {
+        derivedStateOf {
+            viewModel.projectPreparingState == ProjectPreparingState.PREPARING
+        }
+    }
     val projectNameHasError by viewModel.projectNameHasError.collectAsStateWithLifecycle()
 
     BackHandler {
@@ -52,24 +53,19 @@ fun AirfoilAnalysisScreen(
 
     LaunchedEffect(viewModel.projectPreparingState) {
         if (viewModel.projectPreparingState == ProjectPreparingState.DONE) {
-            showProjectPreparingDialog = false
             onDone()
-        } else if (viewModel.projectPreparingState == ProjectPreparingState.PREPARING) {
-            showProjectPreparingDialog = true
         }
     }
 
     AirfoilAnalysisScreen(
-        showProjectPreparingDialog = showProjectPreparingDialog,
+        isProjectPreparing = isProjectPreparing,
         currentPage = viewModel.currentPage,
-        projectName = viewModel.projectName,
         shouldShowDone = viewModel.shouldShowDone,
         previousEnabled = viewModel.previousEnabled,
         onPreviousClick = viewModel::onPreviousClick,
         onNextClick = viewModel::onNextClick,
         onNavigateUp = onNavigateUp,
         onDone = viewModel::onDone,
-        onProjectPreparingDialogDismiss = { showProjectPreparingDialog = false },
         modifier = modifier
     ) { targetState ->
         when (targetState) {
@@ -122,27 +118,17 @@ fun AirfoilAnalysisScreen(
 
 @Composable
 internal fun AirfoilAnalysisScreen(
-    showProjectPreparingDialog: Boolean,
+    isProjectPreparing: Boolean,
     currentPage: AirfoilAnalysisPage,
-    projectName: String,
     shouldShowDone: Boolean,
     previousEnabled: Boolean,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
     onNavigateUp: () -> Unit,
     onDone: () -> Unit,
-    onProjectPreparingDialogDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable (currentPage: AirfoilAnalysisPage) -> Unit
 ) {
-    if (showProjectPreparingDialog) {
-        ProjectPreparingDialog(
-            projectName = projectName,
-            onDismissRequest = onProjectPreparingDialogDismiss,
-            modifier = Modifier.testTag("projectPreparingDialog")
-        )
-    }
-
     Scaffold(
         topBar = {
             NavCenterAlignedAppBar(
@@ -156,7 +142,7 @@ internal fun AirfoilAnalysisScreen(
             NextPrevBottomBar(
                 shouldShowDone = shouldShowDone,
                 previousEnabled = previousEnabled,
-                isLoading = showProjectPreparingDialog,
+                isLoading = isProjectPreparing,
                 onPreviousClick = onPreviousClick,
                 onNextClick = onNextClick,
                 onDone = onDone

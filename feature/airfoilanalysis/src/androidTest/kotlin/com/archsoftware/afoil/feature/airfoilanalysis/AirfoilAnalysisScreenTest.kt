@@ -12,11 +12,10 @@ class AirfoilAnalysisScreenTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun airfoilAnalysisScreen_shouldShowDialogOnProjectPreparing() {
+    fun airfoilAnalysisScreen_shouldShowProgressIndicatorOnProjectPreparing() {
         composeTestRule.setContent {
             AirfoilAnalysisScreen(
-                showProjectPreparingDialog = true,
-                projectName = "My projects",
+                isProjectPreparing = true,
                 currentPage = AirfoilAnalysisPage.POST_PROCESSING_SETTINGS,
                 shouldShowDone = true,
                 previousEnabled = true,
@@ -24,12 +23,11 @@ class AirfoilAnalysisScreenTest {
                 onNextClick = {},
                 onNavigateUp = {},
                 onDone = {},
-                onProjectPreparingDialogDismiss = {}
             ) {}
         }
 
         composeTestRule
-            .onNodeWithTag("projectPreparingDialog")
+            .onNodeWithTag("progressIndicator")
             .assertIsDisplayed()
     }
 }
