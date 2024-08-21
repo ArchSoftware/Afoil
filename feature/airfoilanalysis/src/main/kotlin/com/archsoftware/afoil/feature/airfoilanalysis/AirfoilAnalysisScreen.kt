@@ -156,6 +156,7 @@ internal fun AirfoilAnalysisScreen(
             NextPrevBottomBar(
                 shouldShowDone = shouldShowDone,
                 previousEnabled = previousEnabled,
+                isLoading = showProjectPreparingDialog,
                 onPreviousClick = onPreviousClick,
                 onNextClick = onNextClick,
                 onDone = onDone

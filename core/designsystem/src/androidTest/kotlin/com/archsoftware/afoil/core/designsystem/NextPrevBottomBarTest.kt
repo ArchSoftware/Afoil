@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import com.archsoftware.afoil.core.designsystem.component.NextPrevBottomBar
 import com.archsoftware.afoil.core.testing.util.onNodeWithStringId
@@ -24,6 +25,7 @@ class NextPrevBottomBarTest {
             NextPrevBottomBar(
                 shouldShowDone = false,
                 previousEnabled = false,
+                isLoading = false,
                 onPreviousClick = {},
                 onNextClick = { onNextInvoked = true },
                 onDone = {}
@@ -47,6 +49,7 @@ class NextPrevBottomBarTest {
             NextPrevBottomBar(
                 shouldShowDone = true,
                 previousEnabled = false,
+                isLoading = false,
                 onPreviousClick = {},
                 onNextClick = {},
                 onDone = { onDoneInvoked = true }
@@ -68,6 +71,7 @@ class NextPrevBottomBarTest {
             NextPrevBottomBar(
                 shouldShowDone = true,
                 previousEnabled = false,
+                isLoading = false,
                 onPreviousClick = {},
                 onNextClick = {},
                 onDone = {}
@@ -85,6 +89,7 @@ class NextPrevBottomBarTest {
             NextPrevBottomBar(
                 shouldShowDone = false,
                 previousEnabled = true,
+                isLoading = false,
                 onPreviousClick = {},
                 onNextClick = {},
                 onDone = {}
@@ -94,5 +99,44 @@ class NextPrevBottomBarTest {
         composeTestRule
             .onNodeWithStringId(R.string.core_designsystem_nextprevbottombar_previous)
             .assertIsEnabled()
+    }
+
+    @Test
+    fun nextPrevBottomBar_isLoading() {
+        composeTestRule.setContent {
+            NextPrevBottomBar(
+                shouldShowDone = false,
+                previousEnabled = true,
+                isLoading = true,
+                onPreviousClick = {},
+                onNextClick = {},
+                onDone = {}
+            )
+        }
+
+        composeTestRule
+            .onNodeWithTag("loadingIndicator")
+            .assertIsEnabled()
+    }
+
+    @Test
+    fun nextPrevBottomBar_isLoadingDisablesNextPrevButtons() {
+        composeTestRule.setContent {
+            NextPrevBottomBar(
+                shouldShowDone = false,
+                previousEnabled = true,
+                isLoading = true,
+                onPreviousClick = {},
+                onNextClick = {},
+                onDone = {}
+            )
+        }
+
+        composeTestRule
+            .onNodeWithStringId(R.string.core_designsystem_nextprevbottombar_next)
+            .assertIsNotEnabled()
+        composeTestRule
+            .onNodeWithStringId(R.string.core_designsystem_nextprevbottombar_previous)
+            .assertIsNotEnabled()
     }
 }
