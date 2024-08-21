@@ -17,6 +17,7 @@ private const val SHARED_AXIS_ANIMATION_DURATION = 300
 fun AfoilNavHost(
     canNavigate: Boolean,
     appState: AfoilAppState,
+    onProjectSetupDone: (projectName: String) -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = HOME_ROUTE
 ) {
@@ -57,7 +58,7 @@ fun AfoilNavHost(
         )
         airfoilAnalysisScreen(
             onNavigateUp = appState.navController::navigateUp,
-            onDone = { /* TODO */ }
+            onDone = onProjectSetupDone
         )
     }
 }

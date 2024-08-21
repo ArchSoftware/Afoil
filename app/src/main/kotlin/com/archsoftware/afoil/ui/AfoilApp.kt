@@ -22,6 +22,7 @@ import com.archsoftware.afoil.navigation.AfoilNavHost
 @Composable
 fun AfoilApp(
     afoilAppState: AfoilAppState,
+    onProjectSetupDone: (projectName: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(modifier = modifier) {
@@ -38,6 +39,7 @@ fun AfoilApp(
             afoilAppState = afoilAppState,
             showNoProjectsDirSelectedMessage = showNoProjectsDirSelectedMessage,
             onSelectProjectsDir = { selectProjectsDirLauncher.launch(null) },
+            onProjectSetupDone = onProjectSetupDone,
         )
     }
 }
@@ -47,12 +49,14 @@ internal fun AfoilApp(
     afoilAppState: AfoilAppState,
     showNoProjectsDirSelectedMessage: Boolean,
     onSelectProjectsDir: () -> Unit,
+    onProjectSetupDone: (projectName: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
         AfoilNavHost(
             canNavigate = !showNoProjectsDirSelectedMessage,
             appState = afoilAppState,
+            onProjectSetupDone = onProjectSetupDone,
         )
         if (showNoProjectsDirSelectedMessage) {
             OneButtonCard(

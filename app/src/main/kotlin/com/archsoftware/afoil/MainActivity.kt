@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.core.content.ContextCompat
+import com.archsoftware.afoil.computation.service.ComputationService
 import com.archsoftware.afoil.core.common.contentresolver.AfoilContentResolver
 import com.archsoftware.afoil.core.data.repository.UserPreferencesRepository
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
@@ -42,9 +44,20 @@ class MainActivity : ComponentActivity() {
             NotificationPermissionEffect()
 
             AfoilTheme {
-                AfoilApp(afoilAppState = appState)
+                AfoilApp(
+                    afoilAppState = appState,
+                    onProjectSetupDone = { projectName ->
+                        appState.navigateToComputationMonitor(projectName)
+                        startComputation(projectName)
+                    },
+                )
             }
         }
+    }
+
+    private fun startComputation(projectName: String) {
+        val startIntent = ComputationService.createStartIntent(this, projectName)
+        ContextCompat.startForegroundService(this, startIntent)
     }
 }
 

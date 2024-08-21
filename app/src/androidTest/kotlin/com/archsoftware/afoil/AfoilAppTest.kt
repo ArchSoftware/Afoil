@@ -28,7 +28,8 @@ class AfoilAppTest {
                     userPreferencesRepository = userPreferencesRepository
                 ),
                 showNoProjectsDirSelectedMessage = true,
-                onSelectProjectsDir = {}
+                onSelectProjectsDir = {},
+                onProjectSetupDone = {},
             )
         }
 

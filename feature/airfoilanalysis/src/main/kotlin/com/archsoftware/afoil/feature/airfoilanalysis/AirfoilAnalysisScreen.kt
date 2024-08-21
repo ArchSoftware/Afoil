@@ -36,7 +36,7 @@ private const val CONTENT_ANIMATION_DURATION = 300
 @Composable
 fun AirfoilAnalysisScreen(
     onNavigateUp: () -> Unit,
-    onDone: () -> Unit,
+    onDone: (projectName: String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AirfoilAnalysisViewModel = hiltViewModel()
 ) {
@@ -53,7 +53,7 @@ fun AirfoilAnalysisScreen(
 
     LaunchedEffect(viewModel.projectPreparingState) {
         if (viewModel.projectPreparingState == ProjectPreparingState.DONE) {
-            onDone()
+            onDone(viewModel.projectName)
         }
     }
 

@@ -35,9 +35,11 @@ android {
 }
 
 dependencies {
+    implementation(projects.computation.service)
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.designsystem)
+    implementation(projects.core.model)
     implementation(projects.core.ui)
     implementation(projects.feature.airfoilanalysis)
 
