@@ -20,4 +20,8 @@ class AfoilProjectRepository @Inject constructor(
     override suspend fun insertProject(project: AfoilProject) {
         afoilProjectDao.insertProject(project.asEntity())
     }
+
+    override suspend fun deleteProjects(projects: List<AfoilProject>) {
+        afoilProjectDao.deleteProjects(projects.map(AfoilProject::asEntity))
+    }
 }

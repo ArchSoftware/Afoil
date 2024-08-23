@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface ProjectRepository {
     fun getProjects(): Flow<List<AfoilProject>>
     suspend fun insertProject(project: AfoilProject)
+    suspend fun deleteProjects(projects: List<AfoilProject>)
 }
