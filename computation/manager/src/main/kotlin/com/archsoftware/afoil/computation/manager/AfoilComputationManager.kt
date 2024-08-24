@@ -9,6 +9,7 @@ import com.archsoftware.afoil.core.projectstore.ProjectStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class AfoilComputationManager @Inject constructor(
     private val projectRepository: ProjectRepository,
@@ -31,8 +33,8 @@ class AfoilComputationManager @Inject constructor(
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     @VisibleForTesting
-    internal val computationJob: Job = Job()
-    private val computationScope: CoroutineScope = CoroutineScope(computationJob + defaultDispatcher)
+    internal lateinit var computationJob: Job
+    private lateinit var computationScope: CoroutineScope
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         _computationState.tryEmit(ComputationManager.State.ERROR)
@@ -52,6 +54,8 @@ class AfoilComputationManager @Inject constructor(
     }
 
     override fun startComputation(projectName: String?, computation: suspend () -> Unit) {
+        computationJob = Job()
+        computationScope = CoroutineScope(computationJob + defaultDispatcher)
         computationScope.launch(exceptionHandler) {
             if (projectName == null) throw IllegalArgumentException()
 
@@ -69,6 +73,14 @@ class AfoilComputationManager @Inject constructor(
                 _computationState.emit(ComputationManager.State.CANCELED)
             }
             computationJob.cancel()
+            clear()
         }
+    }
+
+    private fun clear() {
+        // Clear all data since ComputationManager is a singleton
+        _computationState.resetReplayCache()
+        _logs.resetReplayCache()
+        _progress.resetReplayCache()
     }
 }
