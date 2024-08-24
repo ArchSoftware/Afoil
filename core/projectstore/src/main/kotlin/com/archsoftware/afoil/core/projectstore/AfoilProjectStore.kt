@@ -52,13 +52,13 @@ class AfoilProjectStore @Inject constructor(
         }
     }
 
-    override suspend fun <T> writeProjectData(uri: Uri?, projectData: T, type: Class<T>) {
-        if (uri == null) return
+    override suspend fun <T> writeProjectData(projectDirUri: Uri?, projectData: T, type: Class<T>) {
+        if (projectDirUri == null) return
 
         withContext(ioDispatcher) {
             try {
                 val projectDataFileUri = contentResolver.createDocument(
-                    parentDocumentUri = uri,
+                    parentDocumentUri = projectDirUri,
                     mimeType = PROJECT_DATA_MIME_TYPE,
                     displayName = PROJECT_DATA_FILE_NAME
                 )
@@ -74,10 +74,10 @@ class AfoilProjectStore @Inject constructor(
         }
     }
 
-    override suspend fun <T> readProjectData(uri: Uri?, type: Class<T>): T? {
-        if (uri == null) return null
+    override suspend fun <T> readProjectData(projectDirUri: Uri?, type: Class<T>): T? {
+        if (projectDirUri == null) return null
 
-        val projectDataFileUri = Uri.withAppendedPath(uri, PROJECT_DATA_FILE_NAME)
+        val projectDataFileUri = Uri.withAppendedPath(projectDirUri, PROJECT_DATA_FILE_NAME)
         var projectData: T? = null
 
         return withContext(ioDispatcher) {

@@ -227,9 +227,9 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 pressureContoursRefiningLevel = pressureContoursRefiningLevel
             )
             projectRepository.insertProject(project)
-            val projectDir = projectStore.createProjectDir(project)
+            val projectDirUri = projectStore.createProjectDir(project)
             projectStore.writeProjectData(
-                uri = projectDir,
+                projectDirUri = projectDirUri,
                 projectData = projectData,
                 type = AirfoilAnalysisProjectData::class.java
             )

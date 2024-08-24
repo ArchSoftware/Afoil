@@ -45,13 +45,13 @@ class AfoilProjectStoreTest {
         afoilContentResolver.outputStream = projectDataFile.outputStream()
 
         projectStore.writeProjectData(
-            uri = TestAfoilContentResolver.testUri,
+            projectDirUri = TestAfoilContentResolver.testUri,
             projectData = projectData,
             type = AirfoilAnalysisProjectData::class.java
         )
 
         val readProjectData = projectStore.readProjectData(
-            uri = TestAfoilContentResolver.testUri,
+            projectDirUri = TestAfoilContentResolver.testUri,
             type = AirfoilAnalysisProjectData::class.java
         )
 
