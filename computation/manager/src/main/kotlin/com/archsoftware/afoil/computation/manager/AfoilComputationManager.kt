@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AfoilComputationManager @Inject constructor(
     private val projectRepository: ProjectRepository,
     private val projectStore: ProjectStore,

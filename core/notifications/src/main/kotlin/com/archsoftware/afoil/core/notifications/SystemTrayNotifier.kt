@@ -9,10 +9,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val COMPUTATION_SERVICE_NOTIFICATION_CHANNEL_ID = "computation_service_channel"
 private const val PROGRESS_MAX = 100
 
+@Singleton
 class SystemTrayNotifier @Inject constructor(
     @ApplicationContext private val context: Context
 ) : Notifier {
