@@ -53,14 +53,4 @@ class ComputationMonitorViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = false
             )
-
-    val isComputationFinished: StateFlow<Boolean> =
-        computationManager.getComputationState().map { state ->
-            state == ComputationManager.State.FINISHED
-        }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = false
-            )
 }

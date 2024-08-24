@@ -55,25 +55,4 @@ class ComputationMonitorViewModelTest {
 
         collectJob.cancel()
     }
-
-    @Test
-    fun shouldShowGoToResultsOnlyIfComputationIsFinished() = runTest {
-        val collectJob = launch(UnconfinedTestDispatcher()) {
-            viewModel.isComputationFinished.collect()
-        }
-
-        computationManager.sendState(ComputationManager.State.ERROR)
-        assert(!viewModel.isComputationFinished.value)
-
-        computationManager.sendState(ComputationManager.State.CANCELED)
-        assert(!viewModel.isComputationFinished.value)
-
-        computationManager.sendState(ComputationManager.State.RUNNING)
-        assert(!viewModel.isComputationFinished.value)
-
-        computationManager.sendState(ComputationManager.State.FINISHED)
-        assert(viewModel.isComputationFinished.value)
-
-        collectJob.cancel()
-    }
 }

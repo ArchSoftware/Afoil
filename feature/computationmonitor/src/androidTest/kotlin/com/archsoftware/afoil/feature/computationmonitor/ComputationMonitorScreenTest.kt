@@ -7,6 +7,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import com.archsoftware.afoil.computation.manager.ComputationManager
 import com.archsoftware.afoil.core.testing.util.onNodeWithStringId
 import org.junit.Rule
 import org.junit.Test
@@ -21,9 +22,9 @@ class ComputationMonitorScreenTest {
         composeTestRule.setContent {
             ComputationMonitorScreen(
                 projectName = "My Project",
+                state = ComputationManager.State.IDLE,
                 logs = emptyList(),
                 progress = 0f,
-                isComputationFinished = false,
                 showProgressBar = false,
                 confirmationDialogRequester = CancelConfirmationDialogRequester.NONE,
                 onConfirmationDialogRequest = {},
@@ -42,9 +43,9 @@ class ComputationMonitorScreenTest {
         composeTestRule.setContent {
             ComputationMonitorScreen(
                 projectName = "My Project",
+                state = ComputationManager.State.FINISHED,
                 logs = emptyList(),
                 progress = 0f,
-                isComputationFinished = true,
                 showProgressBar = false,
                 confirmationDialogRequester = CancelConfirmationDialogRequester.NONE,
                 onConfirmationDialogRequest = {},
@@ -69,9 +70,9 @@ class ComputationMonitorScreenTest {
         composeTestRule.setContent {
             ComputationMonitorScreen(
                 projectName = "My Project",
+                state = ComputationManager.State.FINISHED,
                 logs = emptyList(),
                 progress = 0f,
-                isComputationFinished = true,
                 showProgressBar = false,
                 confirmationDialogRequester = CancelConfirmationDialogRequester.NONE,
                 onConfirmationDialogRequest = { onConfirmationDialogRequestInvoked = true },
@@ -102,9 +103,9 @@ class ComputationMonitorScreenTest {
         composeTestRule.setContent {
             ComputationMonitorScreen(
                 projectName = "My Project",
+                state = ComputationManager.State.RUNNING,
                 logs = emptyList(),
                 progress = 0f,
-                isComputationFinished = false,
                 showProgressBar = false,
                 confirmationDialogRequester = CancelConfirmationDialogRequester.NAVIGATE_UP,
                 onConfirmationDialogRequest = {},
@@ -123,9 +124,9 @@ class ComputationMonitorScreenTest {
         composeTestRule.setContent {
             ComputationMonitorScreen(
                 projectName = "My Project",
+                state = ComputationManager.State.RUNNING,
                 logs = emptyList(),
                 progress = 0f,
-                isComputationFinished = false,
                 showProgressBar = false,
                 confirmationDialogRequester = CancelConfirmationDialogRequester.CANCEL,
                 onConfirmationDialogRequest = {},
@@ -137,5 +138,77 @@ class ComputationMonitorScreenTest {
         }
 
         composeTestRule.onNodeWithTag("cancelConfirmationDialog").assertIsDisplayed()
+    }
+
+    @Test
+    fun computationMonitorScreen_shouldNotRequestConfirmationDialogIfComputationThrownError() {
+        var onConfirmationDialogRequestInvoked = false
+        var onNavigateUpInvoked = false
+
+        composeTestRule.setContent {
+            ComputationMonitorScreen(
+                projectName = "My Project",
+                state = ComputationManager.State.ERROR,
+                logs = emptyList(),
+                progress = 0f,
+                showProgressBar = false,
+                confirmationDialogRequester = CancelConfirmationDialogRequester.NONE,
+                onConfirmationDialogRequest = { onConfirmationDialogRequestInvoked = true },
+                onCancelConfirmationDialogConfirm = {},
+                onCancelConfirmationDialogDismiss = {},
+                onNavigateUp = { onNavigateUpInvoked = true },
+                onGoToResults = {}
+            )
+        }
+
+        composeTestRule
+            .onNodeWithContentDescription(
+                composeTestRule.activity.getString(R.string.feature_computationmonitor_navigateup_content_desc)
+            )
+            .performClick()
+        assert(onNavigateUpInvoked)
+        assert(!onConfirmationDialogRequestInvoked)
+
+        composeTestRule
+            .onNodeWithStringId(R.string.feature_computationmonitor_exit)
+            .performClick()
+        assert(onNavigateUpInvoked)
+        assert(!onConfirmationDialogRequestInvoked)
+    }
+
+    @Test
+    fun computationMonitorScreen_shouldNotRequestConfirmationDialogIfComputationWasCanceled() {
+        var onConfirmationDialogRequestInvoked = false
+        var onNavigateUpInvoked = false
+
+        composeTestRule.setContent {
+            ComputationMonitorScreen(
+                projectName = "My Project",
+                state = ComputationManager.State.CANCELED,
+                logs = emptyList(),
+                progress = 0f,
+                showProgressBar = false,
+                confirmationDialogRequester = CancelConfirmationDialogRequester.NONE,
+                onConfirmationDialogRequest = { onConfirmationDialogRequestInvoked = true },
+                onCancelConfirmationDialogConfirm = {},
+                onCancelConfirmationDialogDismiss = {},
+                onNavigateUp = { onNavigateUpInvoked = true },
+                onGoToResults = {}
+            )
+        }
+
+        composeTestRule
+            .onNodeWithContentDescription(
+                composeTestRule.activity.getString(R.string.feature_computationmonitor_navigateup_content_desc)
+            )
+            .performClick()
+        assert(onNavigateUpInvoked)
+        assert(!onConfirmationDialogRequestInvoked)
+
+        composeTestRule
+            .onNodeWithStringId(R.string.feature_computationmonitor_exit)
+            .performClick()
+        assert(onNavigateUpInvoked)
+        assert(!onConfirmationDialogRequestInvoked)
     }
 }

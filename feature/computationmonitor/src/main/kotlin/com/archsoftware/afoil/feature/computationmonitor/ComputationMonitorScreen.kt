@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.archsoftware.afoil.computation.manager.ComputationManager
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 import com.archsoftware.afoil.core.designsystem.util.freeScroll
 import com.archsoftware.afoil.core.designsystem.util.rememberFreeScrollState
@@ -49,17 +50,17 @@ fun ComputationMonitorScreen(
     modifier: Modifier = Modifier,
     viewModel: ComputationMonitorViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val logs by viewModel.logs.collectAsStateWithLifecycle()
     val progress by viewModel.progress.collectAsStateWithLifecycle()
-    val isComputationFinished by viewModel.isComputationFinished.collectAsStateWithLifecycle()
     val showProgressBar by viewModel.showProgressBar.collectAsStateWithLifecycle()
     var confirmationDialogRequester by remember { mutableStateOf(CancelConfirmationDialogRequester.NONE) }
 
     ComputationMonitorScreen(
         projectName = viewModel.projectName,
+        state = state,
         logs = logs,
         progress = progress,
-        isComputationFinished = isComputationFinished,
         showProgressBar = showProgressBar,
         confirmationDialogRequester = confirmationDialogRequester,
         onConfirmationDialogRequest = { requester ->
@@ -92,9 +93,9 @@ fun ComputationMonitorScreen(
 @Composable
 internal fun ComputationMonitorScreen(
     projectName: String,
+    state: ComputationManager.State,
     logs: List<ComputationLog>,
     progress: Float,
-    isComputationFinished: Boolean,
     showProgressBar: Boolean,
     confirmationDialogRequester: CancelConfirmationDialogRequester,
     onConfirmationDialogRequest: (requester: CancelConfirmationDialogRequester) -> Unit,
@@ -110,7 +111,7 @@ internal fun ComputationMonitorScreen(
     )
     val freeScrollState = rememberFreeScrollState()
 
-    BackHandler(!isComputationFinished) {
+    BackHandler(state == ComputationManager.State.RUNNING) {
         onConfirmationDialogRequest(CancelConfirmationDialogRequester.BACK_PRESS)
     }
 
@@ -152,7 +153,7 @@ internal fun ComputationMonitorScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            if (isComputationFinished) {
+                            if (state != ComputationManager.State.RUNNING) {
                                 onNavigateUp()
                             } else {
                                 onConfirmationDialogRequest(CancelConfirmationDialogRequester.NAVIGATE_UP)
@@ -180,19 +181,29 @@ internal fun ComputationMonitorScreen(
                 ) {
                     Button(
                         onClick = {
-                            if (isComputationFinished) {
-                                onGoToResults()
-                            } else {
-                                onConfirmationDialogRequest(CancelConfirmationDialogRequester.CANCEL)
+                            when (state) {
+                                ComputationManager.State.RUNNING -> {
+                                    onConfirmationDialogRequest(CancelConfirmationDialogRequester.CANCEL)
+                                }
+                                ComputationManager.State.FINISHED -> {
+                                    onGoToResults()
+                                }
+                                else -> {
+                                    onNavigateUp()
+                                }
                             }
                         }
                     ) {
                         Text(
                             text = stringResource(
-                                id = if (isComputationFinished) {
-                                    R.string.feature_computationmonitor_go_to_results
-                                } else {
-                                    R.string.feature_computationmonitor_cancel
+                                id = when (state) {
+                                    ComputationManager.State.RUNNING -> {
+                                        R.string.feature_computationmonitor_cancel
+                                    }
+                                    ComputationManager.State.FINISHED -> {
+                                        R.string.feature_computationmonitor_go_to_results
+                                    }
+                                    else -> R.string.feature_computationmonitor_exit
                                 }
                             )
                         )
@@ -247,6 +258,7 @@ private fun ComputationMonitorScreenPreview() {
     AfoilTheme {
         ComputationMonitorScreen(
             projectName = "My Project",
+            state = ComputationManager.State.RUNNING,
             logs = buildList {
                 repeat(10) {
                     add(
@@ -260,7 +272,6 @@ private fun ComputationMonitorScreenPreview() {
                 }
             },
             progress = 0.5f,
-            isComputationFinished = false,
             showProgressBar = true,
             confirmationDialogRequester = CancelConfirmationDialogRequester.NONE,
             onConfirmationDialogRequest = {},

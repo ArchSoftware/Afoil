@@ -7,6 +7,7 @@
     </string>
     <string name="feature_computationmonitor_go_to_results">Go to results</string>
     <string name="feature_computationmonitor_cancel">Cancel</string>
+    <string name="feature_computationmonitor_exit">Exit</string>
     <string name="feature_computationmonitor_confirm">Confirm</string>
     <string name="feature_computationmonitor_cancelconfirmationdialog_title">Cancel computation</string>
     <string name="feature_computationmonitor_cancelconfirmationdialog_message">
