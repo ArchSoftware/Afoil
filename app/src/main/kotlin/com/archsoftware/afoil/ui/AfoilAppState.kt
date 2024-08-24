@@ -12,6 +12,7 @@ import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
 import com.archsoftware.afoil.feature.airfoilanalysis.navigation.navigateToAirfoilAnalysis
 import com.archsoftware.afoil.feature.computationmonitor.navigation.navigateToComputationMonitor
+import com.archsoftware.afoil.feature.recentprojects.navigation.navigateToRecentProjects
 import com.archsoftware.afoil.navigation.TopLevelDestination
 import com.archsoftware.afoil.ui.home.navigation.navigateToHome
 import kotlinx.coroutines.CoroutineScope
@@ -81,6 +82,9 @@ data class AfoilAppState(
             }
             TopLevelDestination.AIRFOIL_ANALYSIS -> {
                 navController.navigateToAirfoilAnalysis(navOptions)
+            }
+            TopLevelDestination.RECENT_PROJECTS -> {
+                navController.navigateToRecentProjects(navOptions)
             }
         }
     }

@@ -43,6 +43,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.feature.airfoilanalysis)
     implementation(projects.feature.computationmonitor)
+    implementation(projects.feature.recentprojects)
 
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)

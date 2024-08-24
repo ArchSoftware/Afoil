@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_recentprojects_title">Recent projects</string>
+    <string name="feature_recentprojects_navigateup_content_desc">Back</string>
+    <string name="feature_recentprojects_delete_content_desc">Delete selected</string>
+    <string name="feature_recentprojects_loading_text">Loading projects…</string>
+    <string name="feature_recentprojects_no_project_found">No project found</string>
+</resources>
