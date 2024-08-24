@@ -92,4 +92,21 @@ class AfoilProjectStore @Inject constructor(
             projectData
         }
     }
+
+    override suspend fun deleteProject(project: AfoilProject) {
+        val projectsDirectory =
+            preferencesRepository.getAfoilProjectsDirectory().first() ?: return
+
+        withContext(ioDispatcher) {
+            val treeUri = Uri.parse(projectsDirectory)
+            val projectDirUri =
+                contentResolver.findDocument(treeUri, project.name) ?: return@withContext
+
+            try {
+                contentResolver.deleteDocument(projectDirUri)
+            } catch (e: FileNotFoundException) {
+                Log.e("ProjectStore", "Failed to delete project directory", e)
+            }
+        }
+    }
 }

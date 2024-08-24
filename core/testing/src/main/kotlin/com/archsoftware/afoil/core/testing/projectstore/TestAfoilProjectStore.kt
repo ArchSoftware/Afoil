@@ -12,4 +12,6 @@ class TestAfoilProjectStore : ProjectStore {
     override suspend fun <T> writeProjectData(projectDirUri: Uri?, projectData: T, type: Class<T>) {}
 
     override suspend fun <T> readProjectData(projectDirUri: Uri?, type: Class<T>): T? = null
+
+    override suspend fun deleteProject(project: AfoilProject) {}
 }

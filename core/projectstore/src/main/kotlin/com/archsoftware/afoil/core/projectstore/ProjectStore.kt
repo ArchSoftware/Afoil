@@ -7,4 +7,5 @@ interface ProjectStore {
     suspend fun createProjectDir(project: AfoilProject): Uri?
     suspend fun <T> writeProjectData(projectDirUri: Uri?, projectData: T, type: Class<T>)
     suspend fun <T> readProjectData(projectDirUri: Uri?, type: Class<T>): T?
+    suspend fun deleteProject(project: AfoilProject)
 }
