@@ -17,9 +17,10 @@ class AfoilContentResolver @Inject constructor(
 
     override fun checkIfUriExists(uri: Uri): Boolean {
         val cursor = contentResolver.query(uri, null, null, null, null)
-        val exists = cursor != null && cursor.count > 0
-        cursor?.close()
-        return exists
+        cursor?.use {
+            return it.count > 0
+        }
+        return false
     }
 
     override fun checkIfTreeUriExists(uri: Uri): Boolean {
