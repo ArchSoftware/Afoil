@@ -26,6 +26,10 @@ class TestAfoilContentResolver : UriContentResolver {
         displayName: String
     ): Uri? = testUri
 
+    override fun deleteDocument(uri: Uri) {}
+
+    override fun findDocument(treeUri: Uri, displayName: String): Uri? = testUri
+
     override fun takePersistableUriPermission(uri: Uri) {}
 
     companion object {

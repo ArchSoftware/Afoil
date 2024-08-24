@@ -41,6 +41,33 @@ class AfoilContentResolver @Inject constructor(
         displayName: String
     ): Uri? = DocumentsContract.createDocument(contentResolver, parentDocumentUri, mimeType, displayName)
 
+    override fun deleteDocument(uri: Uri) {
+        DocumentsContract.deleteDocument(contentResolver, uri)
+    }
+
+    override fun findDocument(treeUri: Uri, displayName: String): Uri? {
+        val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(
+            /* treeUri = */ treeUri,
+            /* parentDocumentId = */ DocumentsContract.getTreeDocumentId(treeUri)
+        )
+        val cursor = contentResolver.query(
+            /* uri = */ childrenUri,
+            /* projection = */ null,
+            /* selection = */ "${DocumentsContract.Document.COLUMN_DISPLAY_NAME} = ?",
+            /* selectionArgs = */ arrayOf(displayName),
+            /* sortOrder = */ null
+        )
+        cursor?.use {
+            it.moveToFirst()
+            val documentId = it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
+            return DocumentsContract.buildDocumentUriUsingTree(
+                /* treeUri = */ treeUri,
+                /* documentId = */ documentId
+            )
+        }
+        return null
+    }
+
     override fun takePersistableUriPermission(uri: Uri) {
         contentResolver.takePersistableUriPermission(uri, TAKE_FLAGS)
     }

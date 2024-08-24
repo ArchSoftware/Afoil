@@ -14,5 +14,7 @@ interface UriContentResolver {
         mimeType: String,
         displayName: String
     ): Uri?
+    fun deleteDocument(uri: Uri)
+    fun findDocument(treeUri: Uri, displayName: String): Uri?
     fun takePersistableUriPermission(uri: Uri)
 }
