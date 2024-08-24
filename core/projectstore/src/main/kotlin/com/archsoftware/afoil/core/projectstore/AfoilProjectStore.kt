@@ -32,16 +32,16 @@ class AfoilProjectStore @Inject constructor(
             preferencesRepository.getAfoilProjectsDirectory().first() ?: return null
 
         return withContext(ioDispatcher) {
-            val uri = Uri.parse(projectsDirectory)
-            val treeUri = DocumentsContract.buildDocumentUriUsingTree(
-                /* treeUri = */ uri,
-                /* documentId = */ DocumentsContract.getTreeDocumentId(uri)
+            val treeUri = Uri.parse(projectsDirectory)
+            val uri = DocumentsContract.buildDocumentUriUsingTree(
+                /* treeUri = */ treeUri,
+                /* documentId = */ DocumentsContract.getTreeDocumentId(treeUri)
             )
 
             var dir: Uri? = null
             try {
                 dir = contentResolver.createDocument(
-                    parentDocumentUri = treeUri,
+                    parentDocumentUri = uri,
                     mimeType = DocumentsContract.Document.MIME_TYPE_DIR,
                     displayName = project.name
                 )
