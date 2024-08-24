@@ -5,4 +5,5 @@
     <string name="core_designsystem_nextprevbottombar_done">Done</string>
     <string name="core_designsystem_numerictextfield_error_message">Please enter a valid number</string>
     <string name="core_designsystem_onebuttoncard_close_content_desc">Close</string>
+    <string name="core_designsystem_selectionappbar_cancel_selection">Cancel selection</string>
 </resources>
