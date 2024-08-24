@@ -23,12 +23,12 @@ class AfoilContentResolver @Inject constructor(
         return false
     }
 
-    override fun checkIfTreeUriExists(uri: Uri): Boolean {
-        val treeUri = DocumentsContract.buildDocumentUriUsingTree(
-            /* treeUri = */ uri,
-            /* documentId = */ DocumentsContract.getTreeDocumentId(uri)
+    override fun checkIfTreeUriExists(treeUri: Uri): Boolean {
+        val uri = DocumentsContract.buildDocumentUriUsingTree(
+            /* treeUri = */ treeUri,
+            /* documentId = */ DocumentsContract.getTreeDocumentId(treeUri)
         )
-        return checkIfUriExists(treeUri)
+        return checkIfUriExists(uri)
     }
 
     override fun openInputStream(uri: Uri): InputStream? = contentResolver.openInputStream(uri)

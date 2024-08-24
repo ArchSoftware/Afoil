@@ -6,7 +6,7 @@ import java.io.OutputStream
 
 interface UriContentResolver {
     fun checkIfUriExists(uri: Uri): Boolean
-    fun checkIfTreeUriExists(uri: Uri): Boolean
+    fun checkIfTreeUriExists(treeUri: Uri): Boolean
     fun openInputStream(uri: Uri): InputStream?
     fun openOutputStream(uri: Uri): OutputStream?
     fun createDocument(

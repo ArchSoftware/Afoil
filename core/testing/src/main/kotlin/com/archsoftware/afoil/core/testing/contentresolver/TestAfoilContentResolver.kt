@@ -1,6 +1,5 @@
 package com.archsoftware.afoil.core.testing.contentresolver
 
-import android.database.ContentObserver
 import android.net.Uri
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import org.jetbrains.annotations.TestOnly
@@ -15,7 +14,7 @@ class TestAfoilContentResolver : UriContentResolver {
 
     override fun checkIfUriExists(uri: Uri): Boolean = exists
 
-    override fun checkIfTreeUriExists(uri: Uri): Boolean = checkIfUriExists(uri)
+    override fun checkIfTreeUriExists(treeUri: Uri): Boolean = checkIfUriExists(treeUri)
 
     override fun openInputStream(uri: Uri): InputStream? = inputStream
 
