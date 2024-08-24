@@ -5,6 +5,7 @@ import com.archsoftware.afoil.core.model.AfoilProject
 
 fun AfoilProject.asEntity(): AfoilProjectEntity =
     AfoilProjectEntity(
+        id = id,
         name = name,
         projectDataType = projectDataType
     )

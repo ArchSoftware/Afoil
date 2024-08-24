@@ -13,6 +13,7 @@ data class AfoilProjectEntity(
 
 fun AfoilProjectEntity.asExternalModel(): AfoilProject =
     AfoilProject(
+        id = id,
         name = name,
         projectDataType = projectDataType
     )

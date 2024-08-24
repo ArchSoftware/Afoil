@@ -41,7 +41,9 @@ class AirfoilAnalysisViewModelTest {
     // Test data
     private val invalidValue = "invalid"
     private val projects = listOf(
-        AfoilProject("Project 1", AirfoilAnalysisProjectData::class.java.name)
+        AfoilProject(
+            name = "Project 1",
+            projectDataType = AirfoilAnalysisProjectData::class.java.name)
     )
     private lateinit var datAirfoilFile: File
     private val panelsNumber = "100"

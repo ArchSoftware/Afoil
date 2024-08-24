@@ -214,7 +214,10 @@ class AirfoilAnalysisViewModel @Inject constructor(
 
         viewModelScope.launch {
             _projectPreparingState.value = ProjectPreparingState.PREPARING
-            val project = AfoilProject(projectName, AirfoilAnalysisProjectData::class.java.name)
+            val project = AfoilProject(
+                name = projectName,
+                projectDataType = AirfoilAnalysisProjectData::class.java.name
+            )
             val projectData = AirfoilAnalysisProjectData(
                 datAirfoilUri = datAirfoilUri.toString(),
                 panelsNumber = panelsNumber.toInt(),
