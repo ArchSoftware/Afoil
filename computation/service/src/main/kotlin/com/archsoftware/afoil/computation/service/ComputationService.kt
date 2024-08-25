@@ -54,7 +54,8 @@ class ComputationService : Service() {
 
         serviceScope.launch {
             computationManager.getComputationProgress().collect { progress ->
-                notifier.updateComputationServiceNotification(progress)
+                // Computation manager progress is between 0 and 1, convert it to a percentage
+                notifier.updateComputationServiceNotification((progress * 100).toInt())
             }
         }
 

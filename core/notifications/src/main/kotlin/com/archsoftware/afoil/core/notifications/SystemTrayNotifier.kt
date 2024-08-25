@@ -20,10 +20,10 @@ class SystemTrayNotifier @Inject constructor(
 ) : Notifier {
     private lateinit var computationServiceNotificationBuilder: NotificationCompat.Builder
 
-    override fun updateComputationServiceNotification(progress: Float) {
+    override fun updateComputationServiceNotification(progress: Int) {
         val notification = computationServiceNotificationBuilder.apply {
             if (progress < PROGRESS_MAX) {
-                setProgress(PROGRESS_MAX, progress.toInt(), false)
+                setProgress(PROGRESS_MAX, progress, false)
                 setOngoing(true)
             } else {
                 setContentText(context.getString(R.string.core_notifications_computation_service_computation_finished))
