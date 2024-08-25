@@ -58,6 +58,10 @@ class AirfoilAnalysisViewModel @Inject constructor(
     val projectPreparingState: ProjectPreparingState
         get() = _projectPreparingState.value
 
+    val isProjectPreparing by derivedStateOf {
+        _projectPreparingState.value == ProjectPreparingState.PREPARING
+    }
+
     /*
     Project details page variables
      */

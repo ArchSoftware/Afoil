@@ -13,9 +13,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -40,11 +38,6 @@ fun AirfoilAnalysisScreen(
     modifier: Modifier = Modifier,
     viewModel: AirfoilAnalysisViewModel = hiltViewModel()
 ) {
-    val isProjectPreparing by remember {
-        derivedStateOf {
-            viewModel.projectPreparingState == ProjectPreparingState.PREPARING
-        }
-    }
     val projectNameHasError by viewModel.projectNameHasError.collectAsStateWithLifecycle()
 
     BackHandler {
@@ -58,7 +51,7 @@ fun AirfoilAnalysisScreen(
     }
 
     AirfoilAnalysisScreen(
-        isProjectPreparing = isProjectPreparing,
+        isProjectPreparing = viewModel.isProjectPreparing,
         currentPage = viewModel.currentPage,
         shouldShowDone = viewModel.shouldShowDone,
         previousEnabled = viewModel.previousEnabled,
