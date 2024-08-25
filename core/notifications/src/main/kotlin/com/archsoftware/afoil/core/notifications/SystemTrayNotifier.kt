@@ -24,6 +24,9 @@ class SystemTrayNotifier @Inject constructor(
         val notification = computationServiceNotificationBuilder.apply {
             if (progress < PROGRESS_MAX) {
                 setProgress(PROGRESS_MAX, progress, false)
+                // On API lower than 34 this will make the notification non-dismissable.
+                // On API 34+ the following new behavior is expected:
+                // https://developer.android.com/about/versions/14/behavior-changes-all#non-dismissable-notifications
                 setOngoing(true)
             } else {
                 setContentText(context.getString(R.string.core_notifications_computation_service_computation_finished))
