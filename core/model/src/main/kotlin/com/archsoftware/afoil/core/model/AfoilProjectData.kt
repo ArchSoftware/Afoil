@@ -1,5 +1,11 @@
 package com.archsoftware.afoil.core.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class AfoilProjectData
+
+@Serializable
 data class AirfoilAnalysisProjectData(
     // Airfoil data
     val datAirfoilUri: String,
@@ -13,4 +19,4 @@ data class AirfoilAnalysisProjectData(
     val streamlinesRefiningLevel: Float,
     val pressureContoursGridSize: Int,
     val pressureContoursRefiningLevel: Float
-)
+) : AfoilProjectData()

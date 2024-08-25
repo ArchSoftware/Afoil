@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.afoil.android.library)
+    alias(libs.plugins.afoil.kotlinx.serialization)
 }
 
 android {

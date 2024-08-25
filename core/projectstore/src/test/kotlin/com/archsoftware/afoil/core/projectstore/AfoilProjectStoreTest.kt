@@ -46,13 +46,11 @@ class AfoilProjectStoreTest {
 
         projectStore.writeProjectData(
             projectDirUri = TestAfoilContentResolver.testUri,
-            projectData = projectData,
-            type = AirfoilAnalysisProjectData::class.java
+            projectData = projectData
         )
 
         val readProjectData = projectStore.readProjectData(
-            projectDirUri = TestAfoilContentResolver.testUri,
-            type = AirfoilAnalysisProjectData::class.java
+            projectDirUri = TestAfoilContentResolver.testUri
         )
 
         assert(readProjectData == projectData)

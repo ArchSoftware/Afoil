@@ -237,8 +237,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
             val projectDirUri = projectStore.createProjectDir(project)
             projectStore.writeProjectData(
                 projectDirUri = projectDirUri,
-                projectData = projectData,
-                type = AirfoilAnalysisProjectData::class.java
+                projectData = projectData
             )
             _projectPreparingState.value = ProjectPreparingState.DONE
         }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.afoil.android.library)
     alias(libs.plugins.afoil.android.hilt)
+    alias(libs.plugins.afoil.kotlinx.serialization)
 }
 
 android {
@@ -17,8 +18,6 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.model)
-
-    implementation(libs.gson)
 
     testImplementation(projects.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)

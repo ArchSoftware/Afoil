@@ -39,6 +39,10 @@ gradlePlugin {
             id = "afoil.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
+        register("kotlinxSerialization") {
+            id = "afoil.kotlinx.serialization"
+            implementationClass = "KotlinSerializationConventionPlugin"
+        }
     }
 }
 
