@@ -52,14 +52,15 @@ class AfoilContentResolver @Inject constructor(
         )
         val cursor = contentResolver.query(
             /* uri = */ childrenUri,
-            /* projection = */ null,
-            /* selection = */ "${DocumentsContract.Document.COLUMN_DISPLAY_NAME} = ?",
+            /* projection = */ arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID),
+            /* selection = */ "${DocumentsContract.Document.COLUMN_DISPLAY_NAME} = $displayName",
             /* selectionArgs = */ arrayOf(displayName),
             /* sortOrder = */ null
         )
         cursor?.use {
             it.moveToFirst()
-            val documentId = it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
+            val documentId =
+                it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
             return DocumentsContract.buildDocumentUriUsingTree(
                 /* treeUri = */ treeUri,
                 /* documentId = */ documentId
