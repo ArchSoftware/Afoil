@@ -58,13 +58,14 @@ class AfoilContentResolver @Inject constructor(
             /* sortOrder = */ null
         )
         cursor?.use {
-            it.moveToFirst()
-            val documentId =
-                it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
-            return DocumentsContract.buildDocumentUriUsingTree(
-                /* treeUri = */ treeUri,
-                /* documentId = */ documentId
-            )
+            if (it.moveToFirst()) {
+                val documentId =
+                    it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
+                return DocumentsContract.buildDocumentUriUsingTree(
+                    /* treeUri = */ treeUri,
+                    /* documentId = */ documentId
+                )
+            }
         }
         return null
     }
