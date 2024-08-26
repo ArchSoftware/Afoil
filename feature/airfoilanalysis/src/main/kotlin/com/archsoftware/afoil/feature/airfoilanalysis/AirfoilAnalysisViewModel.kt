@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
 import com.archsoftware.afoil.core.common.utils.isValidDoubleInput
 import com.archsoftware.afoil.core.common.utils.isValidIntInput
@@ -31,6 +32,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AirfoilAnalysisViewModel @Inject constructor(
+    private val contentResolver: UriContentResolver,
     private val datAirfoilReader: DatAirfoilReader,
     private val projectRepository: ProjectRepository,
     private val projectStore: ProjectStore
@@ -215,6 +217,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
 
     fun onDone() {
         if (!checkDataValidity()) return
+        val datAirfoilUri = datAirfoilUri ?: return
 
         viewModelScope.launch {
             _projectPreparingState.value = ProjectPreparingState.PREPARING
@@ -222,8 +225,9 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 name = projectName,
                 projectDataType = AirfoilAnalysisProjectData::class.java.name
             )
+            val datAirfoilDisplayName = contentResolver.getDisplayName(datAirfoilUri) ?: return@launch
             val projectData = AirfoilAnalysisProjectData(
-                datAirfoilUri = datAirfoilUri.toString(),
+                datAirfoilDisplayName = datAirfoilDisplayName,
                 panelsNumber = panelsNumber.toInt(),
                 reynoldsNumber = reynoldsNumber.toDoubleOrNull(),
                 machNumber = machNumber.toDouble(),

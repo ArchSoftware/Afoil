@@ -30,7 +30,7 @@ class AfoilProjectStoreTest {
     @Test
     fun readWriteProjectData() = runTest(StandardTestDispatcher(testScheduler)) {
         val projectData = AirfoilAnalysisProjectData(
-            datAirfoilUri = TestAfoilContentResolver.testUri.toString(),
+            datAirfoilDisplayName = datAirfoilDisplayName,
             panelsNumber = 100,
             reynoldsNumber = 20e3,
             machNumber = 0.3,

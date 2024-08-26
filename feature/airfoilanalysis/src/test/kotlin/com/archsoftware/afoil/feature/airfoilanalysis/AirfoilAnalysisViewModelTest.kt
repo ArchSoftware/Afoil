@@ -59,6 +59,7 @@ class AirfoilAnalysisViewModelTest {
         datAirfoilFile.writeText("NACA 0012")
 
         viewModel = AirfoilAnalysisViewModel(
+            contentResolver = afoilContentResolver,
             datAirfoilReader = DatAirfoilReader(
                 contentResolver = afoilContentResolver,
                 ioDispatcher = StandardTestDispatcher()

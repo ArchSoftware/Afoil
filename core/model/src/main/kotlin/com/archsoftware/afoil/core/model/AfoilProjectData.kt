@@ -8,7 +8,7 @@ sealed class AfoilProjectData
 @Serializable
 data class AirfoilAnalysisProjectData(
     // Airfoil data
-    val datAirfoilUri: String,
+    val datAirfoilDisplayName: String,
     val panelsNumber: Int,
     // Fluid data
     val reynoldsNumber: Double?,
