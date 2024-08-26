@@ -10,4 +10,5 @@ interface ProjectStore {
     suspend fun writeProjectData(projectData: AfoilProjectData)
     suspend fun readProjectData(): AfoilProjectData?
     suspend fun deleteProject(project: AfoilProject)
+    suspend fun copyToProjectDir(sourceUri: Uri?)
 }

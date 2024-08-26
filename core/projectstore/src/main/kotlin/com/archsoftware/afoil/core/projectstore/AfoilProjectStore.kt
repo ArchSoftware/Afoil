@@ -21,6 +21,7 @@ import java.io.FileNotFoundException
 import javax.inject.Inject
 
 private const val PROJECT_DATA_MIME_TYPE = "application/json"
+private const val GENERIC_MIME_TYPE = "*/*"
 @VisibleForTesting
 internal const val PROJECT_DATA_FILE_NAME = "projectData.json"
 
@@ -114,6 +115,30 @@ class AfoilProjectStore @Inject constructor(
                 contentResolver.deleteDocument(projectDirUri)
             } catch (e: FileNotFoundException) {
                 Log.e("ProjectStore", "Failed to delete project directory", e)
+            }
+        }
+    }
+
+    override suspend fun copyToProjectDir(sourceUri: Uri?) {
+        val projectDirUri = projectDirUri ?: return
+        if (sourceUri == null) return
+        val displayName = contentResolver.getDisplayName(sourceUri) ?: return
+
+        withContext(ioDispatcher) {
+            try {
+                val destinationUri = contentResolver.createDocument(
+                    parentDocumentUri = projectDirUri,
+                    mimeType = GENERIC_MIME_TYPE,
+                    displayName = displayName
+                )
+                requireNotNull(destinationUri)
+                contentResolver.openInputStream(sourceUri)?.use { inputStream ->
+                    contentResolver.openOutputStream(destinationUri)?.use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("ProjectStore", "Failed to copy file", e)
             }
         }
     }

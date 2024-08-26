@@ -17,4 +17,6 @@ class TestAfoilProjectStore : ProjectStore {
     override suspend fun readProjectData(): AfoilProjectData? = null
 
     override suspend fun deleteProject(project: AfoilProject) {}
+
+    override suspend fun copyToProjectDir(sourceUri: Uri?) {}
 }
