@@ -239,6 +239,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
             )
             projectRepository.insertProject(project)
             projectStore.createProjectDir(project)
+            projectStore.copyToProjectDir(datAirfoilUri)
             projectStore.writeProjectData(projectData)
             _projectPreparingState.value = ProjectPreparingState.DONE
         }
