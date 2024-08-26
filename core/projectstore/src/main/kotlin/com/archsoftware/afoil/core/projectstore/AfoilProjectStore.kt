@@ -30,10 +30,11 @@ class AfoilProjectStore @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     @Dispatcher(AfoilDispatcher.IO) private val ioDispatcher: CoroutineDispatcher
 ) : ProjectStore {
+    private var projectDirUri: Uri? = null
 
-    override suspend fun createProjectDir(project: AfoilProject): Uri? {
+    override suspend fun createProjectDir(project: AfoilProject) {
         val projectsDirectory =
-            preferencesRepository.getAfoilProjectsDirectory().first() ?: return null
+            preferencesRepository.getAfoilProjectsDirectory().first() ?: return
 
         return withContext(ioDispatcher) {
             val treeUri = Uri.parse(projectsDirectory)
@@ -42,9 +43,8 @@ class AfoilProjectStore @Inject constructor(
                 /* documentId = */ DocumentsContract.getTreeDocumentId(treeUri)
             )
 
-            var dir: Uri? = null
             try {
-                dir = contentResolver.createDocument(
+                projectDirUri = contentResolver.createDocument(
                     parentDocumentUri = uri,
                     mimeType = DocumentsContract.Document.MIME_TYPE_DIR,
                     displayName = project.name
@@ -52,12 +52,18 @@ class AfoilProjectStore @Inject constructor(
             } catch (e: FileNotFoundException) {
                 Log.e("ProjectStore", "Failed to create project directory", e)
             }
-            dir
         }
     }
 
-    override suspend fun writeProjectData(projectDirUri: Uri?, projectData: AfoilProjectData) {
-        if (projectDirUri == null) return
+    override suspend fun setProjectDir(project: AfoilProject) {
+        val projectsDirectory =
+            preferencesRepository.getAfoilProjectsDirectory().first() ?: return
+        val treeUri = Uri.parse(projectsDirectory)
+        projectDirUri = contentResolver.findDocument(treeUri, project.name)
+    }
+
+    override suspend fun writeProjectData(projectData: AfoilProjectData) {
+        val projectDirUri = projectDirUri ?: return
 
         withContext(ioDispatcher) {
             try {
@@ -77,8 +83,8 @@ class AfoilProjectStore @Inject constructor(
         }
     }
 
-    override suspend fun readProjectData(projectDirUri: Uri?): AfoilProjectData? {
-        if (projectDirUri == null) return null
+    override suspend fun readProjectData(): AfoilProjectData? {
+        val projectDirUri = projectDirUri ?: return null
 
         val projectDataFileUri = Uri.withAppendedPath(projectDirUri, PROJECT_DATA_FILE_NAME)
         var projectData: AfoilProjectData? = null

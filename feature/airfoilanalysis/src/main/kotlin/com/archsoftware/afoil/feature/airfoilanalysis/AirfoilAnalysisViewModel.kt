@@ -238,11 +238,8 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 pressureContoursRefiningLevel = pressureContoursRefiningLevel
             )
             projectRepository.insertProject(project)
-            val projectDirUri = projectStore.createProjectDir(project)
-            projectStore.writeProjectData(
-                projectDirUri = projectDirUri,
-                projectData = projectData
-            )
+            projectStore.createProjectDir(project)
+            projectStore.writeProjectData(projectData)
             _projectPreparingState.value = ProjectPreparingState.DONE
         }
     }

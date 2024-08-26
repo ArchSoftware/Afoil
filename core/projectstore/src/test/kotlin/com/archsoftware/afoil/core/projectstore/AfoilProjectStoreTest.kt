@@ -1,5 +1,6 @@
 package com.archsoftware.afoil.core.projectstore
 
+import com.archsoftware.afoil.core.model.AfoilProject
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
 import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
@@ -27,6 +28,13 @@ class AfoilProjectStoreTest {
         ioDispatcher = StandardTestDispatcher(testScheduler)
     )
 
+    // Test data
+    private val project = AfoilProject(
+        name = "Project 1",
+        projectDataType = AirfoilAnalysisProjectData::class.java.name
+    )
+    private val datAirfoilDisplayName = "NACA0012.dat"
+
     @Test
     fun readWriteProjectData() = runTest(StandardTestDispatcher(testScheduler)) {
         val projectData = AirfoilAnalysisProjectData(
@@ -44,14 +52,11 @@ class AfoilProjectStoreTest {
         afoilContentResolver.inputStream = projectDataFile.inputStream()
         afoilContentResolver.outputStream = projectDataFile.outputStream()
 
-        projectStore.writeProjectData(
-            projectDirUri = TestAfoilContentResolver.testUri,
-            projectData = projectData
-        )
+        userPreferencesRepository.updateAfoilProjectsDirectory(TestAfoilContentResolver.testUri.toString())
+        projectStore.setProjectDir(project)
+        projectStore.writeProjectData(projectData)
 
-        val readProjectData = projectStore.readProjectData(
-            projectDirUri = TestAfoilContentResolver.testUri
-        )
+        val readProjectData = projectStore.readProjectData()
 
         assert(readProjectData == projectData)
     }

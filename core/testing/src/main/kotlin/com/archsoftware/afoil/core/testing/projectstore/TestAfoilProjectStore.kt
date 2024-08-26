@@ -8,11 +8,13 @@ import org.jetbrains.annotations.TestOnly
 
 @TestOnly
 class TestAfoilProjectStore : ProjectStore {
-    override suspend fun createProjectDir(project: AfoilProject): Uri? = null
+    override suspend fun createProjectDir(project: AfoilProject) {}
 
-    override suspend fun writeProjectData(projectDirUri: Uri?, projectData: AfoilProjectData) {}
+    override suspend fun setProjectDir(project: AfoilProject) {}
 
-    override suspend fun readProjectData(projectDirUri: Uri?): AfoilProjectData? = null
+    override suspend fun writeProjectData(projectData: AfoilProjectData) {}
+
+    override suspend fun readProjectData(): AfoilProjectData? = null
 
     override suspend fun deleteProject(project: AfoilProject) {}
 }
