@@ -16,9 +16,13 @@ class AfoilContentResolver @Inject constructor(
 ) : UriContentResolver {
 
     override fun checkIfUriExists(uri: Uri): Boolean {
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        cursor?.use {
-            return it.count > 0
+        try {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                return it.count > 0
+            }
+        } catch (e: SecurityException) {
+            return false
         }
         return false
     }
@@ -50,22 +54,30 @@ class AfoilContentResolver @Inject constructor(
             /* treeUri = */ treeUri,
             /* parentDocumentId = */ DocumentsContract.getTreeDocumentId(treeUri)
         )
-        val cursor = contentResolver.query(
-            /* uri = */ childrenUri,
-            /* projection = */ arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID),
-            /* selection = */ "${DocumentsContract.Document.COLUMN_DISPLAY_NAME} = $displayName",
-            /* selectionArgs = */ arrayOf(displayName),
-            /* sortOrder = */ null
-        )
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val documentId =
-                    it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
-                return DocumentsContract.buildDocumentUriUsingTree(
-                    /* treeUri = */ treeUri,
-                    /* documentId = */ documentId
-                )
+        try {
+            val cursor = contentResolver.query(
+                /* uri = */ childrenUri,
+                /* projection = */
+                arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID),
+                /* selection = */
+                "${DocumentsContract.Document.COLUMN_DISPLAY_NAME} = $displayName",
+                /* selectionArgs = */
+                arrayOf(displayName),
+                /* sortOrder = */
+                null
+            )
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val documentId =
+                        it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
+                    return DocumentsContract.buildDocumentUriUsingTree(
+                        /* treeUri = */ treeUri,
+                        /* documentId = */ documentId
+                    )
+                }
             }
+        } catch (e: SecurityException) {
+            return null
         }
         return null
     }
