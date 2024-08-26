@@ -32,6 +32,8 @@ class TestAfoilContentResolver : UriContentResolver {
 
     override fun takePersistableUriPermission(uri: Uri) {}
 
+    override fun getDisplayName(uri: Uri): String? = null
+
     companion object {
         val testUri: Uri? = Uri.parse("content://test_uri")
     }

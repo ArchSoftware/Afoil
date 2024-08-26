@@ -85,4 +85,24 @@ class AfoilContentResolver @Inject constructor(
     override fun takePersistableUriPermission(uri: Uri) {
         contentResolver.takePersistableUriPermission(uri, TAKE_FLAGS)
     }
+
+    override fun getDisplayName(uri: Uri): String? {
+        try {
+            val cursor = contentResolver.query(
+                /* uri = */ uri,
+                /* projection = */ arrayOf(DocumentsContract.Document.COLUMN_DISPLAY_NAME),
+                /* selection = */ null,
+                /* selectionArgs = */ null,
+                /* sortOrder = */ null
+            )
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    return it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME))
+                }
+            }
+        } catch (e: SecurityException) {
+            return null
+        }
+        return null
+    }
 }
