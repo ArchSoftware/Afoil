@@ -91,11 +91,8 @@ data class AfoilAppState(
 
     fun navigateToComputationMonitor(projectName: String) {
         val navOptions = navOptions {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
+            popUpTo(navController.graph.findStartDestination().id)
             launchSingleTop = true
-            restoreState = true
         }
 
         navController.navigateToComputationMonitor(projectName, navOptions)
