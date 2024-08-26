@@ -1,6 +1,7 @@
 package com.archsoftware.afoil.core.projectstore
 
 import com.archsoftware.afoil.core.model.AfoilProject
+import com.archsoftware.afoil.core.model.AfoilProjectData
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
 import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
@@ -48,7 +49,7 @@ class AfoilProjectStoreTest {
             pressureContoursGridSize = 50,
             pressureContoursRefiningLevel = 0.5f
         )
-        val projectDataFile = tmpFolder.newFile(PROJECT_DATA_FILE_NAME)
+        val projectDataFile = tmpFolder.newFile(AfoilProjectData.displayName)
         afoilContentResolver.inputStream = projectDataFile.inputStream()
         afoilContentResolver.outputStream = projectDataFile.outputStream()
 

@@ -1,9 +1,17 @@
 package com.archsoftware.afoil.core.model
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
-sealed class AfoilProjectData
+sealed class AfoilProjectData {
+    companion object {
+        @Transient
+        val mimeType: String = "application/json"
+        @Transient
+        val displayName: String = "projectData.json"
+    }
+}
 
 @Serializable
 data class AirfoilAnalysisProjectData(

@@ -3,7 +3,6 @@ package com.archsoftware.afoil.core.projectstore
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.util.Log
-import androidx.annotation.VisibleForTesting
 import com.archsoftware.afoil.core.common.AfoilDispatcher
 import com.archsoftware.afoil.core.common.Dispatcher
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
@@ -20,10 +19,7 @@ import kotlinx.serialization.json.encodeToStream
 import java.io.FileNotFoundException
 import javax.inject.Inject
 
-private const val PROJECT_DATA_MIME_TYPE = "application/json"
 private const val GENERIC_MIME_TYPE = "*/*"
-@VisibleForTesting
-internal const val PROJECT_DATA_FILE_NAME = "projectData.json"
 
 @OptIn(ExperimentalSerializationApi::class)
 class AfoilProjectStore @Inject constructor(
@@ -70,8 +66,8 @@ class AfoilProjectStore @Inject constructor(
             try {
                 val projectDataFileUri = contentResolver.createDocument(
                     parentDocumentUri = projectDirUri,
-                    mimeType = PROJECT_DATA_MIME_TYPE,
-                    displayName = PROJECT_DATA_FILE_NAME
+                    mimeType = AfoilProjectData.mimeType,
+                    displayName = AfoilProjectData.displayName
                 )
                 requireNotNull(projectDataFileUri)
                 contentResolver.openOutputStream(projectDataFileUri)
@@ -87,7 +83,7 @@ class AfoilProjectStore @Inject constructor(
     override suspend fun readProjectData(): AfoilProjectData? {
         val projectDirUri = projectDirUri ?: return null
 
-        val projectDataFileUri = Uri.withAppendedPath(projectDirUri, PROJECT_DATA_FILE_NAME)
+        val projectDataFileUri = Uri.withAppendedPath(projectDirUri, AfoilProjectData.mimeType)
         var projectData: AfoilProjectData? = null
 
         return withContext(ioDispatcher) {
