@@ -17,11 +17,11 @@ class TestAfoilComputationManager : ComputationManager {
     override fun getComputationLogs(): Flow<List<ComputationLog>> = emptyFlow()
     override fun getComputationProgress(): Flow<Float> = emptyFlow()
 
-    override fun startComputation(projectName: String?) {
+    override fun startComputation(projectId: Long?) {
         _computationState.tryEmit(ComputationManager.State.RUNNING)
     }
 
-    override fun startComputation(projectName: String?, computation: suspend () -> Unit) {}
+    override fun startComputation(projectId: Long?, computation: suspend () -> Unit) {}
 
     override fun stopComputation(canceled: Boolean) {
         if (canceled) _computationState.tryEmit(ComputationManager.State.CANCELED)

@@ -16,8 +16,8 @@ class TestAfoilProjectRepository : ProjectRepository {
 
     override fun getProjects(): Flow<List<AfoilProject>> = projectsFlow
 
-    override fun getProjectByName(name: String): Flow<AfoilProject> =
-        projectsFlow.map { projects -> projects.first { it.name == name } }
+    override fun getProjectById(id: Long): Flow<AfoilProject> =
+        projectsFlow.map { projects -> projects.first { it.id == id } }
 
     override suspend fun insertProject(project: AfoilProject): Long = 0
 

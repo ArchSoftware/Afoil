@@ -59,12 +59,12 @@ class AirfoilAnalysisViewModel @Inject constructor(
     private var isEmptyFieldAllowed: Boolean by mutableStateOf(true)
 
     private val _projectPreparingState: MutableState<ProjectPreparingState> =
-        mutableStateOf(ProjectPreparingState.IDLE)
+        mutableStateOf(ProjectPreparingState.Idle)
     val projectPreparingState: ProjectPreparingState
         get() = _projectPreparingState.value
 
     val isProjectPreparing by derivedStateOf {
-        _projectPreparingState.value == ProjectPreparingState.PREPARING
+        _projectPreparingState.value == ProjectPreparingState.Preparing
     }
 
     /*
@@ -223,7 +223,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
         val datAirfoilUri = datAirfoilUri ?: return
 
         viewModelScope.launch {
-            _projectPreparingState.value = ProjectPreparingState.PREPARING
+            _projectPreparingState.value = ProjectPreparingState.Preparing
             val datAirfoilDisplayName = contentResolver.getDisplayName(datAirfoilUri) ?: return@launch
             val projectData = AirfoilAnalysisProjectData(
                 datAirfoilDisplayName = datAirfoilDisplayName,
@@ -251,7 +251,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 projectOwnerId = projectId
             )
             projectDataRepository.insertProjectData(data)
-            _projectPreparingState.value = ProjectPreparingState.DONE
+            _projectPreparingState.value = ProjectPreparingState.Done(projectName, projectId)
         }
     }
 
@@ -315,8 +315,8 @@ enum class AirfoilAnalysisPage(@StringRes val titleId: Int) {
     POST_PROCESSING_SETTINGS(R.string.feature_airfoilanalysis_postprocessingsettingspage_title)
 }
 
-enum class ProjectPreparingState {
-    IDLE,
-    PREPARING,
-    DONE
+sealed interface ProjectPreparingState {
+    data object Idle : ProjectPreparingState
+    data object Preparing: ProjectPreparingState
+    data class Done(val projectName: String, val projectId: Long) : ProjectPreparingState
 }

@@ -46,9 +46,9 @@ class MainActivity : ComponentActivity() {
             AfoilTheme {
                 AfoilApp(
                     afoilAppState = appState,
-                    onProjectSetupDone = { projectName ->
+                    onProjectSetupDone = { projectId, projectName ->
                         appState.navigateToComputationMonitor(projectName)
-                        startComputation(projectName)
+                        startComputation(projectId, projectName)
                     },
                     onCancelComputation = {
                         stopComputation()
@@ -58,8 +58,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun startComputation(projectName: String) {
-        val startIntent = ComputationService.createStartIntent(this, projectName)
+    private fun startComputation(projectId: Long, projectName: String) {
+        val startIntent = ComputationService.createStartIntent(this, projectId, projectName)
         ContextCompat.startForegroundService(this, startIntent)
     }
 

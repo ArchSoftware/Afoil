@@ -22,7 +22,7 @@ import com.archsoftware.afoil.navigation.AfoilNavHost
 @Composable
 fun AfoilApp(
     afoilAppState: AfoilAppState,
-    onProjectSetupDone: (projectName: String) -> Unit,
+    onProjectSetupDone: (projectId: Long, projectName: String) -> Unit,
     onCancelComputation: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -51,7 +51,7 @@ internal fun AfoilApp(
     afoilAppState: AfoilAppState,
     showNoProjectsDirSelectedMessage: Boolean,
     onSelectProjectsDir: () -> Unit,
-    onProjectSetupDone: (projectName: String) -> Unit,
+    onProjectSetupDone: (projectId: Long, projectName: String) -> Unit,
     onCancelComputation: () -> Unit,
     modifier: Modifier = Modifier
 ) {

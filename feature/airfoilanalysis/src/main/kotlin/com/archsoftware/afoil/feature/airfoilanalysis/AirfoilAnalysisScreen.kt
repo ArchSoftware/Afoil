@@ -34,19 +34,23 @@ private const val CONTENT_ANIMATION_DURATION = 300
 @Composable
 fun AirfoilAnalysisScreen(
     onNavigateUp: () -> Unit,
-    onDone: (projectName: String) -> Unit,
+    onDone: (projectId: Long, projectName: String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AirfoilAnalysisViewModel = hiltViewModel()
 ) {
     val projectNameHasError by viewModel.projectNameHasError.collectAsStateWithLifecycle()
+    val projectPreparingState = viewModel.projectPreparingState
 
     BackHandler {
         if (!viewModel.onBackPressed()) onNavigateUp()
     }
 
-    LaunchedEffect(viewModel.projectPreparingState) {
-        if (viewModel.projectPreparingState == ProjectPreparingState.DONE) {
-            onDone(viewModel.projectName)
+    LaunchedEffect(projectPreparingState) {
+        if (projectPreparingState is ProjectPreparingState.Done) {
+            onDone(
+                projectPreparingState.projectId,
+                projectPreparingState.projectName
+            )
         }
     }
 
@@ -182,7 +186,7 @@ private fun AirfoilAnalysisScreenPreview() {
     AfoilTheme {
         AirfoilAnalysisScreen(
             onNavigateUp = {},
-            onDone = {}
+            onDone = { _, _ -> }
         )
     }
 }

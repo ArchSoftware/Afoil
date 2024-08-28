@@ -46,18 +46,18 @@ class AfoilComputationManager @Inject constructor(
 
     override fun getComputationProgress(): Flow<Float> = _progress
 
-    override fun startComputation(projectName: String?) {
-        startComputation(projectName) {
+    override fun startComputation(projectId: Long?) {
+        startComputation(projectId) {
             // TODO: Retrieve project from repository and pass projectDataType to project
             //  store and implement getUri(projectName) method in ProjectStore
         }
     }
 
-    override fun startComputation(projectName: String?, computation: suspend () -> Unit) {
+    override fun startComputation(projectId: Long?, computation: suspend () -> Unit) {
         computationJob = Job()
         computationScope = CoroutineScope(computationJob + defaultDispatcher)
         computationScope.launch(exceptionHandler) {
-            if (projectName == null) throw IllegalArgumentException()
+            if (projectId == null || projectId < 0) throw IllegalArgumentException()
 
             _computationState.emit(ComputationManager.State.RUNNING)
 

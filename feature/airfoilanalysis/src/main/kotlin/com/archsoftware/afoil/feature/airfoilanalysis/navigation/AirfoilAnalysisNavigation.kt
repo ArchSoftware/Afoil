@@ -15,7 +15,7 @@ fun NavController.navigateToAirfoilAnalysis(navOptions: NavOptions? = null) = na
 
 fun NavGraphBuilder.airfoilAnalysisScreen(
     onNavigateUp: () -> Unit,
-    onDone: (projectName: String) -> Unit
+    onDone: (projectId: Long, projectName: String) -> Unit
 ) {
     composable(route = AIRFOIL_ANALYSIS_ROUTE) {
         AirfoilAnalysisScreen(

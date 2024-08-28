@@ -8,8 +8,8 @@ interface ComputationManager {
     fun getComputationLogs(): Flow<List<ComputationLog>>
     fun getComputationProgress(): Flow<Float>
 
-    fun startComputation(projectName: String?)
-    fun startComputation(projectName: String?, computation: suspend () -> Unit)
+    fun startComputation(projectId: Long?)
+    fun startComputation(projectId: Long?, computation: suspend () -> Unit)
     fun stopComputation(canceled: Boolean)
 
     enum class State {

@@ -17,6 +17,9 @@ class AfoilProjectRepository @Inject constructor(
             it.map(AfoilProjectEntity::asExternalModel)
         }
 
+    override fun getProjectById(id: Long): Flow<AfoilProject> =
+        afoilProjectDao.getProjectById(id).map(AfoilProjectEntity::asExternalModel)
+
     override suspend fun insertProject(project: AfoilProject): Long =
         afoilProjectDao.insertProject(project.asEntity())
 

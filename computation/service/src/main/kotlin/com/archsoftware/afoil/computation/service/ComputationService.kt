@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
+const val EXTRA_PROJECT_ID = "com.archsoftware.afoil.intent.extra.PROJECT_ID"
 const val EXTRA_PROJECT_NAME = "com.archsoftware.afoil.intent.extra.PROJECT_NAME"
 
 @AndroidEntryPoint
@@ -48,9 +49,10 @@ class ComputationService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val projectName = intent?.getStringExtra(EXTRA_PROJECT_NAME)
+        val projectId = intent?.getLongExtra(EXTRA_PROJECT_ID, -1)
         // Call startForeground() as soon as possible to avoid exceptions
         startForeground(projectName)
-        computationManager.startComputation(projectName)
+        computationManager.startComputation(projectId)
 
         serviceScope.launch {
             computationManager.getComputationProgress().collect { progress ->
@@ -94,8 +96,10 @@ class ComputationService : Service() {
     companion object {
         fun createStartIntent(
             context: Context,
+            projectId: Long,
             projectName: String
         ): Intent = Intent(context, ComputationService::class.java).apply {
+            putExtra(EXTRA_PROJECT_ID, projectId)
             putExtra(EXTRA_PROJECT_NAME, projectName)
         }
 

@@ -23,7 +23,7 @@ class AfoilComputationManagerTest {
     private val testScheduler = TestCoroutineScheduler()
 
     // Test data
-    private val projectName = "My Project"
+    private val projectId = 1L
     private suspend fun computationWithoutException() = delay(1000)
     private suspend fun computationWithException() {
         delay(1000)
@@ -53,7 +53,7 @@ class AfoilComputationManagerTest {
     fun computationStateIsCanceledIfComputationIsStoppedWhileRunning() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.CANCELED
 
-        computationManager.startComputation(projectName) { computationWithoutException() }
+        computationManager.startComputation(projectId) { computationWithoutException() }
         computationManager.stopComputation(true)
         val state = computationManager.getComputationState().first()
 
@@ -65,7 +65,7 @@ class AfoilComputationManagerTest {
     fun computationStateIsFinishedIfComputationIsStoppedWhileNotRunning() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.FINISHED
 
-        computationManager.startComputation(projectName) { computationWithoutException() }
+        computationManager.startComputation(projectId) { computationWithoutException() }
 
         advanceUntilIdle()
 
@@ -83,7 +83,7 @@ class AfoilComputationManagerTest {
     fun computationStateIsErrorIfComputationThrowsException() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.ERROR
 
-        computationManager.startComputation(projectName) { computationWithException() }
+        computationManager.startComputation(projectId) { computationWithException() }
 
         advanceUntilIdle()
 

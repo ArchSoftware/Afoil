@@ -19,7 +19,7 @@ private const val SHARED_AXIS_ANIMATION_DURATION = 300
 fun AfoilNavHost(
     canNavigate: Boolean,
     appState: AfoilAppState,
-    onProjectSetupDone: (projectName: String) -> Unit,
+    onProjectSetupDone: (projectId: Long, projectName: String) -> Unit,
     onCancelComputation: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = HOME_ROUTE
