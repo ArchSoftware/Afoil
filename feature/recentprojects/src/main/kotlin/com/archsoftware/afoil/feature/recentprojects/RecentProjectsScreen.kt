@@ -177,6 +177,7 @@ private fun RecentProjectsScreenPreview() {
                         SelectableAfoilProject(
                             afoilProject = AfoilProject(
                                 name = "My Project $it",
+                                dirUri = "",
                                 projectDataType = ""
                             ),
                             isSelected = false

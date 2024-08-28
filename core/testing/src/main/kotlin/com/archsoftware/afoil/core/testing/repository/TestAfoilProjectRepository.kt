@@ -6,6 +6,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import org.jetbrains.annotations.TestOnly
 
 @TestOnly
@@ -15,7 +16,10 @@ class TestAfoilProjectRepository : ProjectRepository {
 
     override fun getProjects(): Flow<List<AfoilProject>> = projectsFlow
 
-    override suspend fun insertProject(project: AfoilProject) {}
+    override fun getProjectByName(name: String): Flow<AfoilProject> =
+        projectsFlow.map { projects -> projects.first { it.name == name } }
+
+    override suspend fun insertProject(project: AfoilProject): Long = 0
 
     override suspend fun deleteProjects(projects: List<AfoilProject>) {
         projectsFlow.tryEmit(projectsFlow.first() - projects.toSet())

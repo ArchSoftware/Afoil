@@ -1,8 +1,9 @@
 package com.archsoftware.afoil.core.projectstore
 
+import androidx.core.net.toUri
 import com.archsoftware.afoil.core.model.AfoilProject
-import com.archsoftware.afoil.core.model.AfoilProjectData
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
+import com.archsoftware.afoil.core.model.ProjectData
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
 import com.archsoftware.afoil.core.testing.repository.TestUserPreferencesRepository
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -32,6 +33,7 @@ class AfoilProjectStoreTest {
     // Test data
     private val project = AfoilProject(
         name = "Project 1",
+        dirUri = TestAfoilContentResolver.testUri.toString(),
         projectDataType = AirfoilAnalysisProjectData::class.java.name
     )
     private val datAirfoilDisplayName = "NACA0012.dat"
@@ -49,15 +51,16 @@ class AfoilProjectStoreTest {
             pressureContoursGridSize = 50,
             pressureContoursRefiningLevel = 0.5f
         )
-        val projectDataFile = tmpFolder.newFile(AfoilProjectData.displayName)
+        val projectDataFile = tmpFolder.newFile(ProjectData.displayName)
         afoilContentResolver.inputStream = projectDataFile.inputStream()
         afoilContentResolver.outputStream = projectDataFile.outputStream()
 
-        userPreferencesRepository.updateAfoilProjectsDirectory(TestAfoilContentResolver.testUri.toString())
-        projectStore.setProjectDir(project)
-        projectStore.writeProjectData(projectData)
+        userPreferencesRepository.updateAfoilProjectsDirectory(
+            TestAfoilContentResolver.testUri.toString()
+        )
+        projectStore.writeProjectData(project.dirUri.toUri(), projectData)
 
-        val readProjectData = projectStore.readProjectData()
+        val readProjectData = projectStore.readProjectData(project.dirUri.toUri())
 
         assert(readProjectData == projectData)
     }

@@ -6,6 +6,7 @@ import com.archsoftware.afoil.core.model.AfoilProject
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
 import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
+import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectDataRepository
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,6 +36,7 @@ class AirfoilAnalysisViewModelTest {
 
     private val afoilContentResolver = TestAfoilContentResolver()
     private val projectRepository = TestAfoilProjectRepository()
+    private val projectDataRepository = TestAfoilProjectDataRepository()
 
     private lateinit var viewModel: AirfoilAnalysisViewModel
 
@@ -43,7 +45,9 @@ class AirfoilAnalysisViewModelTest {
     private val projects = listOf(
         AfoilProject(
             name = "Project 1",
-            projectDataType = AirfoilAnalysisProjectData::class.java.name)
+            dirUri = TestAfoilContentResolver.testUri.toString(),
+            projectDataType = AirfoilAnalysisProjectData::class.java.name
+        )
     )
     private lateinit var datAirfoilFile: File
     private val panelsNumber = "100"
@@ -65,6 +69,7 @@ class AirfoilAnalysisViewModelTest {
                 ioDispatcher = StandardTestDispatcher()
             ),
             projectRepository = projectRepository,
+            projectDataRepository = projectDataRepository,
             projectStore = TestAfoilProjectStore(),
         )
     }

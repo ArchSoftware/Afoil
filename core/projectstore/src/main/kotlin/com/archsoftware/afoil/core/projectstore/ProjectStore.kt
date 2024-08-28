@@ -1,14 +1,12 @@
 package com.archsoftware.afoil.core.projectstore
 
 import android.net.Uri
-import com.archsoftware.afoil.core.model.AfoilProject
-import com.archsoftware.afoil.core.model.AfoilProjectData
+import com.archsoftware.afoil.core.model.ProjectData
 
 interface ProjectStore {
-    suspend fun createProjectDir(project: AfoilProject)
-    suspend fun setProjectDir(project: AfoilProject)
-    suspend fun writeProjectData(projectData: AfoilProjectData)
-    suspend fun readProjectData(): AfoilProjectData?
-    suspend fun deleteProject(project: AfoilProject)
-    suspend fun copyToProjectDir(sourceUri: Uri?)
+    suspend fun createProjectDir(name: String): Uri?
+    suspend fun writeProjectData(dirUri: Uri, projectData: ProjectData): Uri?
+    suspend fun readProjectData(dirUri: Uri): ProjectData?
+    suspend fun deleteProject(dirUri: Uri)
+    suspend fun copyToProjectDir(dirUri: Uri, sourceUri: Uri)
 }

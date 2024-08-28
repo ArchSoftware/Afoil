@@ -17,9 +17,8 @@ class AfoilProjectRepository @Inject constructor(
             it.map(AfoilProjectEntity::asExternalModel)
         }
 
-    override suspend fun insertProject(project: AfoilProject) {
+    override suspend fun insertProject(project: AfoilProject): Long =
         afoilProjectDao.insertProject(project.asEntity())
-    }
 
     override suspend fun deleteProjects(projects: List<AfoilProject>) {
         afoilProjectDao.deleteProjects(projects.map(AfoilProject::asEntity))

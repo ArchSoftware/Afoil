@@ -17,6 +17,7 @@ dependencies {
     testImplementation(projects.core.testing)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
 
     androidTestImplementation(projects.core.testing)
     androidTestImplementation(libs.androidx.test.core)

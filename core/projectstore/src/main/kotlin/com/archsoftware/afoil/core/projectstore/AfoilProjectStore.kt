@@ -7,8 +7,7 @@ import com.archsoftware.afoil.core.common.AfoilDispatcher
 import com.archsoftware.afoil.core.common.Dispatcher
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
-import com.archsoftware.afoil.core.model.AfoilProject
-import com.archsoftware.afoil.core.model.AfoilProjectData
+import com.archsoftware.afoil.core.model.ProjectData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -27,13 +26,12 @@ class AfoilProjectStore @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     @Dispatcher(AfoilDispatcher.IO) private val ioDispatcher: CoroutineDispatcher
 ) : ProjectStore {
-    private var projectDirUri: Uri? = null
-
-    override suspend fun createProjectDir(project: AfoilProject) {
+    override suspend fun createProjectDir(name: String): Uri? {
         val projectsDirectory =
-            preferencesRepository.getAfoilProjectsDirectory().first() ?: return
+            preferencesRepository.getAfoilProjectsDirectory().first() ?: return null
 
-        return withContext(ioDispatcher) {
+        var projectDirUri: Uri? = null
+        withContext(ioDispatcher) {
             val treeUri = Uri.parse(projectsDirectory)
             val uri = DocumentsContract.buildDocumentUriUsingTree(
                 /* treeUri = */ treeUri,
@@ -44,47 +42,40 @@ class AfoilProjectStore @Inject constructor(
                 projectDirUri = contentResolver.createDocument(
                     parentDocumentUri = uri,
                     mimeType = DocumentsContract.Document.MIME_TYPE_DIR,
-                    displayName = project.name
+                    displayName = name
                 )
             } catch (e: FileNotFoundException) {
                 Log.e("ProjectStore", "Failed to create project directory", e)
             }
         }
+        return projectDirUri
     }
 
-    override suspend fun setProjectDir(project: AfoilProject) {
-        val projectsDirectory =
-            preferencesRepository.getAfoilProjectsDirectory().first() ?: return
-        val treeUri = Uri.parse(projectsDirectory)
-        projectDirUri = contentResolver.findDocument(treeUri, project.name)
-    }
-
-    override suspend fun writeProjectData(projectData: AfoilProjectData) {
-        val projectDirUri = projectDirUri ?: return
-
+    override suspend fun writeProjectData(dirUri: Uri, projectData: ProjectData): Uri? {
+        var projectDataFileUri: Uri? = null
         withContext(ioDispatcher) {
             try {
-                val projectDataFileUri = contentResolver.createDocument(
-                    parentDocumentUri = projectDirUri,
-                    mimeType = AfoilProjectData.mimeType,
-                    displayName = AfoilProjectData.displayName
+                val uri = contentResolver.createDocument(
+                    parentDocumentUri = dirUri,
+                    mimeType = ProjectData.mimeType,
+                    displayName = ProjectData.displayName
                 )
-                requireNotNull(projectDataFileUri)
-                contentResolver.openOutputStream(projectDataFileUri)
+                requireNotNull(uri)
+                contentResolver.openOutputStream(uri)
                     ?.use { outputStream ->
                         Json.encodeToStream(projectData, outputStream)
                     }
+                projectDataFileUri = uri
             } catch (e: Exception) {
                 Log.e("ProjectStore", "Failed to write project data", e)
             }
         }
+        return projectDataFileUri
     }
 
-    override suspend fun readProjectData(): AfoilProjectData? {
-        val projectDirUri = projectDirUri ?: return null
-
-        val projectDataFileUri = Uri.withAppendedPath(projectDirUri, AfoilProjectData.mimeType)
-        var projectData: AfoilProjectData? = null
+    override suspend fun readProjectData(dirUri: Uri): ProjectData? {
+        val projectDataFileUri = Uri.withAppendedPath(dirUri, ProjectData.mimeType)
+        var projectData: ProjectData? = null
 
         return withContext(ioDispatcher) {
             try {
@@ -98,32 +89,23 @@ class AfoilProjectStore @Inject constructor(
         }
     }
 
-    override suspend fun deleteProject(project: AfoilProject) {
-        val projectsDirectory =
-            preferencesRepository.getAfoilProjectsDirectory().first() ?: return
-
+    override suspend fun deleteProject(dirUri: Uri) {
         withContext(ioDispatcher) {
-            val treeUri = Uri.parse(projectsDirectory)
-            val projectDirUri =
-                contentResolver.findDocument(treeUri, project.name) ?: return@withContext
-
             try {
-                contentResolver.deleteDocument(projectDirUri)
+                contentResolver.deleteDocument(dirUri)
             } catch (e: FileNotFoundException) {
                 Log.e("ProjectStore", "Failed to delete project directory", e)
             }
         }
     }
 
-    override suspend fun copyToProjectDir(sourceUri: Uri?) {
-        val projectDirUri = projectDirUri ?: return
-        if (sourceUri == null) return
+    override suspend fun copyToProjectDir(dirUri: Uri, sourceUri: Uri) {
         val displayName = contentResolver.getDisplayName(sourceUri) ?: return
 
         withContext(ioDispatcher) {
             try {
                 val destinationUri = contentResolver.createDocument(
-                    parentDocumentUri = projectDirUri,
+                    parentDocumentUri = dirUri,
                     mimeType = GENERIC_MIME_TYPE,
                     displayName = displayName
                 )

@@ -18,8 +18,10 @@ import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
 import com.archsoftware.afoil.core.common.utils.isValidDoubleInput
 import com.archsoftware.afoil.core.common.utils.isValidIntInput
+import com.archsoftware.afoil.core.data.repository.ProjectDataRepository
 import com.archsoftware.afoil.core.data.repository.ProjectRepository
 import com.archsoftware.afoil.core.model.AfoilProject
+import com.archsoftware.afoil.core.model.AfoilProjectData
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,6 +37,7 @@ class AirfoilAnalysisViewModel @Inject constructor(
     private val contentResolver: UriContentResolver,
     private val datAirfoilReader: DatAirfoilReader,
     private val projectRepository: ProjectRepository,
+    private val projectDataRepository: ProjectDataRepository,
     private val projectStore: ProjectStore
 ) : ViewModel() {
 
@@ -221,10 +224,6 @@ class AirfoilAnalysisViewModel @Inject constructor(
 
         viewModelScope.launch {
             _projectPreparingState.value = ProjectPreparingState.PREPARING
-            val project = AfoilProject(
-                name = projectName,
-                projectDataType = AirfoilAnalysisProjectData::class.java.name
-            )
             val datAirfoilDisplayName = contentResolver.getDisplayName(datAirfoilUri) ?: return@launch
             val projectData = AirfoilAnalysisProjectData(
                 datAirfoilDisplayName = datAirfoilDisplayName,
@@ -237,10 +236,21 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 pressureContoursGridSize = pressureContoursGridSize.toInt(),
                 pressureContoursRefiningLevel = pressureContoursRefiningLevel
             )
-            projectRepository.insertProject(project)
-            projectStore.createProjectDir(project)
-            projectStore.copyToProjectDir(datAirfoilUri)
-            projectStore.writeProjectData(projectData)
+            val projectDirUri = projectStore.createProjectDir(projectName) ?: return@launch
+            projectStore.copyToProjectDir(projectDirUri, datAirfoilUri)
+            val projectDataFileUri =
+                projectStore.writeProjectData(projectDirUri, projectData) ?: return@launch
+            val project = AfoilProject(
+                name = projectName,
+                dirUri = projectDirUri.toString(),
+                projectDataType = AirfoilAnalysisProjectData::class.java.name
+            )
+            val projectId = projectRepository.insertProject(project)
+            val data = AfoilProjectData(
+                uri = projectDataFileUri.toString(),
+                projectOwnerId = projectId
+            )
+            projectDataRepository.insertProjectData(data)
             _projectPreparingState.value = ProjectPreparingState.DONE
         }
     }

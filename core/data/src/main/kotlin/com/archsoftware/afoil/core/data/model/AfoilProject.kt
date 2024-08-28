@@ -7,5 +7,6 @@ fun AfoilProject.asEntity(): AfoilProjectEntity =
     AfoilProjectEntity(
         id = id,
         name = name,
+        dirUri = dirUri,
         projectDataType = projectDataType
     )

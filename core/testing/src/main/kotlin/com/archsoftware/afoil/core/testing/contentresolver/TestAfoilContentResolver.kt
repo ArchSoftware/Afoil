@@ -35,6 +35,6 @@ class TestAfoilContentResolver : UriContentResolver {
     override fun getDisplayName(uri: Uri): String? = null
 
     companion object {
-        val testUri: Uri? = Uri.parse("content://test_uri")
+        val testUri: Uri = Uri.parse("content://test_uri")
     }
 }

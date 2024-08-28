@@ -1,9 +1,9 @@
 package com.archsoftware.afoil.feature.recentprojects
 
 import com.archsoftware.afoil.core.model.AfoilProject
-import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.model.SelectableAfoilProject
 import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
+import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectDataRepository
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,18 +14,22 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(RobolectricTestRunner::class)
 class RecentProjectsViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
     private val projectRepository = TestAfoilProjectRepository()
+    private val projectDataRepository = TestAfoilProjectDataRepository()
     private val projectStore = TestAfoilProjectStore()
 
     // Test data
@@ -34,7 +38,8 @@ class RecentProjectsViewModelTest {
             add(
                 AfoilProject(
                     name = "My Project $it",
-                    projectDataType = AirfoilAnalysisProjectData::class.java.name
+                    dirUri = "",
+                    projectDataType = ""
                 )
             )
         }
@@ -46,6 +51,7 @@ class RecentProjectsViewModelTest {
     fun setup() {
         viewModel = RecentProjectsViewModel(
             projectRepository = projectRepository,
+            projectDataRepository = projectDataRepository,
             projectStore = projectStore
         )
     }
