@@ -2,6 +2,7 @@ package com.archsoftware.afoil.core.testing.projectstore
 
 import android.net.Uri
 import com.archsoftware.afoil.core.model.ProjectData
+import com.archsoftware.afoil.core.model.ProjectNumResult
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import org.jetbrains.annotations.TestOnly
 
@@ -12,6 +13,10 @@ class TestAfoilProjectStore : ProjectStore {
     override suspend fun writeProjectData(dirUri: Uri, projectData: ProjectData): Uri? = null
 
     override suspend fun readProjectData(dirUri: Uri): ProjectData? = null
+
+    override suspend fun writeProjectNumResult(dirUri: Uri, result: ProjectNumResult): Uri? = null
+
+    override suspend fun readProjectNumResult(dirUri: Uri): ProjectNumResult? = null
 
     override suspend fun deleteProject(dirUri: Uri) {}
 

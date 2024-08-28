@@ -8,6 +8,7 @@ import com.archsoftware.afoil.core.common.Dispatcher
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
 import com.archsoftware.afoil.core.model.ProjectData
+import com.archsoftware.afoil.core.model.ProjectNumResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -86,6 +87,44 @@ class AfoilProjectStore @Inject constructor(
                 Log.e("ProjectStore", "Failed to read project data", e)
             }
             projectData
+        }
+    }
+
+    override suspend fun writeProjectNumResult(dirUri: Uri, result: ProjectNumResult): Uri? {
+        var projectNumResultFileUri: Uri? = null
+        withContext(ioDispatcher) {
+            try {
+                val uri = contentResolver.createDocument(
+                    parentDocumentUri = dirUri,
+                    mimeType = ProjectNumResult.mimeType,
+                    displayName = ProjectNumResult.displayName
+                )
+                requireNotNull(uri)
+                contentResolver.openOutputStream(uri)
+                    ?.use { outputStream ->
+                        Json.encodeToStream(result, outputStream)
+                    }
+                projectNumResultFileUri = uri
+            } catch (e: Exception) {
+                Log.e("ProjectStore", "Failed to write project result", e)
+            }
+        }
+        return projectNumResultFileUri
+    }
+
+    override suspend fun readProjectNumResult(dirUri: Uri): ProjectNumResult? {
+        val projectNumResultFileUri = Uri.withAppendedPath(dirUri, ProjectNumResult.mimeType)
+        var projectNumResult: ProjectNumResult? = null
+
+        return withContext(ioDispatcher) {
+            try {
+                contentResolver.openInputStream(projectNumResultFileUri)?.use { inputStream ->
+                    projectNumResult = Json.decodeFromStream(inputStream)
+                }
+            } catch (e: Exception) {
+                Log.e("ProjectStore", "Failed to read project result", e)
+            }
+            projectNumResult
         }
     }
 
