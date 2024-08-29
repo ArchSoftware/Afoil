@@ -12,11 +12,11 @@ class TestAfoilProjectStore : ProjectStore {
 
     override suspend fun writeProjectData(dirUri: Uri, projectData: ProjectData): Uri? = null
 
-    override suspend fun readProjectData(dirUri: Uri): ProjectData? = null
+    override suspend fun readProjectData(uri: Uri): ProjectData? = null
 
     override suspend fun writeProjectNumResult(dirUri: Uri, result: ProjectNumResult): Uri? = null
 
-    override suspend fun readProjectNumResult(dirUri: Uri): ProjectNumResult? = null
+    override suspend fun readProjectNumResult(uri: Uri): ProjectNumResult? = null
 
     override suspend fun deleteProject(dirUri: Uri) {}
 

@@ -74,13 +74,12 @@ class AfoilProjectStore @Inject constructor(
         return projectDataFileUri
     }
 
-    override suspend fun readProjectData(dirUri: Uri): ProjectData? {
-        val projectDataFileUri = Uri.withAppendedPath(dirUri, ProjectData.mimeType)
+    override suspend fun readProjectData(uri: Uri): ProjectData? {
         var projectData: ProjectData? = null
 
         return withContext(ioDispatcher) {
             try {
-                contentResolver.openInputStream(projectDataFileUri)?.use { inputStream ->
+                contentResolver.openInputStream(uri)?.use { inputStream ->
                     projectData = Json.decodeFromStream(inputStream)
                 }
             } catch (e: Exception) {
@@ -112,20 +111,18 @@ class AfoilProjectStore @Inject constructor(
         return projectNumResultFileUri
     }
 
-    override suspend fun readProjectNumResult(dirUri: Uri): ProjectNumResult? {
-        val projectNumResultFileUri = Uri.withAppendedPath(dirUri, ProjectNumResult.mimeType)
+    override suspend fun readProjectNumResult(uri: Uri): ProjectNumResult? {
         var projectNumResult: ProjectNumResult? = null
-
-        return withContext(ioDispatcher) {
+        withContext(ioDispatcher) {
             try {
-                contentResolver.openInputStream(projectNumResultFileUri)?.use { inputStream ->
+                contentResolver.openInputStream(uri)?.use { inputStream ->
                     projectNumResult = Json.decodeFromStream(inputStream)
                 }
             } catch (e: Exception) {
                 Log.e("ProjectStore", "Failed to read project result", e)
             }
-            projectNumResult
         }
+        return projectNumResult
     }
 
     override suspend fun deleteProject(dirUri: Uri) {

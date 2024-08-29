@@ -7,9 +7,9 @@ import com.archsoftware.afoil.core.model.ProjectNumResult
 interface ProjectStore {
     suspend fun createProjectDir(name: String): Uri?
     suspend fun writeProjectData(dirUri: Uri, projectData: ProjectData): Uri?
-    suspend fun readProjectData(dirUri: Uri): ProjectData?
+    suspend fun readProjectData(uri: Uri): ProjectData?
     suspend fun writeProjectNumResult(dirUri: Uri, result: ProjectNumResult): Uri?
-    suspend fun readProjectNumResult(dirUri: Uri): ProjectNumResult?
+    suspend fun readProjectNumResult(uri: Uri): ProjectNumResult?
     suspend fun deleteProject(dirUri: Uri)
     suspend fun copyToProjectDir(dirUri: Uri, sourceUri: Uri)
 }
