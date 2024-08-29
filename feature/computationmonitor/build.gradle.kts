@@ -10,6 +10,7 @@ android {
 dependencies {
     implementation(projects.computation.manager)
     implementation(projects.computation.service)
+    implementation(projects.core.data)
     implementation(projects.core.model)
 
     testImplementation(projects.core.testing)

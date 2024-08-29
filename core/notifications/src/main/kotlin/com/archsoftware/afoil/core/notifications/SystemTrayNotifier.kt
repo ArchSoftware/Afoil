@@ -46,14 +46,14 @@ class SystemTrayNotifier @Inject constructor(
         NotificationManagerCompat.from(context).notify(COMPUTATION_SERVICE_NOTIFICATION_ID, notification)
     }
 
-    override fun createComputationServiceNotification(computationName: String?): Notification {
+    override fun createComputationServiceNotification(projectId: Long?, computationName: String?): Notification {
         ensureComputationServiceNotificationChannelExists()
         computationServiceNotificationBuilder =
             NotificationCompat.Builder(context, COMPUTATION_SERVICE_NOTIFICATION_CHANNEL_ID).apply {
                 setSmallIcon(R.drawable.core_notifications_ic_afoil_notifications)
-                if (computationName != null) {
+                if (projectId != null && computationName != null) {
                     setContentTitle(computationName)
-                    setContentIntent(computationMonitorPendingIntent(computationName))
+                    setContentIntent(computationMonitorPendingIntent(projectId))
                 }
                 // Show notification immediately
                 foregroundServiceBehavior = NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE
@@ -83,11 +83,11 @@ class SystemTrayNotifier @Inject constructor(
     }
 
     private fun computationMonitorPendingIntent(
-        computationName: String
+        projectId: Long?
     ): PendingIntent? {
         val deepLinkIntent = Intent().apply {
             action = Intent.ACTION_VIEW
-            data = "$DEEP_LINK_SCHEME_AND_HOST/$COMPUTATION_MONITOR/$computationName".toUri()
+            data = "$DEEP_LINK_SCHEME_AND_HOST/$COMPUTATION_MONITOR/$projectId".toUri()
             component = ComponentName(
                 /* pkg = */ context.packageName,
                 /* cls = */ TARGET_ACTIVITY_NAME,

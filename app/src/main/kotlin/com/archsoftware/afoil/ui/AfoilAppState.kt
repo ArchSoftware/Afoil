@@ -89,12 +89,12 @@ data class AfoilAppState(
         }
     }
 
-    fun navigateToComputationMonitor(projectName: String) {
+    fun navigateToComputationMonitor(projectId: Long) {
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id)
             launchSingleTop = true
         }
 
-        navController.navigateToComputationMonitor(projectName, navOptions)
+        navController.navigateToComputationMonitor(projectId, navOptions)
     }
 }

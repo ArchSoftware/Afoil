@@ -4,5 +4,5 @@ import android.app.Notification
 
 interface Notifier {
     fun updateComputationServiceNotification(progress: Int)
-    fun createComputationServiceNotification(computationName: String?): Notification
+    fun createComputationServiceNotification(projectId: Long?, computationName: String?): Notification
 }

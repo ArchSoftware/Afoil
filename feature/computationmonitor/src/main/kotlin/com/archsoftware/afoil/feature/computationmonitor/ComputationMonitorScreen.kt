@@ -46,10 +46,11 @@ import com.archsoftware.afoil.core.ui.ComputationLogRow
 fun ComputationMonitorScreen(
     onNavigateUp: () -> Unit,
     onCancel: () -> Unit,
-    onGoToResults: (projectName: String) -> Unit,
+    onGoToResults: (projectId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ComputationMonitorViewModel = hiltViewModel()
 ) {
+    val projectName by viewModel.projectName.collectAsStateWithLifecycle()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val logs by viewModel.logs.collectAsStateWithLifecycle()
     val progress by viewModel.progress.collectAsStateWithLifecycle()
@@ -57,7 +58,7 @@ fun ComputationMonitorScreen(
     var confirmationDialogRequester by remember { mutableStateOf(CancelConfirmationDialogRequester.NONE) }
 
     ComputationMonitorScreen(
-        projectName = viewModel.projectName,
+        projectName = projectName,
         state = state,
         logs = logs,
         progress = progress,
@@ -84,7 +85,7 @@ fun ComputationMonitorScreen(
             confirmationDialogRequester = CancelConfirmationDialogRequester.NONE
         },
         onNavigateUp = onNavigateUp,
-        onGoToResults = { onGoToResults(viewModel.projectName) },
+        onGoToResults = { onGoToResults(viewModel.projectId) },
         modifier = modifier
     )
 }

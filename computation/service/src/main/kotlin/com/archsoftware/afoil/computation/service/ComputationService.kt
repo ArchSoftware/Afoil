@@ -51,7 +51,7 @@ class ComputationService : Service() {
         val projectName = intent?.getStringExtra(EXTRA_PROJECT_NAME)
         val projectId = intent?.getLongExtra(EXTRA_PROJECT_ID, -1)
         // Call startForeground() as soon as possible to avoid exceptions
-        startForeground(projectName)
+        startForeground(projectId, projectName)
         computationManager.startComputation(projectId)
 
         serviceScope.launch {
@@ -80,11 +80,11 @@ class ComputationService : Service() {
         computationManager.stopComputation(canceled)
     }
 
-    private fun startForeground(computationName: String?) {
+    private fun startForeground(projectId: Long?, computationName: String?) {
         ServiceCompat.startForeground(
             /* service = */ this,
             /* id = */ SystemTrayNotifier.COMPUTATION_SERVICE_NOTIFICATION_ID,
-            /* notification = */ notifier.createComputationServiceNotification(computationName),
+            /* notification = */ notifier.createComputationServiceNotification(projectId, computationName),
             /* foregroundServiceType = */ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
             } else {

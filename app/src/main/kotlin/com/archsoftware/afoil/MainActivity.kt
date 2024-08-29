@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                 AfoilApp(
                     afoilAppState = appState,
                     onProjectSetupDone = { projectId, projectName ->
-                        appState.navigateToComputationMonitor(projectName)
+                        appState.navigateToComputationMonitor(projectId)
                         startComputation(projectId, projectName)
                     },
                     onCancelComputation = {

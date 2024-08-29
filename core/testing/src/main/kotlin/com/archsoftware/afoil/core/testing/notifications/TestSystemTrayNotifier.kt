@@ -6,7 +6,7 @@ import com.archsoftware.afoil.core.notifications.Notifier
 class TestSystemTrayNotifier : Notifier {
     override fun updateComputationServiceNotification(progress: Int) {}
 
-    override fun createComputationServiceNotification(computationName: String?): Notification {
+    override fun createComputationServiceNotification(projectId: Long?, computationName: String?): Notification {
         return Notification()
     }
 }
