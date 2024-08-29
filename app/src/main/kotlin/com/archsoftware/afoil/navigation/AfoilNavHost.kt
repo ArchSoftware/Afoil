@@ -55,9 +55,7 @@ fun AfoilNavHost(
     ) {
         homeScreen(
             canNavigate = canNavigate,
-            onDestinationSelected = { destination ->
-                appState.navigateToTopLevelDestination(destination)
-            }
+            onDestinationSelected = appState::navigateToTopLevelDestination
         )
         airfoilAnalysisScreen(
             onNavigateUp = appState.navController::navigateUp,
