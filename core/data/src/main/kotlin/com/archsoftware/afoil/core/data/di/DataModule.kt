@@ -2,10 +2,12 @@ package com.archsoftware.afoil.core.data.di
 
 import com.archsoftware.afoil.core.data.repository.AfoilProjectDataRepository
 import com.archsoftware.afoil.core.data.repository.AfoilProjectNumResultRepository
+import com.archsoftware.afoil.core.data.repository.AfoilProjectPostResultRepository
 import com.archsoftware.afoil.core.data.repository.AfoilProjectRepository
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
 import com.archsoftware.afoil.core.data.repository.ProjectDataRepository
 import com.archsoftware.afoil.core.data.repository.ProjectNumResultRepository
+import com.archsoftware.afoil.core.data.repository.ProjectPostResultRepository
 import com.archsoftware.afoil.core.data.repository.ProjectRepository
 import com.archsoftware.afoil.core.data.repository.UserPreferencesRepository
 import dagger.Binds
@@ -30,6 +32,11 @@ internal interface DataModule {
     fun bindsProjectNumResultRepository(
         projectNumResultRepository: AfoilProjectNumResultRepository
     ): ProjectNumResultRepository
+
+    @Binds
+    fun bindsProjectPostResultRepository(
+        projectPostResultRepository: AfoilProjectPostResultRepository
+    ): ProjectPostResultRepository
 
     @Binds
     fun bindsPreferencesRepository(

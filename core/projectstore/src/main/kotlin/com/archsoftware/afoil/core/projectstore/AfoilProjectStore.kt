@@ -9,6 +9,7 @@ import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
 import com.archsoftware.afoil.core.model.ProjectData
 import com.archsoftware.afoil.core.model.ProjectNumResult
+import com.archsoftware.afoil.core.model.ProjectPostResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -123,6 +124,22 @@ class AfoilProjectStore @Inject constructor(
             }
         }
         return projectNumResult
+    }
+
+    override suspend fun writeProjectPostResult(dirUri: Uri, result: ProjectPostResult): Uri? {
+        var postResultFileUri: Uri? = null
+        withContext(ioDispatcher) {
+            try {
+                postResultFileUri = contentResolver.createDocument(
+                    parentDocumentUri = dirUri,
+                    mimeType = ProjectPostResult.mimeType,
+                    displayName = result.displayName
+                )
+            } catch (e: Exception) {
+                Log.e("ProjectStore", "Failed to write post result", e)
+            }
+        }
+        return postResultFileUri
     }
 
     override suspend fun deleteProject(dirUri: Uri) {
