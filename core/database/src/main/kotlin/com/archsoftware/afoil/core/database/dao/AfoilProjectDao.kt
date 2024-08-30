@@ -15,7 +15,7 @@ interface AfoilProjectDao {
     @Query("SELECT * FROM $AFOIL_PROJECTS_TABLE_NAME")
     fun getProjects(): Flow<List<AfoilProjectEntity>>
 
-    @Query("SELECT * FROM $AFOIL_PROJECTS_TABLE_NAME WHERE name = :id")
+    @Query("SELECT * FROM $AFOIL_PROJECTS_TABLE_NAME WHERE id = :id")
     fun getProjectById(id: Long): Flow<AfoilProjectEntity>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
