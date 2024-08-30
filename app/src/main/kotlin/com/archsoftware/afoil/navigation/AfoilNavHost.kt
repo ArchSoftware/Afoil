@@ -8,6 +8,7 @@ import com.archsoftware.afoil.core.designsystem.util.sharedAxisEnter
 import com.archsoftware.afoil.core.designsystem.util.sharedAxisExit
 import com.archsoftware.afoil.feature.airfoilanalysis.navigation.airfoilAnalysisScreen
 import com.archsoftware.afoil.feature.computationmonitor.navigation.computationMonitorScreen
+import com.archsoftware.afoil.feature.computationresults.navigation.computationResultsScreen
 import com.archsoftware.afoil.feature.recentprojects.navigation.recentProjectsScreen
 import com.archsoftware.afoil.ui.AfoilAppState
 import com.archsoftware.afoil.ui.home.navigation.HOME_ROUTE
@@ -70,7 +71,8 @@ fun AfoilNavHost(
         computationMonitorScreen(
             onNavigateUp = appState.navController::navigateUp,
             onCancel = onCancelComputation,
-            onGoToResults = { /* TODO */ }
+            onGoToResults = appState::navigateToComputationResults
         )
+        computationResultsScreen()
     }
 }

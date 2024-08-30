@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Plot names -->
+    <string name="streamlines_plot">Streamlines plot</string>
+    <string name="contours_plot">Contours plot</string>
+    <string name="pressure_plot">Pressure plot</string>
+</resources>

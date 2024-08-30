@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_computationresults_title">%1$s results</string>
+    <string name="feature_computationresults_postprocessing_results">Post-processing results</string>
+    <string name="feature_computationresults_openclose_drawer_content_desc">Open/close drawer</string>
+
+    <string name="feature_computationresults_numericalresultspage_title">Numerical results</string>
+    <string name="feature_computationresults_numericalresultspage_aero_coef">
+        Aerodynamic coefficients
+    </string>
+    <string name="feature_computationresults_numericalresultspage_cp">CP</string>
+    <string name="feature_computationresults_numericalresultspage_cl">CL</string>
+    <string name="feature_computationresults_numericalresultspage_cd">CD</string>
+    <string name="feature_computationresults_numericalresultspage_cm">CM</string>
+    <string name="feature_computationresults_numericalresultspage_more_details">More details</string>
+    <string name="feature_computationresults_numericalresultspage_expand_more_content_desc">
+        Expand/collapse more details
+    </string>
+    <string name="feature_computationresults_numericalresultspage_body_stream_fun">
+        Body streamline function
+    </string>
+    <string name="feature_computationresults_numericalresultspage_psi0">
+        \u03A80
+    </string>
+    <string name="feature_computationresults_numericalresultspage_vort_dist">
+        Nodal vorticity distribution
+    </string>
+    <string name="feature_computationresults_numericalresultspage_vort_dist_helper_text">
+        Nodes are ordered in counterclockwise direction starting from upper T.E.
+    </string>
+    <string name="feature_computationresults_numericalresultspage_gamma_at_node">
+        \u03B3 at node %1$s
+    </string>
+</resources>

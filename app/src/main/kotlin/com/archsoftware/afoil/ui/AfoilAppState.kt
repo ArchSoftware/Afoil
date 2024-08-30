@@ -12,6 +12,7 @@ import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import com.archsoftware.afoil.core.data.repository.PreferencesRepository
 import com.archsoftware.afoil.feature.airfoilanalysis.navigation.navigateToAirfoilAnalysis
 import com.archsoftware.afoil.feature.computationmonitor.navigation.navigateToComputationMonitor
+import com.archsoftware.afoil.feature.computationresults.navigation.navigateToComputationResults
 import com.archsoftware.afoil.feature.recentprojects.navigation.navigateToRecentProjects
 import com.archsoftware.afoil.navigation.TopLevelDestination
 import com.archsoftware.afoil.ui.home.navigation.navigateToHome
@@ -96,5 +97,14 @@ data class AfoilAppState(
         }
 
         navController.navigateToComputationMonitor(projectId, navOptions)
+    }
+
+    fun navigateToComputationResults(projectId: Long) {
+        val navOptions = navOptions {
+            popUpTo(navController.graph.findStartDestination().id)
+            launchSingleTop = true
+        }
+
+        navController.navigateToComputationResults(projectId, navOptions)
     }
 }
