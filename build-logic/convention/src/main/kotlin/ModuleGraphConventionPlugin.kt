@@ -5,11 +5,11 @@ import org.gradle.api.artifacts.ProjectDependency
 
 class ModuleGraphConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        with(target) {
+        target.afterEvaluate {
             val hasProjectDependencies =
-                configurations.getByName("implementation").dependencies.count {
+                configurations.getByName("implementation").dependencies.any {
                     it is ProjectDependency
-                } > 0
+                }
             // Configure ModuleGraph plugin for modules with at least one project dependency only
             // otherwise IllegalArgumentException is thrown
             if (hasProjectDependencies) {
