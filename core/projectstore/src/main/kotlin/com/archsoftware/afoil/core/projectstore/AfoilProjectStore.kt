@@ -3,6 +3,7 @@ package com.archsoftware.afoil.core.projectstore
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.util.Log
+import androidx.core.net.toUri
 import com.archsoftware.afoil.core.common.AfoilDispatcher
 import com.archsoftware.afoil.core.common.Dispatcher
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
@@ -34,7 +35,7 @@ class AfoilProjectStore @Inject constructor(
 
         var projectDirUri: Uri? = null
         withContext(ioDispatcher) {
-            val treeUri = Uri.parse(projectsDirectory)
+            val treeUri = projectsDirectory.toUri()
             val uri = DocumentsContract.buildDocumentUriUsingTree(
                 /* treeUri = */ treeUri,
                 /* documentId = */ DocumentsContract.getTreeDocumentId(treeUri)

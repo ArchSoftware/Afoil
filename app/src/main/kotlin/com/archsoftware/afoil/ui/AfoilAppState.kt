@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.core.net.toUri
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -50,7 +51,7 @@ data class AfoilAppState(
 ) {
     val showNoProjectsDirSelectedMessage: StateFlow<Boolean> =
         userPreferencesRepository.getAfoilProjectsDirectory().map {
-            it == null || !contentResolver.checkIfTreeUriExists(Uri.parse(it))
+            it == null || !contentResolver.checkIfTreeUriExists(it.toUri())
         }
             .stateIn(
                 scope = coroutineScope,

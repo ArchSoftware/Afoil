@@ -1,6 +1,7 @@
 package com.archsoftware.afoil.core.testing.contentresolver
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
 import org.jetbrains.annotations.TestOnly
 import java.io.InputStream
@@ -35,6 +36,6 @@ class TestAfoilContentResolver : UriContentResolver {
     override fun getDisplayName(uri: Uri): String? = null
 
     companion object {
-        val testUri: Uri = Uri.parse("content://test_uri")
+        val testUri: Uri = "content://test_uri".toUri()
     }
 }
