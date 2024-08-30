@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.afoil.android.library)
     alias(libs.plugins.afoil.android.hilt)
     alias(libs.plugins.afoil.kotlinx.serialization)
+    alias(libs.plugins.afoil.modulegraph)
 }
 
 android {

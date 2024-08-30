@@ -20,6 +20,7 @@ kotlin = "1.9.23"
 kotlinxCoroutines = "1.8.1"
 kotlinxSerialization = "1.6.3"
 ksp = "1.9.23-1.0.20"
+modulegraph = "0.10.0"
 robolectric = "4.13"
 room = "2.6.1"
 
@@ -60,6 +61,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+modulegraph-gradlePlugin = { group = "dev.iurysouza", name = "modulegraph", version.ref = "modulegraph" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -69,6 +71,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 
 # Plugins defined by this project
 afoil-android-application = { id = "afoil.android.application", version = "unspecified" }
@@ -79,3 +82,4 @@ afoil-android-library = { id = "afoil.android.library", version = "unspecified" 
 afoil-android-library-compose = { id = "afoil.android.library.compose", version = "unspecified" }
 afoil-android-room = { id = "afoil.android.room", version = "unspecified" }
 afoil-kotlinx-serialization = { id = "afoil.kotlinx.serialization", version = "unspecified" }
+afoil-modulegraph = { id = "afoil.modulegraph", version = "unspecified" }

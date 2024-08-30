@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.afoil.android.application)
     alias(libs.plugins.afoil.android.application.compose)
     alias(libs.plugins.afoil.android.hilt)
+    alias(libs.plugins.afoil.modulegraph)
 }
 
 android {

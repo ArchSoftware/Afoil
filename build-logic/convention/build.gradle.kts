@@ -7,6 +7,7 @@ group = "com.archsoftware.afoil.buildlogic"
 dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.modulegraph.gradlePlugin)
 }
 
 gradlePlugin {
@@ -42,6 +43,10 @@ gradlePlugin {
         register("kotlinxSerialization") {
             id = "afoil.kotlinx.serialization"
             implementationClass = "KotlinSerializationConventionPlugin"
+        }
+        register("moduleGraph") {
+            id = "afoil.modulegraph"
+            implementationClass = "ModuleGraphConventionPlugin"
         }
     }
 }
