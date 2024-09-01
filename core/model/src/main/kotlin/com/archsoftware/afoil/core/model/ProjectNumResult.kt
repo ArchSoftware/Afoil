@@ -17,7 +17,6 @@ sealed class ProjectNumResult {
 data class AirfoilAnalysisNumResult(
     val gammas: List<Double>,
     val psi0: Double,
-    val cp: Double,
     val cl: Double,
     val cd: Double,
     val cm: Double

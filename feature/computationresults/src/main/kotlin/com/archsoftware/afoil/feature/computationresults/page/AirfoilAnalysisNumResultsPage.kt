@@ -57,17 +57,6 @@ fun AirfoilAnalysisNumResultsPage(
         )
         NumResultRow(
             name = stringResource(
-                id = R.string.feature_computationresults_numericalresultspage_cp
-            ).subscript(
-                start = 1,
-                end = 2,
-                subscriptStyle = MaterialTheme.typography.bodySmall
-            ),
-            value = numResult.cp,
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
-        )
-        NumResultRow(
-            name = stringResource(
                 id = R.string.feature_computationresults_numericalresultspage_cl
             ).subscript(
                 start = 1,
@@ -193,7 +182,6 @@ private fun AirfoilAnalysisNumResultsPagePreview() {
                     0.005
                 ),
                 psi0 = 0.0,
-                cp = 0.0,
                 cl = 0.0,
                 cd = 0.0,
                 cm = 0.0
