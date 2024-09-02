@@ -11,6 +11,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/ArchSoftware/afoil-engine")
+            credentials {
+                val gprUser: String? by settings
+                val gprKey: String? by settings
+                username = gprUser ?: System.getenv("GITHUB_USERNAME")
+                password = gprKey ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
 

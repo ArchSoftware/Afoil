@@ -1,5 +1,6 @@
 [versions]
 accompanist = "0.34.0"
+afoilEngine = "0.1.0"
 androidGradlePlugin = "8.5.2"
 androidxActivity = "1.9.1"
 androidxComposeBom = "2024.08.00"
@@ -62,6 +63,9 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 modulegraph-gradlePlugin = { group = "dev.iurysouza", name = "modulegraph", version.ref = "modulegraph" }
+
+# GitHub Packages Registry dependencies
+afoil-engine = { group = "com.archsoftware.afoil", name = "engine", version.ref = "afoilEngine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
