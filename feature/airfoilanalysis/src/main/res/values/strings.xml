@@ -2,7 +2,7 @@
 <resources>
     <string name="feature_airfoilanalysis_title">Airfoil analysis</string>
     <string name="feature_airfoilanalysis_navigateup_content_desc">Back</string>
-    <string name="feature_airfoilanalysis_input_guidelines">
+    <string name="feature_airfoilanalysis_value_input_helper_text">
         Use dot as decimal separator. Exponential notation supported.
     </string>
 
@@ -26,8 +26,14 @@
     </string>
 
     <string name="feature_airfoilanalysis_airfoildatapage_title">Airfoil data</string>
+    <string name="feature_airfoilanalysis_airfoildatapage_datairfoil_helper_text">
+        Only Selig format airfoils are supported.
+    </string>
     <string name="feature_airfoilanalysis_airfoildatapage_open_datairfoil">Open .dat</string>
     <string name="feature_airfoilanalysis_airfoildatapage_paneling_options">Paneling options</string>
+    <string name="feature_airfoilanalysis_airfoildatapage_paneling_options_helper_text">
+        Usually \u007E160 panels produce good results.
+    </string>
     <string name="feature_airfoilanalysis_airfoildatapage_panels_number">Panels number</string>
     <string name="feature_airfoilanalysis_airfoildatapage_datairfoil_placeholder">
         No airfoil selected

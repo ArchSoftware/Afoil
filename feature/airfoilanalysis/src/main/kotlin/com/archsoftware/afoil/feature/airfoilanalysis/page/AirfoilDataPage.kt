@@ -50,11 +50,16 @@ fun AirfoilDataPage(
         title = stringResource(id = AirfoilAnalysisPage.AIRFOIL_DATA.titleId),
         modifier = modifier
     ) {
+        Text(
+            text = stringResource(id = R.string.feature_airfoilanalysis_airfoildatapage_datairfoil_helper_text),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(vertical = 16.dp)
+        )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
                 .fillMaxWidth()
         ) {
             Text(
@@ -90,7 +95,7 @@ fun AirfoilDataPage(
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = stringResource(id = R.string.feature_airfoilanalysis_input_guidelines),
+            text = stringResource(id = R.string.feature_airfoilanalysis_airfoildatapage_paneling_options_helper_text),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(vertical = 16.dp)
         )
@@ -101,7 +106,7 @@ fun AirfoilDataPage(
             keyboardType = KeyboardType.Number,
             onValueChange = onPanelsNumberChange,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
                 .fillMaxWidth()
         )
     }

@@ -34,7 +34,7 @@ fun FluidDataPage(
         modifier = modifier
     ) {
         Text(
-            text = stringResource(id = R.string.feature_airfoilanalysis_input_guidelines),
+            text = stringResource(id = R.string.feature_airfoilanalysis_value_input_helper_text),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(vertical = 16.dp)
         )
