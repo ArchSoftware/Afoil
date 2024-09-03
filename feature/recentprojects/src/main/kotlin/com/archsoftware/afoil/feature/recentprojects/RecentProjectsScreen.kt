@@ -39,7 +39,7 @@ import com.archsoftware.afoil.core.ui.AfoilProjectItem
 @Composable
 fun RecentProjectsScreen(
     onNavigateUp: () -> Unit,
-    onProjectClick: (projectName: String) -> Unit,
+    onProjectClick: (projectId: Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecentProjectsViewModel = hiltViewModel()
 ) {
@@ -52,7 +52,7 @@ fun RecentProjectsScreen(
         recentProjects = recentProjects,
         onProjectClick = { project ->
             if (!viewModel.onProjectClick(project)) {
-                onProjectClick(project.name)
+                onProjectClick(project.id)
             }
         },
         onNavigateUp = onNavigateUp,

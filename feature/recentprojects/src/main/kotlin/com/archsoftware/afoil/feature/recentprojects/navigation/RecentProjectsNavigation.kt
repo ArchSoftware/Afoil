@@ -15,7 +15,7 @@ fun NavController.navigateToRecentProjects(navOptions: NavOptions? = null) = nav
 
 fun NavGraphBuilder.recentProjectsScreen(
     onNavigateUp: () -> Unit,
-    onProjectClick: (projectName: String) -> Unit
+    onProjectClick: (projectId: Long) -> Unit
 ) {
     composable(route = RECENT_PROJECTS_ROUTE) {
         RecentProjectsScreen(
