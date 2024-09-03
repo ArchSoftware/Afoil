@@ -52,7 +52,7 @@ class AfoilContentResolver @Inject constructor(
     override fun findDocument(treeUri: Uri, displayName: String): Uri? {
         val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(
             /* treeUri = */ treeUri,
-            /* parentDocumentId = */ DocumentsContract.getTreeDocumentId(treeUri)
+            /* parentDocumentId = */ DocumentsContract.getDocumentId(treeUri)
         )
         try {
             val cursor = contentResolver.query(
