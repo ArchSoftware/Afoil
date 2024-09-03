@@ -28,6 +28,16 @@ jobs:
             - name: Check build-logic
               run: ./gradlew check -p build-logic
 
+            - name: Create and push new module graphs
+              run: |
+                ./gradlew createModuleGraph
+                if ! git diff-index --quiet --ignore-submodules --ignore-cr-at-eol HEAD --; then
+                  git config user.name 'github-actions[bot]'
+                  git config user.email 'github-actions[bot]@users.noreply.github.com'
+                  git add \*.md
+                  git commit -m 'docs: update module graphs'
+                fi
+
             - name: Build APK
               run: ./gradlew assembleDebug
               env:
