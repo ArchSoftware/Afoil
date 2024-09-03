@@ -64,7 +64,7 @@ fun AfoilNavHost(
         )
         recentProjectsScreen(
             onNavigateUp = appState.navController::navigateUp,
-            onProjectClick = { /* TODO */ }
+            onProjectClick = appState::navigateToComputationResults
         )
 
         // Not directly reachable destinations
