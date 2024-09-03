@@ -20,6 +20,8 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.projectstore)
 
+    implementation(libs.afoil.engine)
+
     testImplementation(projects.core.testing)
     testImplementation(kotlin("test"))
     testImplementation(libs.kotlinx.coroutines.test)
