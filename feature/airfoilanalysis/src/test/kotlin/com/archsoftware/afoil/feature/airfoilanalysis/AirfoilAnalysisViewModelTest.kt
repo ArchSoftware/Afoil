@@ -1,10 +1,10 @@
 package com.archsoftware.afoil.feature.airfoilanalysis
 
 import androidx.compose.runtime.snapshots.Snapshot
-import com.archsoftware.afoil.core.common.datairfoilreader.DatAirfoilReader
 import com.archsoftware.afoil.core.model.AfoilProject
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
+import com.archsoftware.afoil.core.testing.datairfoilreader.TestDatAirfoilReader
 import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectDataRepository
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
@@ -12,17 +12,14 @@ import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.io.File
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
@@ -31,12 +28,10 @@ class AirfoilAnalysisViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    @get:Rule
-    val tmpFolder: TemporaryFolder = TemporaryFolder.builder().assureDeletion().build()
-
     private val afoilContentResolver = TestAfoilContentResolver()
     private val projectRepository = TestAfoilProjectRepository()
     private val projectDataRepository = TestAfoilProjectDataRepository()
+    private val datAirfoilReader = TestDatAirfoilReader()
 
     private lateinit var viewModel: AirfoilAnalysisViewModel
 
@@ -49,19 +44,7 @@ class AirfoilAnalysisViewModelTest {
             projectDataType = AirfoilAnalysisProjectData::class.java.name
         )
     )
-    private lateinit var datAirfoilFile: File
-    private val validAirfoil =
-        " NACA 0012 AIRFOILS\n" +
-                "1.0000000 0.0012600\n" +
-                "0.9994161 0.0013419\n" +
-                "0.9994161 -.0013419\n" +
-                "1.0000000 -.0012600\n"
-    private val invalidAirfoil =
-        " NACA 0012 AIRFOILS\n" +
-                "1.0000000 0.0012600   0.00099\n" +
-                "0.9994161 0.0013419\n" +
-                "0.9994161 -.0013419\n" +
-                "1.0000000 -.0012600\n"
+    private val airfoilName = "NACA 0012"
     private val panelsNumber = "100"
     private val reynoldsNumber = "20e3"
     private val machNumber = "0.3"
@@ -71,15 +54,9 @@ class AirfoilAnalysisViewModelTest {
 
     @Before
     fun setup() {
-        datAirfoilFile = tmpFolder.newFile("naca0012.dat")
-        datAirfoilFile.writeText(validAirfoil)
-
         viewModel = AirfoilAnalysisViewModel(
             contentResolver = afoilContentResolver,
-            datAirfoilReader = DatAirfoilReader(
-                contentResolver = afoilContentResolver,
-                ioDispatcher = StandardTestDispatcher()
-            ),
+            datAirfoilReader = datAirfoilReader,
             projectRepository = projectRepository,
             projectDataRepository = projectDataRepository,
             projectStore = TestAfoilProjectStore(),
@@ -88,8 +65,7 @@ class AirfoilAnalysisViewModelTest {
 
     @Test
     fun showSnackbarIfSelectedDatAirfoilIsInvalid() = runTest {
-        datAirfoilFile.writeText(invalidAirfoil)
-        afoilContentResolver.inputStream = datAirfoilFile.inputStream()
+        datAirfoilReader.isValid = false
         viewModel.onDatAirfoilSelected(TestAfoilContentResolver.testUri)
 
         advanceUntilIdle()
@@ -183,13 +159,14 @@ class AirfoilAnalysisViewModelTest {
     @Test
     fun airfoilDataPageStillDisplayedIfDataIsInvalid() = runTest {
         viewModel.pageIndex.value = 1
+        datAirfoilReader.isValid = true
+        datAirfoilReader.name = airfoilName
 
         viewModel.onDatAirfoilSelected(null)
         viewModel.onPanelsNumberChange(invalidValue)
         viewModel.onNextClick()
         assert(viewModel.currentPage == AirfoilAnalysisPage.AIRFOIL_DATA)
 
-        afoilContentResolver.inputStream = datAirfoilFile.inputStream()
         viewModel.onDatAirfoilSelected(TestAfoilContentResolver.testUri)
 
         advanceUntilIdle()
@@ -202,7 +179,6 @@ class AirfoilAnalysisViewModelTest {
         viewModel.onNextClick()
         assert(viewModel.currentPage == AirfoilAnalysisPage.AIRFOIL_DATA)
 
-        afoilContentResolver.inputStream = datAirfoilFile.inputStream()
         viewModel.onDatAirfoilSelected(TestAfoilContentResolver.testUri)
 
         advanceUntilIdle()

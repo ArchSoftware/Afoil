@@ -14,10 +14,10 @@ import javax.inject.Inject
 class DatAirfoilReader @Inject constructor(
     private val contentResolver: UriContentResolver,
     @Dispatcher(AfoilDispatcher.IO) private val ioDispatcher: CoroutineDispatcher
-) {
+) : AirfoilReader {
 
     @Throws(IOException::class)
-    suspend fun checkValidity(uri: Uri?): Boolean {
+    override suspend fun checkValidity(uri: Uri?): Boolean {
         return withContext(ioDispatcher) {
             if (uri != null) {
                 contentResolver.openInputStream(uri)?.use { inputStream ->
@@ -45,7 +45,7 @@ class DatAirfoilReader @Inject constructor(
     }
 
     @Throws(IOException::class)
-    suspend fun readName(uri: Uri?): String? {
+    override suspend fun readName(uri: Uri?): String? {
         var line: String? = null
         return withContext(ioDispatcher) {
             if (uri != null) {
@@ -60,7 +60,7 @@ class DatAirfoilReader @Inject constructor(
     }
 
     @Throws(IOException::class)
-    suspend fun readCoordinates(uri: Uri?): List<Coordinate> {
+    override suspend fun readCoordinates(uri: Uri?): List<Coordinate> {
         val coordinates = mutableListOf<Coordinate>()
         withContext(ioDispatcher) {
             if (uri != null) {

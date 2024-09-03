@@ -15,7 +15,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
-import com.archsoftware.afoil.core.common.datairfoilreader.DatAirfoilReader
+import com.archsoftware.afoil.core.common.datairfoilreader.AirfoilReader
 import com.archsoftware.afoil.core.common.utils.isValidDoubleInput
 import com.archsoftware.afoil.core.common.utils.isValidIntInput
 import com.archsoftware.afoil.core.data.repository.ProjectDataRepository
@@ -35,7 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AirfoilAnalysisViewModel @Inject constructor(
     private val contentResolver: UriContentResolver,
-    private val datAirfoilReader: DatAirfoilReader,
+    private val datAirfoilReader: AirfoilReader,
     private val projectRepository: ProjectRepository,
     private val projectDataRepository: ProjectDataRepository,
     private val projectStore: ProjectStore
