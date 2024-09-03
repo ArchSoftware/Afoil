@@ -2,6 +2,7 @@ package com.archsoftware.afoil.core.testing.manager
 
 import com.archsoftware.afoil.computation.manager.ComputationManager
 import com.archsoftware.afoil.core.model.ComputationLog
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +22,7 @@ class TestAfoilComputationManager : ComputationManager {
         _computationState.tryEmit(ComputationManager.State.RUNNING)
     }
 
-    override fun startComputation(projectId: Long?, computation: suspend () -> Unit) {}
+    override fun startComputation(projectId: Long?, computation: suspend CoroutineScope.(id: Long) -> Unit) {}
 
     override fun stopComputation(canceled: Boolean) {
         if (canceled) _computationState.tryEmit(ComputationManager.State.CANCELED)

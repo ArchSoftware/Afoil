@@ -5,8 +5,11 @@ import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -65,6 +68,11 @@ class AfoilComputationManagerTest {
     fun computationStateIsFinishedIfComputationIsStoppedWhileNotRunning() = runTest(testScheduler) {
         val expectedState = ComputationManager.State.FINISHED
 
+        val states = mutableListOf<ComputationManager.State>()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            computationManager.getComputationState().toList(states)
+        }
+
         computationManager.startComputation(projectId) { computationWithoutException() }
 
         advanceUntilIdle()
@@ -73,9 +81,7 @@ class AfoilComputationManagerTest {
 
         advanceUntilIdle()
 
-        val state = computationManager.getComputationState().first()
-
-        assertEquals(expectedState, state)
+        assertEquals(expectedState, states.last())
         assertTrue(computationManager.computationJob.isCancelled)
     }
 
