@@ -15,7 +15,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.archsoftware.afoil.core.common.contentresolver.UriContentResolver
-import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
+import com.archsoftware.afoil.core.common.datairfoilreader.DatAirfoilReader
 import com.archsoftware.afoil.core.common.utils.isValidDoubleInput
 import com.archsoftware.afoil.core.common.utils.isValidIntInput
 import com.archsoftware.afoil.core.data.repository.ProjectDataRepository
@@ -66,6 +66,10 @@ class AirfoilAnalysisViewModel @Inject constructor(
     val isProjectPreparing by derivedStateOf {
         _projectPreparingState.value == ProjectPreparingState.Preparing
     }
+
+    private val _snackbarMessageId: MutableState<Int?> = mutableStateOf(null)
+    val snackbarMessageId: Int?
+        get() = _snackbarMessageId.value
 
     /*
     Project details page variables
@@ -144,6 +148,10 @@ class AirfoilAnalysisViewModel @Inject constructor(
     val pressureContoursRefiningLevel: Float
         get() = _pressureContoursRefiningLevel.value
 
+    fun onSnackbarShown() {
+        _snackbarMessageId.value = null
+    }
+
     /*
     Project details page methods
      */
@@ -161,7 +169,13 @@ class AirfoilAnalysisViewModel @Inject constructor(
             var name: String? = null
             if (uri != null) {
                 try {
-                    name = datAirfoilReader.readName(uri)
+                    if (datAirfoilReader.checkValidity(uri)) {
+                        name = datAirfoilReader.readName(uri)
+                    } else {
+                        // Show error message
+                        _snackbarMessageId.value = R.string.feature_airfoilanalysis_airfoildatapage_invalid_datairfoil
+                        return@launch
+                    }
                 } catch (e: Exception) {
                     Log.e("AirfoilAnalysisViewModel", "Failed to read airfoil data", e)
                 }

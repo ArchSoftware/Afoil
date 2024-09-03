@@ -38,6 +38,9 @@
     <string name="feature_airfoilanalysis_airfoildatapage_datairfoil_placeholder">
         No airfoil selected
     </string>
+    <string name="feature_airfoilanalysis_airfoildatapage_invalid_datairfoil">
+        Selected file is not a valid Selig .dat airfoil.
+    </string>
 
     <string name="feature_airfoilanalysis_fluiddatapage_title">Fluid data</string>
     <string name="feature_airfoilanalysis_fluiddatapage_reynolds_number">Reynolds number</string>

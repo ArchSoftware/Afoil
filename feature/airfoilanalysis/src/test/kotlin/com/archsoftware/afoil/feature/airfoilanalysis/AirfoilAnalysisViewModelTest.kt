@@ -1,7 +1,7 @@
 package com.archsoftware.afoil.feature.airfoilanalysis
 
 import androidx.compose.runtime.snapshots.Snapshot
-import com.archsoftware.afoil.core.common.utils.DatAirfoilReader
+import com.archsoftware.afoil.core.common.datairfoilreader.DatAirfoilReader
 import com.archsoftware.afoil.core.model.AfoilProject
 import com.archsoftware.afoil.core.model.AirfoilAnalysisProjectData
 import com.archsoftware.afoil.core.testing.contentresolver.TestAfoilContentResolver
@@ -50,6 +50,18 @@ class AirfoilAnalysisViewModelTest {
         )
     )
     private lateinit var datAirfoilFile: File
+    private val validAirfoil =
+        " NACA 0012 AIRFOILS\n" +
+                "1.0000000 0.0012600\n" +
+                "0.9994161 0.0013419\n" +
+                "0.9994161 -.0013419\n" +
+                "1.0000000 -.0012600\n"
+    private val invalidAirfoil =
+        " NACA 0012 AIRFOILS\n" +
+                "1.0000000 0.0012600   0.00099\n" +
+                "0.9994161 0.0013419\n" +
+                "0.9994161 -.0013419\n" +
+                "1.0000000 -.0012600\n"
     private val panelsNumber = "100"
     private val reynoldsNumber = "20e3"
     private val machNumber = "0.3"
@@ -60,7 +72,7 @@ class AirfoilAnalysisViewModelTest {
     @Before
     fun setup() {
         datAirfoilFile = tmpFolder.newFile("naca0012.dat")
-        datAirfoilFile.writeText("NACA 0012")
+        datAirfoilFile.writeText(validAirfoil)
 
         viewModel = AirfoilAnalysisViewModel(
             contentResolver = afoilContentResolver,
@@ -72,6 +84,17 @@ class AirfoilAnalysisViewModelTest {
             projectDataRepository = projectDataRepository,
             projectStore = TestAfoilProjectStore(),
         )
+    }
+
+    @Test
+    fun showSnackbarIfSelectedDatAirfoilIsInvalid() = runTest {
+        datAirfoilFile.writeText(invalidAirfoil)
+        afoilContentResolver.inputStream = datAirfoilFile.inputStream()
+        viewModel.onDatAirfoilSelected(TestAfoilContentResolver.testUri)
+
+        advanceUntilIdle()
+
+        assert(viewModel.snackbarMessageId == R.string.feature_airfoilanalysis_airfoildatapage_invalid_datairfoil)
     }
 
     @Test

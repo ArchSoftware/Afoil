@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -59,6 +62,8 @@ fun AirfoilAnalysisScreen(
         currentPage = viewModel.currentPage,
         shouldShowDone = viewModel.shouldShowDone,
         previousEnabled = viewModel.previousEnabled,
+        snackbarMessage = viewModel.snackbarMessageId?.let { stringResource(id = it) },
+        onSnackbarShown = viewModel::onSnackbarShown,
         onPreviousClick = viewModel::onPreviousClick,
         onNextClick = viewModel::onNextClick,
         onNavigateUp = onNavigateUp,
@@ -119,6 +124,8 @@ internal fun AirfoilAnalysisScreen(
     currentPage: AirfoilAnalysisPage,
     shouldShowDone: Boolean,
     previousEnabled: Boolean,
+    snackbarMessage: String?,
+    onSnackbarShown: () -> Unit,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
     onNavigateUp: () -> Unit,
@@ -126,6 +133,15 @@ internal fun AirfoilAnalysisScreen(
     modifier: Modifier = Modifier,
     content: @Composable (currentPage: AirfoilAnalysisPage) -> Unit
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(snackbarMessage) {
+        if (snackbarMessage != null) {
+            snackbarHostState.showSnackbar(message = snackbarMessage)
+            onSnackbarShown()
+        }
+    }
+
     Scaffold(
         topBar = {
             NavCenterAlignedAppBar(
@@ -144,6 +160,9 @@ internal fun AirfoilAnalysisScreen(
                 onNextClick = onNextClick,
                 onDone = onDone
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         },
         modifier = modifier
     ) { padding ->
