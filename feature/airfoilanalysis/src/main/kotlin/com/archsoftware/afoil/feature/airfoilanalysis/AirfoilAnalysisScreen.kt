@@ -204,8 +204,16 @@ private fun getSlideDirection(
 private fun AirfoilAnalysisScreenPreview() {
     AfoilTheme {
         AirfoilAnalysisScreen(
+            isProjectPreparing = false,
+            currentPage = AirfoilAnalysisPage.PROJECT_DETAILS,
+            shouldShowDone = true,
+            previousEnabled = true,
+            snackbarMessage = null,
+            onSnackbarShown = {},
+            onPreviousClick = {},
+            onNextClick = {},
             onNavigateUp = {},
-            onDone = { _, _ -> }
-        )
+            onDone = {}
+        ) {}
     }
 }
