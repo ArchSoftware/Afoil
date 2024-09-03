@@ -17,6 +17,7 @@ android {
 dependencies {
     implementation(libs.androidx.runtime.android)
 
+    testImplementation(kotlin("test"))
     testImplementation(projects.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
