@@ -6,10 +6,32 @@ on:
             - main
 
 jobs:
+    check_commits_types:
+        name: Check commit types
+        runs-on: ubuntu-latest
+        outputs:
+          contain_docs: ${{ steps.check.outputs.contain_docs }}
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+
+          - name: Check commit types
+            id: check
+            run: |
+              contain_docs=true
+              for commit in "${{ github.event.commits }}"; do
+                if [[ "$commit.message" != "docs:"* ]]; then
+                  contain_docs=false
+                  break
+                fi
+              done
+              echo "contain_docs=$contain_docs" >> $GITHUB_OUTPUT
+
     build_apk:
         name: Build APK
         runs-on: ubuntu-latest
-        if: ${{ !contains(join(github.event.commits.*.message, ' '), 'docs:') }}
+        needs: check_commits_types
+        if: ${{ needs.check_commits_types.outputs.contain_docs == 'false' }}
         steps:
             - name: Checkout
               uses: actions/checkout@v4
