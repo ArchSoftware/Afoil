@@ -18,6 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.archsoftware.afoil.core.model.ComputationLog
 
+/**
+ * A composable that displays a [ComputationLog].
+ *
+ * @param log The log to display.
+ * @param modifier The [Modifier] to apply to this row.
+ */
 @Composable
 fun ComputationLogRow(
     log: ComputationLog,

@@ -14,6 +14,16 @@ import androidx.compose.ui.unit.dp
 import com.archsoftware.afoil.core.common.utils.format
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * A composable that displays a slider for accuracy control.
+ *
+ * @param text The text to display above the slider.
+ * @param value The current value of the slider.
+ * @param onValueChange The callback to invoke when the slider value changes.
+ * @param modifier The [Modifier] to apply to this slider.
+ * @param valueRange The range of values that the slider can take.
+ * @param supportingText An optional supporting text to display below the slider.
+ */
 @Composable
 fun AccuracySlider(
     text: String,

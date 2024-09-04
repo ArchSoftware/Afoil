@@ -8,6 +8,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.withStyle
 
+/**
+ * Formats a specific range of the given string as a subscript.
+ *
+ * @param start The start index of the subscript.
+ * @param end The end index of the subscript.
+ * @param subscriptStyle The style to apply to the subscript.
+ * @return The formatted [AnnotatedString].
+ */
 @Composable
 fun String.subscript(
     start: Int,

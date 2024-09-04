@@ -11,6 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/**
+ * A composable that wraps a page with a title and a content.
+ *
+ * @param title The title of the page.
+ * @param modifier The [Modifier] to apply to this wrapper.
+ * @param content The content of the page.
+ */
 @Composable
 fun PageWrapper(
     title: String,

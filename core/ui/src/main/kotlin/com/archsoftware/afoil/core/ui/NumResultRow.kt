@@ -10,6 +10,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import com.archsoftware.afoil.core.common.utils.format
 
+/**
+ * A composable that displays a numerical result.
+ *
+ * @param name The name of the result.
+ * @param value The value of the result.
+ * @param modifier The [Modifier] to apply to this row.
+ */
 @Composable
 fun NumResultRow(
     name: String,

@@ -23,6 +23,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * A composable that displays an Afoil project details.
+ *
+ * @param name The name of the project.
+ * @param icon The icon that identifies the project type.
+ * @param isSelected Whether the project is selected.
+ * @param onClick The callback to invoke when the item is clicked.
+ * @param onLongClick The callback to invoke when the item is long clicked.
+ * @param modifier The [Modifier] to apply to this item.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AfoilProjectItem(
