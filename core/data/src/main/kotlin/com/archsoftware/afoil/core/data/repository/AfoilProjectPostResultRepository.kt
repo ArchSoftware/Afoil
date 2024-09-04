@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+/**
+ * Repository that provides management methods for [AfoilProjectPostResult] objects.
+ */
 class AfoilProjectPostResultRepository @Inject constructor(
     private val projectPostResultDao: AfoilProjectPostResultDao
 ) : ProjectPostResultRepository {

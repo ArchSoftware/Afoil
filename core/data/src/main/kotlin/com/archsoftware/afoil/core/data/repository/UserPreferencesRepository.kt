@@ -4,6 +4,9 @@ import com.archsoftware.afoil.core.datastore.UserPreferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+/**
+ * Repository that provides management methods for user preferences.
+ */
 class UserPreferencesRepository @Inject constructor(
     private val dataStore: UserPreferencesDataStore
 ) : PreferencesRepository {
