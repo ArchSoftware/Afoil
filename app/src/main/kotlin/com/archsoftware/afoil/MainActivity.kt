@@ -58,11 +58,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Starts the [ComputationService] passing the given [projectId] and [projectName].
+     */
     private fun startComputation(projectId: Long, projectName: String) {
         val startIntent = ComputationService.createStartIntent(this, projectId, projectName)
         ContextCompat.startForegroundService(this, startIntent)
     }
 
+    /**
+     * Stops the [ComputationService].
+     */
     private fun stopComputation() {
         val stopIntent = ComputationService.createStopIntent(this)
         stopService(stopIntent)

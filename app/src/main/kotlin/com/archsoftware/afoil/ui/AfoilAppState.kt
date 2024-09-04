@@ -59,6 +59,12 @@ data class AfoilAppState(
                 started = SharingStarted.WhileSubscribed(5_000)
             )
 
+    /**
+     * Takes persistable uri permission for the selected projects directory [Uri] and stores it
+     * as a user preference.
+     *
+     * @param uri The selected projects directory [Uri].
+     */
     fun onProjectsDirectorySelected(uri: Uri?) {
         if (uri == null) return
 
@@ -69,12 +75,22 @@ data class AfoilAppState(
         }
     }
 
+    /**
+     * Navigates to the selected [TopLevelDestination] saving the state of the current destination
+     * to make it available when navigating back to it.
+     *
+     * @param topLevelDestination The selected [TopLevelDestination].
+     */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val navOptions = navOptions {
+            // Pop up to the start destination in the navigation graph to avoid building up
+            // a large backstack of destinations
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
+            // Top destination should only have one instance active at a time
             launchSingleTop = true
+            // Restore state when re-selecting a previously selected destination
             restoreState = true
         }
 
@@ -91,6 +107,9 @@ data class AfoilAppState(
         }
     }
 
+    /**
+     * Navigates to the computation monitor screen passing the given [projectId].
+     */
     fun navigateToComputationMonitor(projectId: Long) {
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id)
@@ -100,6 +119,9 @@ data class AfoilAppState(
         navController.navigateToComputationMonitor(projectId, navOptions)
     }
 
+    /**
+     * Navigates to the computation results screen passing the given [projectId].
+     */
     fun navigateToComputationResults(projectId: Long) {
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id)

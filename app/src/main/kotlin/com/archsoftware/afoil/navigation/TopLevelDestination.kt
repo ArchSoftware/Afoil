@@ -8,6 +8,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.archsoftware.afoil.feature.airfoilanalysis.R as airfoilanalysisR
 import com.archsoftware.afoil.feature.recentprojects.R as recentprojectsR
 
+/**
+ * Represents the top-level destinations which can be directly reached by the user.
+ */
 enum class TopLevelDestination(val icon: ImageVector?, @StringRes val titleId: Int?) {
     HOME(
         icon = null,
