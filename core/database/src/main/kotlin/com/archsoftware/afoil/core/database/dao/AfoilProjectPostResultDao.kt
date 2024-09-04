@@ -9,6 +9,9 @@ import com.archsoftware.afoil.core.database.model.AFOIL_PROJECT_POST_RESULTS_TAB
 import com.archsoftware.afoil.core.database.model.AfoilProjectPostResultEntity
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * DAO for [AfoilProjectPostResultEntity] access.
+ */
 @Dao
 interface AfoilProjectPostResultDao {
 

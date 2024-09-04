@@ -6,6 +6,9 @@ import com.archsoftware.afoil.core.model.AfoilProjectPostResult
 
 internal const val AFOIL_PROJECT_POST_RESULTS_TABLE_NAME = "afoil_project_post_results"
 
+/**
+ * Internal data layer representation of Afoil project post-processing result.
+ */
 @Entity(tableName = AFOIL_PROJECT_POST_RESULTS_TABLE_NAME)
 data class AfoilProjectPostResultEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,

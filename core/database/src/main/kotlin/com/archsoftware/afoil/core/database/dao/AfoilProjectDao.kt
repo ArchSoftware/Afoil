@@ -9,6 +9,9 @@ import com.archsoftware.afoil.core.database.model.AFOIL_PROJECTS_TABLE_NAME
 import com.archsoftware.afoil.core.database.model.AfoilProjectEntity
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * DAO for [AfoilProjectEntity] access.
+ */
 @Dao
 interface AfoilProjectDao {
 

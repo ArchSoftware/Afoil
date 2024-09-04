@@ -8,6 +8,9 @@ import com.archsoftware.afoil.core.database.model.AFOIL_PROJECT_NUM_RESULTS_TABL
 import com.archsoftware.afoil.core.database.model.AfoilProjectNumResultEntity
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * DAO for [AfoilProjectNumResultEntity] access.
+ */
 @Dao
 interface AfoilProjectNumResultDao {
 

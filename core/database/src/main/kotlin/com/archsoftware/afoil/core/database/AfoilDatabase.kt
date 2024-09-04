@@ -11,6 +11,9 @@ import com.archsoftware.afoil.core.database.model.AfoilProjectEntity
 import com.archsoftware.afoil.core.database.model.AfoilProjectNumResultEntity
 import com.archsoftware.afoil.core.database.model.AfoilProjectPostResultEntity
 
+/**
+ * [RoomDatabase] implementation for Afoil.
+ */
 @Database(
     entities = [
         AfoilProjectEntity::class,

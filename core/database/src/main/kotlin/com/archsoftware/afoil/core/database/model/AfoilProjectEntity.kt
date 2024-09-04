@@ -6,6 +6,9 @@ import com.archsoftware.afoil.core.model.AfoilProject
 
 internal const val AFOIL_PROJECTS_TABLE_NAME = "afoil_projects"
 
+/**
+ * Internal data layer representation of Afoil project.
+ */
 @Entity(tableName = AFOIL_PROJECTS_TABLE_NAME)
 data class AfoilProjectEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
