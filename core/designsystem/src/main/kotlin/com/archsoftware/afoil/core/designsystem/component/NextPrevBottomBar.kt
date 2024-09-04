@@ -19,6 +19,17 @@ import androidx.compose.ui.unit.dp
 import com.archsoftware.afoil.core.designsystem.R
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * Afoil bottom bar with next and previous buttons.
+ *
+ * @param shouldShowDone Whether the done button should be shown.
+ * @param previousEnabled Whether the previous button should be enabled.
+ * @param isLoading Whether the loading indicator should be shown.
+ * @param onPreviousClick The action to perform when the previous button is clicked.
+ * @param onNextClick The action to perform when the next button is clicked.
+ * @param onDone The action to perform when the done button is clicked.
+ * @param modifier The modifier to be applied to this bottom bar.
+ */
 @Composable
 fun NextPrevBottomBar(
     shouldShowDone: Boolean,

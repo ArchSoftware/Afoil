@@ -13,6 +13,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.archsoftware.afoil.core.designsystem.R
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * Afoil [OutlinedTextField] for numeric inputs.
+ *
+ * @param value The current value of the text field.
+ * @param label The label to display above the text field.
+ * @param onValueChange The action to perform when the value of the text field changes.
+ * @param modifier The modifier to be applied to this text field.
+ * @param supportingText The supporting text to display below the text field.
+ * @param unitOfMeasure The unit of measure to display next to the value.
+ * @param isError Whether the text field has an error.
+ * @param keyboardType The type of keyboard to use for the text field.
+ */
 @Composable
 fun NumericTextField(
     value: String,

@@ -13,6 +13,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * Afoil [CenterAlignedTopAppBar].
+ *
+ * @param title The title to display.
+ * @param navIcon The navigation icon to display.
+ * @param navIconContentDescription The content description for the navigation icon.
+ * @param onNavIconClick The action to perform when the navigation icon is clicked.
+ * @param modifier The modifier to be applied to this app bar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavCenterAlignedAppBar(

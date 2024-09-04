@@ -18,6 +18,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.archsoftware.afoil.core.designsystem.R
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * Afoil [TopAppBar] with a selection action bar. It switches between a normal [TopAppBar] and
+ * a selection action bar depending on the value of [showActionBar].
+ *
+ * @param title The title to display.
+ * @param navIcon The navigation icon to display.
+ * @param navIconContentDescription The content description for the navigation icon.
+ * @param selectedCount The number of selected items.
+ * @param showActionBar Whether to show the selection action bar.
+ * @param onNavIconClick The action to perform when the navigation icon is clicked.
+ * @param onCancelIconClick The action to perform when the cancel icon is clicked.
+ * @param modifier The modifier to be applied to this app bar.
+ * @param actions The actions to display in the selection action bar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectionAppBar(

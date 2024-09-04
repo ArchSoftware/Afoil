@@ -20,6 +20,16 @@ import androidx.compose.ui.unit.dp
 import com.archsoftware.afoil.core.designsystem.R
 import com.archsoftware.afoil.core.designsystem.theme.AfoilTheme
 
+/**
+ * Afoil [Card] with a single button.
+ *
+ * @param text The text to display.
+ * @param buttonText The text to display on the button.
+ * @param onButtonClick The action to perform when the button is clicked.
+ * @param modifier The modifier to be applied to this card.
+ * @param showDismissButton Whether to show a dismiss button.
+ * @param onDismiss The action to perform when the dismiss button is clicked.
+ */
 @Composable
 fun OneButtonCard(
     text: String,
