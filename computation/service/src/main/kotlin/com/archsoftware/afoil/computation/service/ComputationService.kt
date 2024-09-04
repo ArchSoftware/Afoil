@@ -23,6 +23,13 @@ import javax.inject.Inject
 const val EXTRA_PROJECT_ID = "com.archsoftware.afoil.intent.extra.PROJECT_ID"
 const val EXTRA_PROJECT_NAME = "com.archsoftware.afoil.intent.extra.PROJECT_NAME"
 
+/**
+ * Foreground [Service] used to host the computation.
+ *
+ * It serves as communication interface between clients and the [ComputationManager]. It manages
+ * notification progress updates and automatically stop the computation whenever it's finished or
+ * an error occurs.
+ */
 @AndroidEntryPoint
 class ComputationService : Service() {
 
@@ -94,6 +101,14 @@ class ComputationService : Service() {
     }
 
     companion object {
+        /**
+         * Creates an intent to start the [ComputationService].
+         *
+         * @param context A Context of the application package implementing this class.
+         * @param projectId The ID of the project to start the computation for.
+         * @param projectName The name of the project to start the computation for.
+         * @return An intent to start the [ComputationService].
+         */
         fun createStartIntent(
             context: Context,
             projectId: Long,
@@ -103,6 +118,12 @@ class ComputationService : Service() {
             putExtra(EXTRA_PROJECT_NAME, projectName)
         }
 
+        /**
+         * Creates an intent to stop the [ComputationService].
+         *
+         * @param context A Context of the application package implementing this class.
+         * @return An intent to stop the [ComputationService].
+         */
         fun createStopIntent(context: Context): Intent =
             Intent(context, ComputationService::class.java)
     }
