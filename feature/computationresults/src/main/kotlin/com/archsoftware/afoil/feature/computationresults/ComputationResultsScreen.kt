@@ -148,7 +148,10 @@ internal fun ComputationResultsScreen(
         Scaffold(
             topBar = {
                 NavCenterAlignedAppBar(
-                    title = stringResource(id = R.string.feature_computationresults_title),
+                    title = stringResource(
+                        id = R.string.feature_computationresults_title,
+                        projectName
+                    ),
                     navIcon = Icons.Filled.Menu,
                     navIconContentDescription = stringResource(
                         id = R.string.feature_computationresults_openclose_drawer_content_desc
@@ -184,7 +187,7 @@ private fun ComputationResultsScreenPreview() {
     AfoilTheme {
         ComputationResultsScreen(
             currentPage = ComputationResultsPage.NumResultsPage,
-            projectName = "Project name",
+            projectName = "My Project",
             projectPostResults = listOf(
                 AfoilProjectPostResult(
                     id = 0,
