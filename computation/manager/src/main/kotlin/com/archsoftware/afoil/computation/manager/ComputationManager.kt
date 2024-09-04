@@ -13,6 +13,9 @@ interface ComputationManager {
     fun startComputation(projectId: Long?, computation: suspend CoroutineScope.(id: Long) -> Unit)
     fun stopComputation(canceled: Boolean)
 
+    /**
+     * Represents the state of the computation.
+     */
     enum class State {
         IDLE,
         RUNNING,

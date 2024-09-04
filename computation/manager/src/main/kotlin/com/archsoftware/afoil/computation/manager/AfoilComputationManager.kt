@@ -36,6 +36,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Singleton implementation of the [ComputationManager] interface.
+ *
+ * Manages the computation lifecycle through the [startComputation] and [stopComputation] methods.
+ * It also notifies clients of computation state and progress.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class AfoilComputationManager @Inject constructor(
@@ -68,6 +74,11 @@ class AfoilComputationManager @Inject constructor(
 
     override fun getComputationProgress(): Flow<Float> = _progress
 
+    /**
+     * Starts the computation for the given project.
+     *
+     * @param projectId The ID of the project to start the computation for.
+     */
     override fun startComputation(projectId: Long?) {
         startComputation(projectId) { id ->
             val project = projectRepository.getProjectById(id).first()
@@ -81,6 +92,12 @@ class AfoilComputationManager @Inject constructor(
         }
     }
 
+    /**
+     * Executes the given computation block under a new computation job and scope.
+     *
+     * @param projectId The project ID to pass to the computation block.
+     * @param computation The computation block to execute.
+     */
     override fun startComputation(projectId: Long?, computation: suspend CoroutineScope.(id: Long) -> Unit) {
         computationJob = Job()
         computationScope = CoroutineScope(computationJob + defaultDispatcher)
@@ -95,6 +112,11 @@ class AfoilComputationManager @Inject constructor(
         }
     }
 
+    /**
+     * Stops the computation.
+     *
+     * @param canceled Whether the computation was canceled.
+     */
     override fun stopComputation(canceled: Boolean) {
         computationScope.launch {
             if (canceled) {
@@ -120,21 +142,28 @@ class AfoilComputationManager @Inject constructor(
         data: AirfoilAnalysisProjectData
     ) {
         // TODO: Use generic solver which will choose internally to use inviscid or viscous procedure
+        // Read project data
         val dirUri = project.dirUri.toUri()
         val rawPoints = datAirfoilReader.readCoordinates(
             contentResolver.findDocument(dirUri, data.datAirfoilDisplayName)
         )
         if (rawPoints.isEmpty()) return
+
+        // Setup logger
         val logger = Logger()
         val logs = mutableListOf<ComputationLog>()
         logger.log.onEach {
             logs += it.asExternalModel()
             _logs.emit(logs)
         }.launchIn(this)
+
+        // Setup computation
         val panelsGenerator = PanelsGenerator(data.panelsNumber, logger)
         val points = panelsGenerator.generate(rawPoints.map(Coordinate::asEngineModel)) ?: return
         val inviscidSolver = InviscidSolver(points, data.machNumber, data.angleOfAttack, logger)
         val inviscidSolution = inviscidSolver.solve() ?: return
+
+        // Store the available results
         val numResult = AirfoilAnalysisNumResult(
             gammas = inviscidSolution.gammas.toList(),
             psi0 = inviscidSolution.psi0,
