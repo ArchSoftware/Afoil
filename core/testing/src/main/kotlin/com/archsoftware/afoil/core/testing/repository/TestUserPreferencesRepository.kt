@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.jetbrains.annotations.TestOnly
 
+/**
+ * Test-only implementation of the [PreferencesRepository] interface.
+ */
 @TestOnly
 class TestUserPreferencesRepository : PreferencesRepository {
     private val afoilProjectsDirectoryFlow: MutableSharedFlow<String?> =

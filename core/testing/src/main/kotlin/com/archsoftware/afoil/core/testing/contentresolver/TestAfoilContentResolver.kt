@@ -7,6 +7,9 @@ import org.jetbrains.annotations.TestOnly
 import java.io.InputStream
 import java.io.OutputStream
 
+/**
+ * Test-only implementation of the [UriContentResolver] interface.
+ */
 @TestOnly
 class TestAfoilContentResolver : UriContentResolver {
     var exists: Boolean = false

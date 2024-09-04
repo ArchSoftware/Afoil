@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.jetbrains.annotations.TestOnly
 
+/**
+ * Test-only implementation of the [ProjectPostResultRepository] interface.
+ */
 @TestOnly
 class TestAfoilProjectPostResultRepository : ProjectPostResultRepository {
     private val projectPostResultsFlow: MutableSharedFlow<List<AfoilProjectPostResult>> =

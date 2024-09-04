@@ -7,6 +7,9 @@ import com.archsoftware.afoil.core.model.ProjectPostResult
 import com.archsoftware.afoil.core.projectstore.ProjectStore
 import org.jetbrains.annotations.TestOnly
 
+/**
+ * Test-only implementation of the [ProjectStore] interface.
+ */
 @TestOnly
 class TestAfoilProjectStore : ProjectStore {
     override suspend fun createProjectDir(name: String): Uri? = null

@@ -5,6 +5,9 @@ import com.archsoftware.afoil.core.common.datairfoilreader.AirfoilReader
 import com.archsoftware.afoil.core.common.datairfoilreader.Coordinate
 import org.jetbrains.annotations.TestOnly
 
+/**
+ * Test-only implementation of the [AirfoilReader] interface.
+ */
 @TestOnly
 class TestDatAirfoilReader : AirfoilReader {
     var isValid = true

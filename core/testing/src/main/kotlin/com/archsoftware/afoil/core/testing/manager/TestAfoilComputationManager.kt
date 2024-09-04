@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
 import org.jetbrains.annotations.TestOnly
 
+/**
+ * Test-only implementation of the [ComputationManager] interface.
+ */
 @TestOnly
 class TestAfoilComputationManager : ComputationManager {
     private val _computationState: MutableSharedFlow<ComputationManager.State> =
