@@ -10,6 +10,9 @@ import javax.inject.Inject
 
 private val RECENT_AFOIL_PROJECTS_DIRECTORY = stringPreferencesKey("recent_afoil_projects_directory")
 
+/**
+ * Afoil user preferences data store.
+ */
 class UserPreferencesDataStore @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     fun getAfoilProjectsDirectory(): Flow<String?> {
