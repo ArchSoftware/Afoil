@@ -3,6 +3,9 @@ package com.archsoftware.afoil.core.model
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
+/**
+ * Serializable representation of generic Afoil project numerical result.
+ */
 @Serializable
 sealed class ProjectNumResult {
     companion object {
@@ -13,6 +16,9 @@ sealed class ProjectNumResult {
     }
 }
 
+/**
+ * Serializable representation of airfoil analysis project numerical result.
+ */
 @Serializable
 data class AirfoilAnalysisNumResult(
     val gammas: List<Double>,

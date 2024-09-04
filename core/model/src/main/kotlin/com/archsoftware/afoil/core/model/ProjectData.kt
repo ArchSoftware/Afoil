@@ -3,6 +3,9 @@ package com.archsoftware.afoil.core.model
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
+/**
+ * Serializable representation of generic Afoil project data.
+ */
 @Serializable
 sealed class ProjectData {
     companion object {
@@ -13,6 +16,9 @@ sealed class ProjectData {
     }
 }
 
+/**
+ * Serializable representation of airfoil analysis project data.
+ */
 @Serializable
 data class AirfoilAnalysisProjectData(
     // Airfoil data
