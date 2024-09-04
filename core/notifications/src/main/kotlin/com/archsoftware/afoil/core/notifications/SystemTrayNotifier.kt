@@ -23,12 +23,22 @@ private const val DEEP_LINK_SCHEME_AND_HOST = "https://www.afoil.archsoftware.co
 private const val COMPUTATION_MONITOR = "computationmonitor"
 private const val PROGRESS_MAX = 100
 
+/**
+ * Singleton implementation of the [Notifier] interface.
+ *
+ * Displays and manages notifications in the system tray.
+ */
 @Singleton
 class SystemTrayNotifier @Inject constructor(
     @ApplicationContext private val context: Context
 ) : Notifier {
     private lateinit var computationServiceNotificationBuilder: NotificationCompat.Builder
 
+    /**
+     * Updates the computation service notification with the given progress.
+     *
+     * @param progress The current progress of the computation.
+     */
     override fun updateComputationServiceNotification(progress: Int) {
         val notification = computationServiceNotificationBuilder.apply {
             if (progress < PROGRESS_MAX) {
@@ -46,6 +56,14 @@ class SystemTrayNotifier @Inject constructor(
         NotificationManagerCompat.from(context).notify(COMPUTATION_SERVICE_NOTIFICATION_ID, notification)
     }
 
+    /**
+     * Creates the computation service notification with a pending intent pointing to the
+     * computation monitor screen.
+     *
+     * @param projectId The ID of the project to pass to the computation monitor screen.
+     * @param computationName The name of the computation.
+     * @return The notification.
+     */
     override fun createComputationServiceNotification(projectId: Long?, computationName: String?): Notification {
         ensureComputationServiceNotificationChannelExists()
         computationServiceNotificationBuilder =
