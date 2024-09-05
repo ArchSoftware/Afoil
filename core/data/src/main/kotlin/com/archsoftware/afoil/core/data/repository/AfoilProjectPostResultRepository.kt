@@ -20,15 +20,11 @@ class AfoilProjectPostResultRepository @Inject constructor(
             it.map(AfoilProjectPostResultEntity::asExternalModel)
         }
 
-    override suspend fun insertProjectPostResults(projectPostResults: List<AfoilProjectPostResult>) {
-        projectPostResultDao.insertProjectPostResults(
-            projectPostResults.map(AfoilProjectPostResult::asEntity)
-        )
+    override suspend fun insertProjectPostResult(projectPostResult: AfoilProjectPostResult) {
+        projectPostResultDao.insertProjectPostResult(projectPostResult.asEntity())
     }
 
-    override suspend fun deleteProjectPostResults(projectPostResults: List<AfoilProjectPostResult>) {
-        projectPostResultDao.deleteProjectPostResults(
-            projectPostResults.map(AfoilProjectPostResult::asEntity)
-        )
+    override suspend fun deleteProjectPostResultsByProjectId(projectId: Long) {
+        projectPostResultDao.deleteProjectPostResultsByProjectId(projectId)
     }
 }

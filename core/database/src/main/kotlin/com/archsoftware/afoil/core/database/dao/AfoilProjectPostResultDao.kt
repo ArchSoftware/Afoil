@@ -1,7 +1,6 @@
 package com.archsoftware.afoil.core.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,8 +18,8 @@ interface AfoilProjectPostResultDao {
     fun getProjectPostResultsByProjectId(projectId: Long): Flow<List<AfoilProjectPostResultEntity>>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insertProjectPostResults(projectPostResults: List<AfoilProjectPostResultEntity>)
+    suspend fun insertProjectPostResult(projectPostResults: AfoilProjectPostResultEntity)
 
-    @Delete
-    suspend fun deleteProjectPostResults(projectPostResults: List<AfoilProjectPostResultEntity>)
+    @Query("DELETE FROM $AFOIL_PROJECT_POST_RESULTS_TABLE_NAME WHERE projectOwnerId = :projectId")
+    suspend fun deleteProjectPostResultsByProjectId(projectId: Long)
 }

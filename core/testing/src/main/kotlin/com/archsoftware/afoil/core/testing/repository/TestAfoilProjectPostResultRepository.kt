@@ -18,7 +18,7 @@ class TestAfoilProjectPostResultRepository : ProjectPostResultRepository {
     override fun getProjectPostResultsByProjectId(projectId: Long): Flow<List<AfoilProjectPostResult>> =
         projectPostResultsFlow
 
-    override suspend fun insertProjectPostResults(projectPostResults: List<AfoilProjectPostResult>) {}
+    override suspend fun insertProjectPostResult(projectPostResult: AfoilProjectPostResult) {}
 
-    override suspend fun deleteProjectPostResults(projectPostResults: List<AfoilProjectPostResult>) {}
+    override suspend fun deleteProjectPostResultsByProjectId(projectId: Long) {}
 }
