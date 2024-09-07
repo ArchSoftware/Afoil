@@ -1,5 +1,6 @@
 package com.archsoftware.afoil.core.projectstore
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.util.Log
@@ -178,11 +179,21 @@ class AfoilProjectStore @Inject constructor(
         var postResultFileUri: Uri? = null
         withContext(ioDispatcher) {
             try {
-                postResultFileUri = contentResolver.createDocument(
+                val uri = contentResolver.createDocument(
                     parentDocumentUri = dirUri,
                     mimeType = ProjectPostResult.mimeType,
                     displayName = result.displayName
                 )
+                requireNotNull(uri)
+                contentResolver.openOutputStream(uri)
+                    ?.use { outputStream ->
+                        result.bitmap.compress(
+                            /* format = */ Bitmap.CompressFormat.PNG,
+                            /* quality = */ 100,
+                            /* stream = */ outputStream
+                        )
+                    }
+                postResultFileUri = uri
             } catch (e: Exception) {
                 Log.e("ProjectStore", "Failed to write post result", e)
             }
