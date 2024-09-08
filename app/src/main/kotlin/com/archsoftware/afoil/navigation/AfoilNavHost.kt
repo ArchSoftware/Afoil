@@ -73,6 +73,8 @@ fun AfoilNavHost(
             onCancel = onCancelComputation,
             onGoToResults = appState::navigateToComputationResults
         )
-        computationResultsScreen()
+        computationResultsScreen(
+            onNavigateUp = appState.navController::navigateUp
+        )
     }
 }

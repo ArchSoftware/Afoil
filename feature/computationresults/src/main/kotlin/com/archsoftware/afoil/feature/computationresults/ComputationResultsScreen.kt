@@ -1,5 +1,6 @@
 package com.archsoftware.afoil.feature.computationresults
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
@@ -40,18 +41,33 @@ import com.archsoftware.afoil.core.common.R as commonR
 
 @Composable
 fun ComputationResultsScreen(
+    onNavigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ComputationResultsViewModel = hiltViewModel()
 ) {
     val projectName by viewModel.projectName.collectAsStateWithLifecycle()
     val numResult by viewModel.projectNumResult.collectAsStateWithLifecycle()
     val postResults by viewModel.projectPostResults.collectAsStateWithLifecycle()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler {
+        if (drawerState.isOpen) {
+            coroutineScope.launch {
+                drawerState.close()
+            }
+        } else {
+            if (!viewModel.onBackPressed()) onNavigateUp()
+        }
+    }
 
     ComputationResultsScreen(
         currentPage = viewModel.currentPage,
         projectName = projectName,
         projectPostResults = postResults,
         onPageSelected = viewModel::onPageSelected,
+        drawerState = drawerState,
+        coroutineScope = coroutineScope,
         modifier = modifier
     ) { currentPage ->
         when (currentPage) {
@@ -84,7 +100,7 @@ internal fun ComputationResultsScreen(
     projectPostResults: List<AfoilProjectPostResult>,
     onPageSelected: (page: ComputationResultsPage) -> Unit,
     modifier: Modifier = Modifier,
-    drawerState: DrawerState = rememberDrawerState(DrawerValue.Open),
+    drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     content: @Composable (currentPage: ComputationResultsPage) -> Unit
 ) {

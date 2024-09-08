@@ -63,6 +63,16 @@ class ComputationResultsViewModel @Inject constructor(
     fun onPageSelected(page: ComputationResultsPage) {
         _currentPage.value = page
     }
+
+    fun onBackPressed(): Boolean {
+        val handled = _currentPage.value != ComputationResultsPage.NumResultsPage
+        if (handled) {
+            _currentPage.value = ComputationResultsPage.NumResultsPage
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 sealed interface ComputationResultsPage {

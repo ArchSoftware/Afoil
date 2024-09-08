@@ -19,11 +19,11 @@ fun NavController.navigateToComputationResults(
     navOptions = navOptions
 )
 
-fun NavGraphBuilder.computationResultsScreen() {
+fun NavGraphBuilder.computationResultsScreen(onNavigateUp: () -> Unit) {
     composable(
         route = "$COMPUTATION_RESULTS_ROUTE/{$PROJECT_ID_ARG}",
         arguments = listOf(navArgument(PROJECT_ID_ARG) { type = NavType.LongType })
     ) {
-        ComputationResultsScreen()
+        ComputationResultsScreen(onNavigateUp = onNavigateUp)
     }
 }
