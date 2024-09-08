@@ -103,15 +103,15 @@ fun AirfoilAnalysisScreen(
             AirfoilAnalysisPage.POST_PROCESSING_SETTINGS -> {
                 PostProcessingSettingsPage(
                     numberOfStreamlines = viewModel.numberOfStreamlines,
-                    streamlinesRefiningLevel = viewModel.streamlinesRefiningLevel,
+                    streamlinesRefinementLevel = viewModel.streamlinesRefinementLevel,
                     pressureContoursGridSize = viewModel.pressureContoursGridSize,
-                    pressureContoursRefiningLevel = viewModel.pressureContoursRefiningLevel,
+                    pressureContoursRefinementLevel = viewModel.pressureContoursRefinementLevel,
                     numberOfStreamlinesHasError = viewModel.numberOfStreamlinesHasError,
                     pressureContoursGridSizeHasError = viewModel.pressureContoursGridSizeHasError,
                     onNumberOfStreamlinesChange = viewModel::onNumberOfStreamlinesChange,
-                    onStreamlinesRefiningLevelChange = viewModel::onStreamlinesRefiningLevelChange,
+                    onStreamlinesRefinementLevelChange = viewModel::onStreamlinesRefinementLevelChange,
                     onPressureContoursGridSizeChange = viewModel::onPressureContoursGridSizeChange,
-                    onPressureContoursRefiningLevelChange = viewModel::onPressureContoursRefiningLevelChange
+                    onPressureContoursRefinementLevelChange = viewModel::onPressureContoursRefinementLevelChange
                 )
             }
         }

@@ -30,7 +30,7 @@ data class AirfoilAnalysisProjectData(
     val angleOfAttack: Double,
     // Post-processing settings
     val numberOfStreamlines: Int,
-    val streamlinesRefiningLevel: Float,
+    val streamlinesRefinementLevel: Float,
     val pressureContoursGridSize: Int,
-    val pressureContoursRefiningLevel: Float
+    val pressureContoursRefinementLevel: Float
 ) : ProjectData()

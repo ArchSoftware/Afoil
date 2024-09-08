@@ -47,9 +47,9 @@ class AfoilProjectStoreTest {
             machNumber = 0.3,
             angleOfAttack = 5.0,
             numberOfStreamlines = 50,
-            streamlinesRefiningLevel = 0.5f,
+            streamlinesRefinementLevel = 0.5f,
             pressureContoursGridSize = 50,
-            pressureContoursRefiningLevel = 0.5f
+            pressureContoursRefinementLevel = 0.5f
         )
         val projectDataFile = tmpFolder.newFile(ProjectData.displayName)
         afoilContentResolver.inputStream = projectDataFile.inputStream()

@@ -54,13 +54,13 @@
     <string name="feature_airfoilanalysis_postprocessingsettingspage_title">Post-processing settings</string>
     <string name="feature_airfoilanalysis_postprocessingsettingspage_streamlines">Streamlines</string>
     <string name="feature_airfoilanalysis_postprocessingsettingspage_number_of_streamlines">Number of streamlines</string>
-    <string name="feature_airfoilanalysis_postprocessingsettingspage_refining_level">Refining level</string>
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_refinement_level">Refinement level</string>
     <string name="feature_airfoilanalysis_postprocessingsettingspage_pressure_contours">Pressure contours</string>
     <string name="feature_airfoilanalysis_postprocessingsettingspage_grid_size">Grid size</string>
     <string name="feature_airfoilanalysis_postprocessingsettingspage_grid_size_supporting_text">
         Number of grid points along each side.
     </string>
-    <string name="feature_airfoilanalysis_postprocessingsettingspage_refining_level_supporting_text">
+    <string name="feature_airfoilanalysis_postprocessingsettingspage_refinement_level_supporting_text">
         0 means grosser, 1 means smoother
     </string>
 </resources>

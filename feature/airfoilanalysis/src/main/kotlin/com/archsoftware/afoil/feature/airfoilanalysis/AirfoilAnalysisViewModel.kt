@@ -134,9 +134,9 @@ class AirfoilAnalysisViewModel @Inject constructor(
     val numberOfStreamlinesHasError: Boolean
         get() = !isValidIntInput(numberOfStreamlines, isEmptyFieldAllowed).value
 
-    private val _streamlinesRefiningLevel: MutableState<Float> = mutableFloatStateOf(0f)
-    val streamlinesRefiningLevel: Float
-        get() = _streamlinesRefiningLevel.value
+    private val _streamlinesRefinementLevel: MutableState<Float> = mutableFloatStateOf(0f)
+    val streamlinesRefinementLevel: Float
+        get() = _streamlinesRefinementLevel.value
 
     private val _pressureContoursGridSize: MutableState<String> = mutableStateOf(String())
     val pressureContoursGridSize: String
@@ -144,9 +144,9 @@ class AirfoilAnalysisViewModel @Inject constructor(
     val pressureContoursGridSizeHasError: Boolean
         get() = !isValidIntInput(pressureContoursGridSize, isEmptyFieldAllowed).value
 
-    private val _pressureContoursRefiningLevel: MutableState<Float> = mutableFloatStateOf(0f)
-    val pressureContoursRefiningLevel: Float
-        get() = _pressureContoursRefiningLevel.value
+    private val _pressureContoursRefinementLevel: MutableState<Float> = mutableFloatStateOf(0f)
+    val pressureContoursRefinementLevel: Float
+        get() = _pressureContoursRefinementLevel.value
 
     fun onSnackbarShown() {
         _snackbarMessageId.value = null
@@ -211,16 +211,16 @@ class AirfoilAnalysisViewModel @Inject constructor(
         _numberOfStreamlines.value = value
     }
 
-    fun onStreamlinesRefiningLevelChange(value: Float) {
-        _streamlinesRefiningLevel.value = value
+    fun onStreamlinesRefinementLevelChange(value: Float) {
+        _streamlinesRefinementLevel.value = value
     }
 
     fun onPressureContoursGridSizeChange(value: String) {
         _pressureContoursGridSize.value = value
     }
 
-    fun onPressureContoursRefiningLevelChange(value: Float) {
-        _pressureContoursRefiningLevel.value = value
+    fun onPressureContoursRefinementLevelChange(value: Float) {
+        _pressureContoursRefinementLevel.value = value
     }
 
     /*
@@ -246,9 +246,9 @@ class AirfoilAnalysisViewModel @Inject constructor(
                 machNumber = machNumber.toDouble(),
                 angleOfAttack = angleOfAttack.toDouble(),
                 numberOfStreamlines = numberOfStreamlines.toInt(),
-                streamlinesRefiningLevel = streamlinesRefiningLevel,
+                streamlinesRefinementLevel = streamlinesRefinementLevel,
                 pressureContoursGridSize = pressureContoursGridSize.toInt(),
-                pressureContoursRefiningLevel = pressureContoursRefiningLevel
+                pressureContoursRefinementLevel = pressureContoursRefinementLevel
             )
             val projectDirUri = projectStore.createProjectDir(projectName) ?: return@launch
             projectStore.copyToProjectDir(projectDirUri, datAirfoilUri)

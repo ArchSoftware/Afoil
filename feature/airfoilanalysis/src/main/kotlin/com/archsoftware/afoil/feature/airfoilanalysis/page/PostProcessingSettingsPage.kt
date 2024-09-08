@@ -22,15 +22,15 @@ import com.archsoftware.afoil.feature.airfoilanalysis.R
 @Composable
 fun PostProcessingSettingsPage(
     numberOfStreamlines: String,
-    streamlinesRefiningLevel: Float,
+    streamlinesRefinementLevel: Float,
     pressureContoursGridSize: String,
-    pressureContoursRefiningLevel: Float,
+    pressureContoursRefinementLevel: Float,
     numberOfStreamlinesHasError: Boolean,
     pressureContoursGridSizeHasError: Boolean,
     onNumberOfStreamlinesChange: (String) -> Unit,
-    onStreamlinesRefiningLevelChange: (Float) -> Unit,
+    onStreamlinesRefinementLevelChange: (Float) -> Unit,
     onPressureContoursGridSizeChange: (String) -> Unit,
-    onPressureContoursRefiningLevelChange: (Float) -> Unit,
+    onPressureContoursRefinementLevelChange: (Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
     PageWrapper(
@@ -54,10 +54,10 @@ fun PostProcessingSettingsPage(
                 .fillMaxWidth()
         )
         AccuracySlider(
-            text = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refining_level),
-            value = streamlinesRefiningLevel,
-            supportingText = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refining_level_supporting_text),
-            onValueChange = onStreamlinesRefiningLevelChange,
+            text = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refinement_level),
+            value = streamlinesRefinementLevel,
+            supportingText = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refinement_level_supporting_text),
+            onValueChange = onStreamlinesRefinementLevelChange,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         Text(
@@ -78,10 +78,10 @@ fun PostProcessingSettingsPage(
                 .fillMaxWidth()
         )
         AccuracySlider(
-            text = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refining_level),
-            value = pressureContoursRefiningLevel,
-            supportingText = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refining_level_supporting_text),
-            onValueChange = onPressureContoursRefiningLevelChange,
+            text = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refinement_level),
+            value = pressureContoursRefinementLevel,
+            supportingText = stringResource(id = R.string.feature_airfoilanalysis_postprocessingsettingspage_refinement_level_supporting_text),
+            onValueChange = onPressureContoursRefinementLevelChange,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
     }
@@ -93,15 +93,15 @@ private fun PostProcessingSettingsPagePreview() {
     AfoilTheme {
         PostProcessingSettingsPage(
             numberOfStreamlines = "100",
-            streamlinesRefiningLevel = 0.5f,
+            streamlinesRefinementLevel = 0.5f,
             pressureContoursGridSize = "100",
-            pressureContoursRefiningLevel = 0.5f,
+            pressureContoursRefinementLevel = 0.5f,
             numberOfStreamlinesHasError = false,
             pressureContoursGridSizeHasError = false,
             onNumberOfStreamlinesChange = {},
-            onStreamlinesRefiningLevelChange = {},
+            onStreamlinesRefinementLevelChange = {},
             onPressureContoursGridSizeChange = {},
-            onPressureContoursRefiningLevelChange = {}
+            onPressureContoursRefinementLevelChange = {}
         )
     }
 }
