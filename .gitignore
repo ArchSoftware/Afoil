@@ -16,3 +16,6 @@ captures/
 
 # Local configuration file
 local.properties
+
+# Kotlin
+.kotlin
