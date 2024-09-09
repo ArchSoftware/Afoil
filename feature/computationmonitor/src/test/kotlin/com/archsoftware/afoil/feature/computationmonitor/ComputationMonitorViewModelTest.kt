@@ -3,8 +3,9 @@ package com.archsoftware.afoil.feature.computationmonitor
 import androidx.lifecycle.SavedStateHandle
 import com.archsoftware.afoil.computation.manager.ComputationManager
 import com.archsoftware.afoil.core.testing.manager.TestAfoilComputationManager
+import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import com.archsoftware.afoil.core.testing.util.MainDispatcherRule
-import com.archsoftware.afoil.feature.computationmonitor.navigation.PROJECT_NAME_ARG
+import com.archsoftware.afoil.feature.computationmonitor.navigation.PROJECT_ID_ARG
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,7 +24,7 @@ class ComputationMonitorViewModelTest {
     private val computationManager = TestAfoilComputationManager()
     
     // Test data
-    private val projectName = "My Project"
+    private val projectId = 2L
 
     private lateinit var viewModel: ComputationMonitorViewModel
 
@@ -31,7 +32,8 @@ class ComputationMonitorViewModelTest {
     fun setup() {
         viewModel = ComputationMonitorViewModel(
             computationManager = computationManager,
-            savedStateHandle = SavedStateHandle(mapOf(PROJECT_NAME_ARG to projectName))
+            projectRepository = TestAfoilProjectRepository(),
+            savedStateHandle = SavedStateHandle(mapOf(PROJECT_ID_ARG to projectId))
         )
     }
 

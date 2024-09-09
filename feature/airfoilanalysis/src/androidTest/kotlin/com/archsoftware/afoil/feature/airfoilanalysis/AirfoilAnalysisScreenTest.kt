@@ -19,6 +19,8 @@ class AirfoilAnalysisScreenTest {
                 currentPage = AirfoilAnalysisPage.POST_PROCESSING_SETTINGS,
                 shouldShowDone = true,
                 previousEnabled = true,
+                snackbarMessage = null,
+                onSnackbarShown = {},
                 onPreviousClick = {},
                 onNextClick = {},
                 onNavigateUp = {},

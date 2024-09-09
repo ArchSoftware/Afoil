@@ -1,5 +1,6 @@
 package com.archsoftware.afoil.feature.recentprojects
 
+import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -20,6 +21,7 @@ class RecentProjectsScreenTest {
         SelectableAfoilProject(
             AfoilProject(
                 name = "Project 1",
+                dirUri = Uri.EMPTY.toString(),
                 projectDataType = ""
             ),
             isSelected = false
@@ -27,6 +29,7 @@ class RecentProjectsScreenTest {
         SelectableAfoilProject(
             AfoilProject(
                 name = "Project 2",
+                dirUri = Uri.EMPTY.toString(),
                 projectDataType = ""
             ),
             isSelected = false
