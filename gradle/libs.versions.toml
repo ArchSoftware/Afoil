@@ -4,7 +4,6 @@ afoilEngine = "0.1.0"
 androidGradlePlugin = "8.5.2"
 androidxActivity = "1.9.1"
 androidxComposeBom = "2024.08.00"
-androidxComposeCompiler = "1.5.11"
 androidxCore = "1.13.1"
 androidxDatastore = "1.1.1"
 androidxHiltNavigationCompose = "1.2.0"
@@ -61,6 +60,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+compose-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 modulegraph-gradlePlugin = { group = "dev.iurysouza", name = "modulegraph", version.ref = "modulegraph" }
 
@@ -70,9 +70,8 @@ afoil-engine = { group = "com.archsoftware.afoil", name = "engine", version.ref 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
