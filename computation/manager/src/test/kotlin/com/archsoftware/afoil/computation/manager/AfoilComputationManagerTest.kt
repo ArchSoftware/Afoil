@@ -5,6 +5,7 @@ import com.archsoftware.afoil.core.testing.datairfoilreader.TestDatAirfoilReader
 import com.archsoftware.afoil.core.testing.projectstore.TestAfoilProjectStore
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectDataRepository
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectNumResultRepository
+import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectPostResultRepository
 import com.archsoftware.afoil.core.testing.repository.TestAfoilProjectRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -45,6 +46,7 @@ class AfoilComputationManagerTest {
             projectRepository = TestAfoilProjectRepository(),
             projectDataRepository = TestAfoilProjectDataRepository(),
             projectNumResultRepository = TestAfoilProjectNumResultRepository(),
+            projectPostResultRepository = TestAfoilProjectPostResultRepository(),
             projectStore = TestAfoilProjectStore(),
             datAirfoilReader = TestDatAirfoilReader(),
             contentResolver = TestAfoilContentResolver(),
