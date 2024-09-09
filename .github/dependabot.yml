@@ -18,22 +18,9 @@ updates:
 
   - package-ecosystem: "gradle"
     directory: "/"
-    registries:
-      - maven-github
+    registries: "*"
     schedule:
       interval: "weekly"
-    allow:
-      - dependency-name: "com.archsoftware.afoil:*"
-    target-branch: "main"
-    commit-message:
-      prefix: "build"
-
-  - package-ecosystem: "gradle"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    ignore:
-      - dependency-name: "com.archsoftware.afoil:*"
     groups:
       kotlin-ksp:
         patterns:
