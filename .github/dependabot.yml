@@ -18,8 +18,21 @@ updates:
 
   - package-ecosystem: "gradle"
     directory: "/"
+    registries:
+      - maven-github
     schedule:
       interval: "weekly"
+    allow:
+      - dependency-name: "com.archsoftware.afoil:*"
+    target-branch: "main"
     commit-message:
       prefix: "build"
-    registries: "*"
+
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "com.archsoftware.afoil:*"
+    commit-message:
+      prefix: "build"
