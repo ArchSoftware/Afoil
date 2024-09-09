@@ -21,6 +21,10 @@ updates:
     registries: "*"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "afoil.android.*"
+      - dependency-name: "afoil.kotlinx.*"
+      - dependency-name: "afoil.modulegraph"
     groups:
       kotlin-ksp:
         patterns:
