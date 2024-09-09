@@ -34,5 +34,10 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "com.archsoftware.afoil:*"
+    groups:
+      kotlin-ksp:
+        patterns:
+          - "org.jetbrains.kotlin:*"
+          - "com.google.devtools.ksp"
     commit-message:
       prefix: "build"
